@@ -38,11 +38,11 @@
                     <!-- English Title -->
                     <td>{{ Str::limit(optional($service->translate('en'))->title ?? 'Başlıq Yox', 16) }}</td>
                     <!-- Azerbaijani Description -->
-                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 60) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 100) }}</td>
                     <!-- Russian Description -->
-                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 60) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 100) }}</td>
                     <!-- English Description -->
-                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 60) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 100) }}</td>
                     <!-- Actions -->
                     <td>
                         <a href="{{ route('admin.services.edit', $service) }}" class="btn btn-sm btn-primary mb-1 w-100">Düzənlə</a>

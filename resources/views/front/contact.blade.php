@@ -3,7 +3,7 @@
 @section('title', 'Contact')
 
 @section('header-text')
-    Contact Us
+    {{ __('contact-us') }}
 @endsection
 
 @section('content')

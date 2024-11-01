@@ -16,21 +16,21 @@
     </div>
 
     <div class="background-slider-content">
-        <h1>Diş sağlamlığınıza <br> dəyər veririk</h1>
-        <p class="bck-slider-paragraph">Məqsədimiz, hər bir xəstəmizin ehtiyaclarına uyğun fərdi .<br> müalicə planı hazırlayaraq, rahat və sağlam bir gülüş qazandırmaqdır.</p>
-        <button id="appointment-btn" class="appointment-btn btn-in-slider">Make an Appointment</button>
+        <h1 style="width: 50%">{{ __('slider-title') }}</h1>
+        <p style="width: 60%" class="bck-slider-paragraph">{{ __('slider-paragraph') }}</p>
+        <button id="appointment-btn" class="appointment-btn btn-in-slider">{{ __('appointment') }}</button>
     </div>
 </div>
 
 <div class="card_slider_container">
     <div class="card_slider">
         <div class="emergency_cases">
-            <h2>Emergency Cases</h2>
-            <p class="emergency-paragraph">Təcili hallarda dərhal <br> yardım göstərmək üçün hazırıq.</p>
+            <h2>{{ __('emergency') }}</h2>
+            <p style="width: 85%; text-align: center" class="emergency-paragraph">{{ __('emergency-paragraph') }}</p>
             <span class="phone_number">{{ $contactDetails->phone ?? 'Phone not set' }}</span>
         </div>
         <div class="working_hours">
-            <h2>İş Saatları</h2>
+            <h2>{{ __('working-hours') }}</h2>
             <ul>
                 @php
                     $today = now();
@@ -44,7 +44,7 @@
                         $dayOfWeek = $date->dayOfWeek;
 
                         if ($dayOfWeek == 0) {
-                            $workingHours = "İstirahət Günü";
+                            $workingHours = __('rest-days');
                         } elseif ($date->day % 2 == 0) {
                             $workingHours = "14:00 - 18:00";
                         } else {
@@ -59,24 +59,24 @@
         </div>
 
         <div class="custom_appointment">
-            <h2 class="appointment-title">Make an Appointment</h2>
+            <h2 class="appointment-title">{{ __('appointment') }}</h2>
             <form id="custom_appointmentForm" method="POST" action="{{ route('reservation.store') }}">
                 @csrf
                 <div class="form-row">
                     <div class="input-group">
                         <select id="department" name="department" style="color: rgba(255, 255, 255, 0.7); font-size: 16px" class="selecting-services">
-                            <option value="" disabled selected>Services</option>
+                            <option value="" disabled selected>{{ __('services') }}</option>
                             @foreach($allServices as $service)
                                 <option value="{{ $service->id }}">{{ $service->title }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="input-group">
-                        <input type="text" id="name" name="name" placeholder="Name" required>
+                        <input type="text" id="name" name="name" placeholder="{{ __('name') }}" required>
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="input-group">
-                        <input type="email" id="email" name="email" placeholder="Email">
+                        <input type="email" id="email" name="email" placeholder="{{ __('email') }}">
                         <i class="fa-solid fa-paper-plane"></i>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             type="text"
                             id="date-picker-main"
                             name="date"
-                            placeholder="Date"
+                            placeholder="{{ __('date') }}"
                             readonly
                             required
                             class="input-with-icon"
@@ -98,7 +98,7 @@
                             type="text"
                             id="time-picker-main"
                             name="time"
-                            placeholder="Time"
+                            placeholder="{{ __('time') }}"
                             readonly
                             required
                             class="input-with-icon"
@@ -106,13 +106,13 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="input-group">
-                        <input type="tel" id="phone" name="phone" placeholder="Phone" required
+                        <input type="tel" id="phone" name="phone" placeholder="{{ __('phone') }}" required
                                pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                title="Only numbers are allowed">
                         <i class="fas fa-phone"></i>
                     </div>
                 </div>
-                <button type="submit" class="button" id="appointment-btn button">Make an appointment</button>
+                <button type="submit" class="button" id="appointment-btn button">{{ __('appointment') }}</button>
             </form>
         </div>
 
@@ -139,10 +139,4 @@
         time_24hr: true,
         minuteIncrement: 15
     });
-    //
-    // document.getElementById('appointment-btn').addEventListener('click', function() {
-    //     const appointmentForm = document.getElementById('custom_appointmentForm');
-    //     appointmentForm.submit();
-    // });
-
 </script>

@@ -1,6 +1,6 @@
 <div class="our_offer">
-    <h1>Diş Sağlamlığı haqqında Ən Son Məsləhətlər və Yeniliklər</h1>
-    <p>Bloqumuzu ziyarət edin və diş sağlamlığınızı qorumaq üçün faydalı məsləhətlər, müasir stomatoloji trendləri <br> və estetik gülüş yaratma yollarını öyrənin! Daim yenilənən yazılarımızla sağlam gülüşə bir addım daha yaxın olun.</p>
+    <h1>{{ __('blog-title') }}</h1>
+    <p style="width: 70%; margin: auto; margin-bottom:30px">{{ __('blog-paragraph') }}</p>
 </div>
 <div class="blog-cards">
     @foreach($blogs as $blog)
@@ -11,14 +11,14 @@
         <div class="blog-card-content">
             <div class="blog-card-meta">
                 <span class="date"><i class="far fa-calendar-alt"></i> {{ $blog->date }}</span>
-                <span class="comments-count"><i class="far fa-comments"></i> {{ $blog->comments_count }} şərh</span>
+                <span class="comments-count"><i class="far fa-comments"></i> {{ $blog->comments_count }} {{ __('comment') }}</span>
             </div>
             <div class="blog-card-text">
                 <a href="{{ route('blog.show', $blog->slug) }}">
                     <h3 class="blog-card-title">{{ $blog->title }}</h3>
                 </a>
                 <p class="blog-card-description">{{ $blog->description_one }}</p>
-                <a href="{{ route('blog.show', $blog->slug) }}" class="read-more">Read more</a>
+                <a href="{{ route('blog.show', $blog->slug) }}" class="read-more">{{ __('read-more') }}</a>
             </div>
         </div>
     </div>

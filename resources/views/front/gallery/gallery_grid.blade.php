@@ -204,9 +204,9 @@
 
 <div class="gallery-navigation-container">
     @if ($images->onFirstPage())
-        <span class="gallery-button gallery-button--previous disabled">&#8249; Prev</span>
+        <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
     @else
-        <a href="{{ $images->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; Prev</a>
+        <a href="{{ $images->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
     @endif
 
     <div class="gallery-pagination">
@@ -220,8 +220,8 @@
     </div>
 
     @if ($images->hasMorePages())
-        <a href="{{ $images->nextPageUrl() }}" class="gallery-button gallery-button--next">Next &#8250;</a>
+        <a href="{{ $images->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
     @else
-        <span class="gallery-button gallery-button--next disabled">Next &#8250;</span>
+        <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
     @endif
 </div>

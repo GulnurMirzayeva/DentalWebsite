@@ -7,14 +7,14 @@
         <div class="blog-card-content">
             <div class="blog-card-meta">
                 <span class="date"><i class="far fa-calendar-alt"></i> {{ $blog->date }}</span>
-                <span class="comments-count"><i class="far fa-comments"></i> {{ $blog->comments_count }} şərh</span>
+                <span class="comments-count"><i class="far fa-comments"></i> {{ $blog->comments_count }} {{ __('comment') }}</span>
             </div>
             <div class="blog-card-text">
                 <a href="{{ route('blog.show', $blog->slug) }}">
                     <h3 class="blog-card-title">{{ $blog->title }}</h3>
                 </a>
                 <p class="blog-card-description">{{ $blog->description_one }}</p>
-                <a href="{{ route('blog.show', $blog->slug) }}" class="read-more">Read more</a>
+                <a href="{{ route('blog.show', $blog->slug) }}" class="read-more">{{ __('read-more') }}</a>
             </div>
         </div>
     </div>
@@ -24,9 +24,9 @@
 
 <div class="gallery-navigation-container">
     @if ($blogs->onFirstPage())
-        <span class="gallery-button gallery-button--previous disabled">&#8249; Prev</span>
+        <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
     @else
-        <a href="{{ $blogs->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; Prev</a>
+        <a href="{{ $blogs->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
     @endif
 
     <div class="gallery-pagination">
@@ -40,9 +40,9 @@
     </div>
 
     @if ($blogs->hasMorePages())
-        <a href="{{ $blogs->nextPageUrl() }}" class="gallery-button gallery-button--next">Next &#8250;</a>
+        <a href="{{ $blogs->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
     @else
-        <span class="gallery-button gallery-button--next disabled">Next &#8250;</span>
+        <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
     @endif
 </div>
 

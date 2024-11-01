@@ -3,8 +3,8 @@
         <div class="testimonials-overlay"></div>
         <div class="testimonials-comments-slider">
             <div class="testimonials-titles">
-                <p>Read testimonials</p>
-                <h1>Our Patient Says</h1>
+                <p>{{ __('testimonials-title') }}</p>
+                <h1>{{ __('testimonials-paragraph') }}</h1>
             </div>
             <div>
                 <div class="slider-container">

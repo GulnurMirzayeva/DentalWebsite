@@ -4,8 +4,8 @@
     </div>
     <div class="header-content-part">
         <div class="header-a-tags">
-            <a href="{{ route('home') }}">HOME</a>
-            <a href="{{ route('about') }}">ABOUT</a>
+            <a href="{{ route('home') }}">{{ __('home') }}</a>
+            <a href="{{ route('about') }}">{{ __('about') }}</a>
         </div>
         <p class="header-paragraph">@yield('header-text')</p>
     </div>

@@ -1,6 +1,6 @@
 <div class="our_offer">
-    <h1>Our Best Offers</h1>
-    <p>Our offer is valid during this month</p>
+    <h1>{{ __('price-title') }}</h1>
+    <p>{{ __('price-paragraph') }}</p>
 </div>
 <div class="our_offers_dentis">
     @foreach($packages as $package)
@@ -8,7 +8,7 @@
             <h2>{{ $package->name }}</h2>
             <p style="padding-bottom: 20px">
                 <i class="fa-solid fa-manat-sign" style="margin-right: 2px;"></i>
-                <span class="span-package-price">{{ $package->price }}</span>/sessiya
+                <span class="span-package-price">{{ $package->price }}</span>/{{ __('session') }}
             </p>
 
             <ul class="best_offers">
@@ -18,9 +18,6 @@
                     </li>
                 @endforeach
             </ul>
-
-
-
         </div>
     @endforeach
 </div>
