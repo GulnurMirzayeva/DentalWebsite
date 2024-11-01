@@ -54,31 +54,4 @@
 </div>
 
 
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageLinks = document.querySelectorAll('.dropdown-content a');
 
-            languageLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault(); // Default davranışı dayandırırıq
-
-                    const url = this.getAttribute('href');
-                    document.body.style.cursor = 'wait';
-
-                    // AJAX ilə sorğu göndəririk
-                    fetch(url)
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.reload();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            document.body.style.cursor = 'default';
-                        });
-                });
-            });
-        });
-    </script>
-@endsection
