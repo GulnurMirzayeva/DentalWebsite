@@ -24,20 +24,20 @@ body {
 /*arrow icon start*/
 .back-to-top {
     position: fixed;
-    bottom: 40px; /* Footerun üstündə görünməsini təmin etmək üçün */
-    right: 20px;  /* Sağ tərəfdə görünməsi üçün */
-    font-size: 15px; /* İkonun ölçüsünü tənzimləmək üçün */
-    color: var(--white); /* İkonun rəngi */
-    display: none; /* Başlanğıcda gizli */
-    text-decoration: none; /* Alt xətt olmadan */
-    background-color: var(--light-black); /* Fon rəngi */
-    border-radius: 50%; /* Dairəvi forma */
-    padding: 10px; /* İçəridəki boşluq */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Kölgə effekti */
+    bottom: 40px;
+    right: 20px;
+    font-size: 15px;
+    color: var(--white);
+    display: none;
+    text-decoration: none;
+    background-color: var(--light-black);
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .back-to-top.show {
-    display: block; /* Göstərmək üçün */
+    display: block;
 }
 /*arrow icon end*/
 
@@ -831,6 +831,12 @@ input, select {
 
     .custom_appointment .input-group {
         width: 85%;
+    }
+    .custom_appointment .time-input-group,
+    .custom_appointment .date-input-group {
+        width: 85%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

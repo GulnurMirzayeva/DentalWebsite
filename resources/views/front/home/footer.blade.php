@@ -70,7 +70,7 @@
         </div>
 
         <a href="#" class="back-to-top" id="backToTop">
-            &#8679; <!-- Unicode ox simvolu -->
+            &#8679;
         </a>
     </div>
 </div>

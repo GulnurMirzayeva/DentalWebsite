@@ -637,23 +637,18 @@ window.onscroll = function() {
     }
 };
 // arrow icon
-// İkona tıklandığında səhifəni yuxarıya fırladın
+
 backToTopButton.addEventListener('click', function(e) {
-    e.preventDefault(); // Tıklama davranışını dayandırın
+    e.preventDefault();
     window.scrollTo({
         top: 0,
-        behavior: 'smooth' // Yuxarıya fırlatma animasiyası
+        behavior: 'smooth'
     });
 });
 // arrow icon end
 
 
-// scroll start
 
-
-
-
-// scroll end
 
 
 
