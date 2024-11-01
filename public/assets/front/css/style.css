@@ -21,6 +21,65 @@ body {
     overflow-x: hidden;
 }
 
+/*arrow icon start*/
+.back-to-top {
+    position: fixed;
+    bottom: 40px; /* Footerun üstündə görünməsini təmin etmək üçün */
+    right: 20px;  /* Sağ tərəfdə görünməsi üçün */
+    font-size: 15px; /* İkonun ölçüsünü tənzimləmək üçün */
+    color: var(--white); /* İkonun rəngi */
+    display: none; /* Başlanğıcda gizli */
+    text-decoration: none; /* Alt xətt olmadan */
+    background-color: var(--light-black); /* Fon rəngi */
+    border-radius: 50%; /* Dairəvi forma */
+    padding: 10px; /* İçəridəki boşluq */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Kölgə effekti */
+}
+
+.back-to-top.show {
+    display: block; /* Göstərmək üçün */
+}
+/*arrow icon end*/
+
+/*scroll start*/
+
+/* Mobil cihazlarda skroll aktivləşdirmək */
+@media (max-width: 768px) { /* 768px-dən kiçik ekranlarda (mobil və tablet) */
+    html, body {
+        height: 100%; /* Tam hündürlük */
+        margin: 0; /* Marjinləri sıfırlamaq */
+    }
+
+    .scroll-container {
+        height: 100vh; /* Tam ekran hündürlüyü */
+        overflow-y: auto; /* Yalnız yuxarı-aşağı skroll üçün */
+        -webkit-overflow-scrolling: touch; /* Mobil cihazlarda skrollun daha hamar olmasını təmin edir */
+    }
+
+    /* İstifadəçi mobil cihazlarda asanlıqla skroll edə bilsin */
+    .scroll-container::-webkit-scrollbar {
+        width: 10px; /* Skroll çubuğunun eni */
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background-color: #888; /* Skroll çubuğunun rəngi */
+        border-radius: 10px; /* Dairəvi künclər */
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Hover zamanı rəng dəyişməsi */
+    }
+}
+
+
+
+
+/*scroll end*/
+
+
+
+
+
 /*Background Slider starts*/
 .background_slider {
     position: relative;
@@ -243,6 +302,7 @@ input {
     font-size: 16px;
     color: var(--gray);
 }
+
 
 .name-input-group i,
 .email-input-group i,
@@ -639,8 +699,10 @@ input, select {
         margin-left: 18%;
     }
 
+
+
     .custom_appointment button {
-        width: 110%;
+        width: 70%;
         margin: 10px 0 0 0;
     }
 
@@ -717,6 +779,8 @@ input, select {
     .working_hours .day-of-week {
         font-size: 13px;
     }
+
+
 }
 
 @media screen and (max-width: 576px) {
@@ -745,7 +809,8 @@ input, select {
     }
 
     .background-slider-content #appointment-btn {
-        width: 37%;
+        width: 50%;
+        font-size: 14px;
     }
 
     .slider-controls {
@@ -2125,9 +2190,9 @@ input, select {
 }
 
 .quick-services a:hover {
-
     color: var(--gray-dark);
 }
+
 
 
 .office-contact-data p:hover {
@@ -2180,13 +2245,22 @@ input, select {
 .quick-links a:hover {
     color: var(--gray);
 }
+.copy{
+    width: 100%;
+}
 
 .footer-part .footer-copyright {
     text-align: center;
     color: var(--light);
-    padding-top: 60px;
+    padding-top: 40px;
     font-size: 20px;
+    /*margin: auto;*/
 }
+
+
+
+
+
 
 
 @media (max-width: 1024px) {
@@ -2238,6 +2312,7 @@ input, select {
         padding-top: 20px;
     }
 }
+
 
 /*Footer ends*/
 

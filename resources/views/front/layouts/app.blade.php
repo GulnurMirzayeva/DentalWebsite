@@ -64,10 +64,12 @@
 <body>
 @include('front.home.nav')
 
-<main>
-    @yield('content')
-</main>
-@include('front.chatbot.index')
+<div class="scroll-container">
+    <main>
+        @yield('content')
+    </main>
+</div>
+{{--@include('front.chatbot.index')--}}
 
 @include('front.home.footer')
 

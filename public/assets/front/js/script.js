@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const offcanvas = document.getElementById('navOffcanvas');
     const navContent = document.querySelector('.nav-content');
     const appointmentBtn = document.getElementById('nav-appointment-btn');
+    const mobileAppointmentBtn = document.querySelector('#navOffcanvas .appointment-btn');
 
-
+    // Existing hamburger menu code
     hamburgerIcon.addEventListener('click', function () {
         offcanvas.classList.add('active');
         navContent.classList.add('offcanvas-active');
@@ -37,6 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
         navContent.classList.remove('offcanvas-active');
     });
 
+    // New code for mobile appointment button
+    mobileAppointmentBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Close the mobile menu
+        offcanvas.classList.remove('active');
+        navContent.classList.remove('offcanvas-active');
+
+        // Open your appointment form here
+        // Assuming you have code to show the appointment form
+        const appointmentForm = document.getElementById('appointment-form');
+        const overlay = document.getElementById('overlay');
+        if (appointmentForm && overlay) {
+            appointmentForm.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+        }
+    });
 });
 
 // Multilanguage Dropdown
@@ -601,6 +618,47 @@ $(document).ready(function () {
         ],
     };
 });
+
+
+
+// ox
+
+// script.js
+
+// Yuxarıya qalxma ikonu
+const backToTopButton = document.getElementById('backToTop');
+
+// Scroll hadisəsini izləyin
+window.onscroll = function() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopButton.classList.add('show'); // İkonu göstərin
+    } else {
+        backToTopButton.classList.remove('show'); // İkonu gizlədin
+    }
+};
+// arrow icon
+// İkona tıklandığında səhifəni yuxarıya fırladın
+backToTopButton.addEventListener('click', function(e) {
+    e.preventDefault(); // Tıklama davranışını dayandırın
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Yuxarıya fırlatma animasiyası
+    });
+});
+// arrow icon end
+
+
+// scroll start
+
+
+
+
+// scroll end
+
+
+
+
+
 
 
 
