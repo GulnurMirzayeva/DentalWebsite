@@ -12,9 +12,9 @@
                     <th scope="col">Ad Soyad</th>
                     <th scope="col">Telefon</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Message</th>
+                    <th scope="col">Mesaj</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Fəaliyyətlər</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,7 +25,7 @@
                         <td>{{ $message->email }}</td>
                         <td>
                             <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#messageModal{{ $message->id }}">
-                                View Message
+                                Mesajı oxu
                             </button>
 
                             <!-- Modal -->
@@ -51,9 +51,9 @@
                         </td>
                         <td>
                             @if($message->viewed)
-                                <span class="badge badge-success">Viewed</span>
+                                <span class="badge badge-success">Oxunub</span>
                             @else
-                                <span class="badge badge-warning">Unviewed</span>
+                                    <span class="badge badge-warning">Oxunmayıb</span>
                             @endif
                         </td>
                         <td>
@@ -67,7 +67,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No messages received yet.</td>
+                        <td colspan="6" class="text-center">Mesaj yoxdur.</td>
                     </tr>
                 @endforelse
                 </tbody>
