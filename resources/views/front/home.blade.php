@@ -24,4 +24,7 @@
     @include('front.contact.contact_form')
 {{--   @include('front.chatbot.index')--}}
 
+{{--   <button class="scroll-to-top">Yuxarı</button> <!-- Yuxarıya keçid düyməsi -->--}}
+
+
 @endsection

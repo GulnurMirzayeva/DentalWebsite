@@ -37,6 +37,7 @@
             <a href="{{ route('blog') }}">Blog</a>
             <a href="{{ route('contact') }}">Contact</a>
         </div>
+
         <div class="quick-services">
             <h2>Services</h2>
             @foreach($footerServices->slice(-6) as $service)
@@ -44,10 +45,6 @@
             @endforeach
         </div>
 
-
-        @php
-            $contactDetails = \App\Models\ContactDetail::first();
-        @endphp
         <div class="office-contact-data">
             <h2>Contact Us</h2>
             <p><i class="fa-solid fa-map-location-dot"></i> {{ $contactDetails->address ?? 'Address not set' }}</p>
@@ -65,12 +62,22 @@
                     {{ $contactDetails->facebook ?? 'Facebook not set' }}
                 </a>
             </p>
-        <style>
-            .social-link {
-                color: white; /* Set link color to white */
-                text-decoration: none; /* Remove underline */
-            }
-        </style>
 
-            <p class="footer-copyright">Copyright ©2024 All rights reserved</p>
         </div>
+        <div class="copy">
+            <p class="footer-copyright">Copyright ©2024 All rights reserved</p>
+
+        </div>
+
+        <a href="#" class="back-to-top" id="backToTop">
+            &#8679; <!-- Unicode ox simvolu -->
+        </a>
+    </div>
+</div>
+
+<style>
+    .social-link {
+        color: white; /* Set link color to white */
+        text-decoration: none; /* Remove underline */
+    }
+</style>
