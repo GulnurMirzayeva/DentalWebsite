@@ -70,14 +70,14 @@
         </div>
 
         <a href="#" class="back-to-top" id="backToTop">
-            &#8679; <!-- Unicode ox simvolu -->
+            <i class="fa-solid fa-up-long"></i>
         </a>
     </div>
 </div>
 
 <style>
     .social-link {
-        color: white; /* Set link color to white */
-        text-decoration: none; /* Remove underline */
+        color: white;
+        text-decoration: none;
     }
 </style>

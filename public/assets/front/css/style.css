@@ -21,63 +21,26 @@ body {
     overflow-x: hidden;
 }
 
-/*arrow icon start*/
+/* Arrow icon starts */
 .back-to-top {
     position: fixed;
-    bottom: 40px; /* Footerun üstündə görünməsini təmin etmək üçün */
-    right: 20px;  /* Sağ tərəfdə görünməsi üçün */
-    font-size: 15px; /* İkonun ölçüsünü tənzimləmək üçün */
-    color: var(--white); /* İkonun rəngi */
-    display: none; /* Başlanğıcda gizli */
-    text-decoration: none; /* Alt xətt olmadan */
-    background-color: var(--light-black); /* Fon rəngi */
-    border-radius: 50%; /* Dairəvi forma */
-    padding: 10px; /* İçəridəki boşluq */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Kölgə effekti */
+    bottom: 40px;
+    right: 20px;
+    font-size: 20px;
+    color: var(--light);
+    display: none;
+    text-decoration: none;
+    background-color: var(--blue);
+    border-radius: 50%;
+    padding: 13px 18px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .back-to-top.show {
-    display: block; /* Göstərmək üçün */
+    display: block;
 }
-/*arrow icon end*/
-
-/*scroll start*/
-
-/* Mobil cihazlarda skroll aktivləşdirmək */
-@media (max-width: 768px) { /* 768px-dən kiçik ekranlarda (mobil və tablet) */
-    html, body {
-        height: 100%; /* Tam hündürlük */
-        margin: 0; /* Marjinləri sıfırlamaq */
-    }
-
-    .scroll-container {
-        height: 100vh; /* Tam ekran hündürlüyü */
-        overflow-y: auto; /* Yalnız yuxarı-aşağı skroll üçün */
-        -webkit-overflow-scrolling: touch; /* Mobil cihazlarda skrollun daha hamar olmasını təmin edir */
-    }
-
-    /* İstifadəçi mobil cihazlarda asanlıqla skroll edə bilsin */
-    .scroll-container::-webkit-scrollbar {
-        width: 10px; /* Skroll çubuğunun eni */
-    }
-
-    .scroll-container::-webkit-scrollbar-thumb {
-        background-color: #888; /* Skroll çubuğunun rəngi */
-        border-radius: 10px; /* Dairəvi künclər */
-    }
-
-    .scroll-container::-webkit-scrollbar-thumb:hover {
-        background-color: #555; /* Hover zamanı rəng dəyişməsi */
-    }
-}
-
-
-
-
-/*scroll end*/
-
-
-
+/* Arrow icon ends */
 
 
 /*Background Slider starts*/
@@ -369,6 +332,11 @@ input:focus,
 }
 
 @media (max-width: 480px) {
+    .btn-in-slider {
+        margin-left: 23% !important;
+        width: 200px !important;
+        height: 40px !important;
+    }
     .appointment-form-row {
         margin-bottom: 15px;
     }
@@ -377,7 +345,7 @@ input:focus,
     .service-select {
         font-size: 12px;
         padding: 4px;
-
+        height: 30px;
     }
 
     .appointment-submit-btn {

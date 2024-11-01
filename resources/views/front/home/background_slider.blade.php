@@ -18,7 +18,7 @@
     <div class="background-slider-content">
         <h1>Diş sağlamlığınıza <br> dəyər veririk</h1>
         <p class="bck-slider-paragraph">Məqsədimiz, hər bir xəstəmizin ehtiyaclarına uyğun fərdi .<br> müalicə planı hazırlayaraq, rahat və sağlam bir gülüş qazandırmaqdır.</p>
-        <button id="appointment-btn" class="appointment-btn">Make an Appointment</button>
+        <button id="appointment-btn" class="appointment-btn btn-in-slider">Make an Appointment</button>
     </div>
 </div>
 
