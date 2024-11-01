@@ -22,9 +22,12 @@ class PricingPackage extends Model implements TranslatableContract
     ];
 
     // Define many-to-many relationship with the Service model
+
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class, 'pricing_package_service');
     }
+
+
 
 }

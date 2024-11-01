@@ -17,12 +17,9 @@
                 <div class="language">
                     <i class="fa-solid fa-globe"></i>
                     <div class="dropdown-content">
-                        {{--                            <a href="{{ route('locale', ['locale' => 'az']) }}">Az</a>--}}
-                        {{--                            <a href="{{ route('locale', ['locale' => 'ru']) }}">Ru</a>--}}
-                        {{--                            <a href="{{ route('locale', ['locale' => 'en']) }}">En</a>--}}
-                        <a href="">Az</a>
-                        <a href="">Ru</a>
-                        <a href="">En</a>
+                        <a href="{{ route('set.language', ['locale' => 'az']) }}">Az</a>
+                        <a href="{{ route('set.language', ['locale' => 'ru']) }}">Ru</a>
+                        <a href="{{ route('set.language', ['locale' => 'en']) }}">En</a>
                     </div>
                 </div>
             </div>

@@ -1,73 +1,43 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Qiymət Paketləri')
+@section('title', 'Pricing Packages')
 
 @section('content')
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+    <div class="container">
+        <h1>Pricing Packages</h1>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+        <a href="{{ route('pricing.create') }}" class="btn btn-primary mb-3">Create New Package</a>
 
-    <h1>Qiymət Paketləri</h1>
-
-    <a href="{{ route('pricing.create') }}" class="btn btn-primary mb-3">Paket Əlavə Et</a>
-
-    <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Ad (AZ)</th>
-                <th>Ad (RU)</th>
-                <th>Ad (EN)</th>
-                <th>Qiymət</th>
-                <th>Xidmət (AZ)</th>
-                <th>Xidmət (RU)</th>
-                <th>Xidmət (EN)</th>
-                <th>Proses</th>
+                <th>Name (AZ)</th>
+                <th>Name (RU)</th>
+                <th>Name (EN)</th>
+                <th>Price</th>
+                <th>Service (AZ)</th>
+                <th>Service (RU)</th>
+                <th>Service (EN)</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             @foreach($packages as $package)
                 <tr>
-                    <!-- Azerbaijani Name -->
                     <td>{{ $package->translate('az')->name ?? 'N/A' }}</td>
-                    <!-- Russian Name -->
                     <td>{{ $package->translate('ru')->name ?? 'N/A' }}</td>
-                    <!-- English Name -->
                     <td>{{ $package->translate('en')->name ?? 'N/A' }}</td>
-                    <!-- Price -->
                     <td>{{ $package->price }}</td>
-                    <!-- Services in Azerbaijani -->
+                    <td>{{ $package->translate('az')->service_name ?? 'N/A' }}</td>
+                    <td>{{ $package->translate('ru')->service_name ?? 'N/A' }}</td>
+                    <td>{{ $package->translate('en')->service_name ?? 'N/A' }}</td>
+
                     <td>
-                        @foreach($package->services as $service)
-                            {{ $service->translate('az')->title ?? 'N/A' }}<br>
-                        @endforeach
-                    </td>
-                    <!-- Services in Russian -->
-                    <td>
-                        @foreach($package->services as $service)
-                            {{ $service->translate('ru')->title ?? 'N/A' }}<br>
-                        @endforeach
-                    </td>
-                    <!-- Services in English -->
-                    <td>
-                        @foreach($package->services as $service)
-                            {{ $service->translate('en')->title ?? 'N/A' }}<br>
-                        @endforeach
-                    </td>
-                    <td>
-                        <a href="{{ route('pricing.edit', $package->id) }}" class="btn btn-primary">Düzənlə</a>
-                        <form action="{{ route('pricing.destroy', $package->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('pricing.edit', $package->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('pricing.destroy', $package->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Sil</button>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                         </form>
                     </td>
                 </tr>

@@ -12,6 +12,8 @@ class PricingPackageTranslation extends Model
     protected $fillable = [
         'name',
         'slug',
-        'service_name', // Make service_name fillable
+        'service_name',
+        'locale',  // Add locale to fillable attributes
+        'pricing_package_id'  // Also add this to ensure it can be set
     ];
 }

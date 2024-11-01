@@ -39,6 +39,12 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+use App\Http\Controllers\LanguageController;
+
+Route::get('/set-language/{locale}', [LanguageController::class, 'setLanguage'])->name('set.language');
+
+
+
 Route::get('/forget-password', [ForgotPasswordManager::class, 'forgetPassword'])->name('forget.password');
 Route::post('/forget-password', [ForgotPasswordManager::class, 'forgetPasswordPost'])->name('forget.password.post');
 
