@@ -1558,6 +1558,11 @@ input, select {
         padding: 32px;
     }
 
+    .opening-hours .opening-hours__day {
+        text-align: center;
+        margin: auto;
+    }
+
     .opening-hours {
         margin-bottom: 40px;
     }

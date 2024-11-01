@@ -12,9 +12,9 @@
                     <th scope="col">Ad Soyad</th>
                     <th scope="col">Telefon</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Message</th>
+                    <th scope="col">Mesaj</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Fəaliyyətlər</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,7 +25,7 @@
                         <td>{{ $message->email }}</td>
                         <td>
                             <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#messageModal{{ $message->id }}">
-                                View Message
+                                Mesajı oxu
                             </button>
 
                             <!-- Modal -->
@@ -51,9 +51,9 @@
                         </td>
                         <td>
                             @if($message->viewed)
-                                <span class="badge badge-success">Viewed</span>
+                                <span class="badge badge-success">Oxunub</span>
                             @else
-                                <span class="badge badge-warning">Unviewed</span>
+                                <span class="badge badge-warning">Oxunmayıb</span>
                             @endif
                         </td>
                         <td>
@@ -67,22 +67,36 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No messages received yet.</td>
-                        <td colspan="5" class="text-center">Mesaj Yoxdur.</td>
+                        <td colspan="6" class="text-center">Mesaj yoxdur.</td>
                     </tr>
                 @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             @foreach ($messages as $message)
             $('#messageModal{{ $message->id }}').on('hidden.bs.modal', function () {
-                // Trigger markAsViewed when the modal is closed
                 markAsViewed({{ $message->id }});
             });
             @endforeach
+
+            // Check if the URL contains a message ID (e.g., /admin/contact#message-5)
+            const hash = window.location.hash;
+            if (hash) {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.classList.add('highlight');  // Apply the highlight class
+                    element.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the element
+
+                    // Optionally, remove the highlight class after a few seconds
+                    setTimeout(() => {
+                        element.classList.remove('highlight');
+                    }, 2000);  // Remove highlight after 2 seconds
+                }
+            }
         });
 
         function markAsViewed(id) {
@@ -91,32 +105,27 @@
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-            }).then(response => {
-                if (response.ok) {
-                    location.reload(); // Reload the page to update the status
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the badge status to "Viewed"
+                        const badge = document.querySelector(`#message-${id} .badge`);
+                        if (badge) {
+                            badge.classList.remove('badge-warning');
+                            badge.classList.add('badge-success');
+                            badge.textContent = 'Oxunub';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (window.location.hash) {
-                const element = document.querySelector(window.location.hash);
-                if (element) {
-                    element.classList.add('highlight');  // Apply the highlight class
-                    element.scrollIntoView({ behavior: 'smooth' }); // Smooth scrolling to the element
 
-                    // Optionally, remove the highlight class after a few seconds
-                    setTimeout(() => {
-                        element.classList.remove('highlight');
-                    }, 2000);  // Remove after 2 seconds
-                }
-            }
-        });
-    </script>
-    <style>.highlight {
+    <style>
+        .highlight {
             background-color: #ffeb3b;
             animation: highlight-animation 2s ease-in-out;
         }

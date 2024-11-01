@@ -111,6 +111,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/contact', [ComplaintSuggestionController::class, 'showMessages'])->name('admin.contact.show');
     Route::post('/contact/store', [ComplaintSuggestionController::class, 'storeContactForm'])->name('admin.contact.store');
     Route::delete('contact/{id}/delete', [ComplaintSuggestionController::class, 'destroy'])->name('admin.contact.delete');
+    Route::post('contact/{id}/markAsViewed', [ComplaintSuggestionController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
 });
 Route::prefix('admin')->group(function () {
     Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('admin.gallery.index');

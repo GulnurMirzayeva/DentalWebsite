@@ -68,7 +68,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="reservationsDropdown">
                 <h6 class="dropdown-header">
-                    Reservations Center
+                    Rezervasiyalar
                 </h6>
                 @forelse($latestPendingReservations as $reservation)
                     <a class="dropdown-item d-flex align-items-center"
@@ -83,12 +83,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new reservations</div>
+                            <div class="text-truncate">Yeni rezervasiya yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.reservation') }}">Read
-                    More Reservations</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.reservation') }}">Bütün rezervasiyalara baxın.</a>
             </div>
         </li>
 
@@ -108,7 +107,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="commentsDropdown">
                 <h6 class="dropdown-header">
-                    Comment Center
+                    Şərhlər
                 </h6>
                 @forelse($comments as $comment)
                     <a class="dropdown-item d-flex align-items-center"
@@ -122,12 +121,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new comments</div>
+                            <div class="text-truncate">Yeni şərh yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">Read
-                    More Comments</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">Bütün şərhlərə baxın.</a>
             </div>
         </li>
 
@@ -149,7 +147,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
-                    Message Center
+                    Mesajlar
                 </h6>
                 @forelse($messages as $message)
                     <a class="dropdown-item d-flex align-items-center"
@@ -167,12 +165,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new messages</div>
+                            <div class="text-truncate">Yeni mesaj yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.contact.show') }}">Read
-                    More Messages</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.contact.show') }}">Bütün mesajlara baxın.</a>
             </div>
         </li>
 
