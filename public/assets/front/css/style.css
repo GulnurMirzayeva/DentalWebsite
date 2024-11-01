@@ -21,6 +21,28 @@ body {
     overflow-x: hidden;
 }
 
+/* Arrow icon starts */
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    font-size: 20px;
+    color: var(--light);
+    display: none;
+    text-decoration: none;
+    background-color: var(--blue);
+    border-radius: 50%;
+    padding: 13px 18px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    display: block;
+}
+/* Arrow icon ends */
+
+
 /*Background Slider starts*/
 .background_slider {
     position: relative;
@@ -244,6 +266,7 @@ input {
     color: var(--gray);
 }
 
+
 .name-input-group i,
 .email-input-group i,
 .phone-input-group i {
@@ -309,6 +332,11 @@ input:focus,
 }
 
 @media (max-width: 480px) {
+    .btn-in-slider {
+        margin-left: 23% !important;
+        width: 200px !important;
+        height: 40px !important;
+    }
     .appointment-form-row {
         margin-bottom: 15px;
     }
@@ -317,7 +345,7 @@ input:focus,
     .service-select {
         font-size: 12px;
         padding: 4px;
-
+        height: 30px;
     }
 
     .appointment-submit-btn {
@@ -641,8 +669,10 @@ input, select {
         margin-left: 18%;
     }
 
+
+
     .custom_appointment button {
-        width: 110%;
+        width: 70%;
         margin: 10px 0 0 0;
     }
 
@@ -719,6 +749,8 @@ input, select {
     .working_hours .day-of-week {
         font-size: 13px;
     }
+
+
 }
 
 @media screen and (max-width: 576px) {
@@ -747,7 +779,8 @@ input, select {
     }
 
     .background-slider-content #appointment-btn {
-        width: 37%;
+        width: 50%;
+        font-size: 14px;
     }
 
     .slider-controls {
@@ -2132,9 +2165,9 @@ input, select {
 }
 
 .quick-services a:hover {
-
     color: var(--gray-dark);
 }
+
 
 
 .office-contact-data p:hover {
@@ -2187,13 +2220,22 @@ input, select {
 .quick-links a:hover {
     color: var(--gray);
 }
+.copy{
+    width: 100%;
+}
 
 .footer-part .footer-copyright {
     text-align: center;
     color: var(--light);
-    padding-top: 60px;
+    padding-top: 40px;
     font-size: 20px;
+    /*margin: auto;*/
 }
+
+
+
+
+
 
 
 @media (max-width: 1024px) {
@@ -2245,6 +2287,7 @@ input, select {
         padding-top: 20px;
     }
 }
+
 
 /*Footer ends*/
 

@@ -11,11 +11,13 @@
 
     {{-- SEO meta tags --}}
     <meta name="keywords" content="@yield('meta_keywords','stomatoloq,dis hekimi,dis mualicesi,implant,ortodontiya')">
-    <meta name="description" content="@yield('meta_description', 'Peşəkar stomatoloq xidmətləri - diş müalicəsi, implantlar və ağız sağlamlığı üzrə xidmətlər.')">
+    <meta name="description"
+          content="@yield('meta_description', 'Peşəkar stomatoloq xidmətləri - diş müalicəsi, implantlar və ağız sağlamlığı üzrə xidmətlər.')">
 
     {{-- Open Graph Meta Tags --}}
     <meta property="og:title" content="@yield('og_title', 'Peşəkar Stomatoloq Xidmətləri')">
-    <meta property="og:description" content="@yield('og_description', 'Diş müalicəsi, implantlar və ortodontiya xidmətləri.')">
+    <meta property="og:description"
+          content="@yield('og_description', 'Diş müalicəsi, implantlar və ortodontiya xidmətləri.')">
     <meta property="og:image" content="@yield('og_image', asset('assets/front/img/favicon.jpg'))">
     <meta property="og:url" content="@yield('og_url', url()->current())">
 
@@ -28,16 +30,20 @@
     {{--    Font Family    --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     {{--    Font Awasome    --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     {{--    JQuery     --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{--   Alpine.JS   --}}
     <!-- Include easepick CSS and JS -->
-    <link href="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.js"></script>
 
     <!-- Include flatpickr CSS and JS -->
-    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     {{-- JSON-LD Structured Data --}}
@@ -64,10 +70,11 @@
 <body>
 @include('front.home.nav')
 
-<main>
-    @yield('content')
-</main>
-@include('front.chatbot.index')
+<div class="scroll-container">
+    <main>
+        @yield('content')
+    </main>
+</div>
 
 @include('front.home.footer')
 

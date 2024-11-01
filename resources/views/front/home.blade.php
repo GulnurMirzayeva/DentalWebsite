@@ -11,17 +11,17 @@
 @section('og_url', url()->current())
 
 @section('content')
-   @include('front.home.background_slider')
+    @include('front.home.background_slider')
     @include('front.services.our_services')
     @include('front.about.advantages')
-{{--   @include('front.chatbot.index')--}}
-   @include('front.home.appointment')
-   @include('front.services.prices')
-   @include('front.about.achievements')
-   @include('front.home.home_blog')
+    {{--   @include('front.chatbot.index')--}}
+    @include('front.home.appointment')
+    @include('front.services.prices')
+    @include('front.about.achievements')
+    @include('front.home.home_blog')
     @include('front.about.testimonials')
     @include('front.home.gallery_slider')
     @include('front.contact.contact_form')
-{{--   @include('front.chatbot.index')--}}
+    {{--   @include('front.chatbot.index')--}}
 
 @endsection
