@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
@@ -39,11 +40,9 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-use App\Http\Controllers\LanguageController;
-
-Route::get('/set-language/{locale}', [LanguageController::class, 'setLanguage'])->name('set.language');
-
-
+Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switchLang'])
+    ->name('set.language')
+    ->middleware('web');
 
 Route::get('/forget-password', [ForgotPasswordManager::class, 'forgetPassword'])->name('forget.password');
 Route::post('/forget-password', [ForgotPasswordManager::class, 'forgetPasswordPost'])->name('forget.password.post');

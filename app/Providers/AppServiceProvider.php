@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Service;
@@ -18,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        View::composer('*', function ($view) {
+            $view->with('currentLocale', Config::get('translatable.locale'));
+        });
+
         View::composer('front.home.footer', function ($view) {
             $view->with('footerServices', Service::all());
         });
