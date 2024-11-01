@@ -53,7 +53,7 @@
                             @if($message->viewed)
                                 <span class="badge badge-success">Oxunub</span>
                             @else
-                                    <span class="badge badge-warning">Oxunmayıb</span>
+                                <span class="badge badge-warning">Oxunmayıb</span>
                             @endif
                         </td>
                         <td>
@@ -75,12 +75,28 @@
         </div>
     </div>
 
-    <script>document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
             @foreach ($messages as $message)
             $('#messageModal{{ $message->id }}').on('hidden.bs.modal', function () {
                 markAsViewed({{ $message->id }});
             });
             @endforeach
+
+            // Check if the URL contains a message ID (e.g., /admin/contact#message-5)
+            const hash = window.location.hash;
+            if (hash) {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.classList.add('highlight');  // Apply the highlight class
+                    element.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the element
+
+                    // Optionally, remove the highlight class after a few seconds
+                    setTimeout(() => {
+                        element.classList.remove('highlight');
+                    }, 2000);  // Remove highlight after 2 seconds
+                }
+            }
         });
 
         function markAsViewed(id) {
@@ -98,7 +114,7 @@
                         if (badge) {
                             badge.classList.remove('badge-warning');
                             badge.classList.add('badge-success');
-                            badge.textContent = 'Viewed';
+                            badge.textContent = 'Oxunub';
                         }
                     }
                 })
