@@ -3,96 +3,111 @@
 namespace App\Http\Controllers;
 
 use App\Models\PricingPackage;
-use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Service;
+
 
 class PricingPackageController extends Controller
 {
     public function index()
     {
-        $packages = PricingPackage::all();
+        $packages = PricingPackage::with('translations')->get();
         return view('admin.pricing.index', compact('packages'));
     }
 
     public function FrontIndex()
     {
-        $packages = PricingPackage::all();
+        $packages = PricingPackage::with('services.translations')->get();
         return view('front.services.prices', compact('packages'));
     }
 
     public function create()
     {
-        $services = Service::all();
+        $services = Service::with('translations')->get();
         return view('admin.pricing.create', compact('services'));
     }
 
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name.*' => 'required|string',
+        $data = $request->validate([
             'price' => 'required|numeric',
-            'services' => 'required|array',
-            'services.*' => 'array', // Ensure each language has an array of services
+            'name.*' => 'required|string',
+            'service_id.*' => 'required|exists:services,id',
         ]);
 
-        // Create the package
         $package = PricingPackage::create([
-            'price' => $request->price,
+            'price' => $data['price'],
         ]);
 
-        // Attach services for each language
-        foreach ($request->services as $language => $serviceIds) {
-            $package->services()->attach($serviceIds);
+        foreach (['az', 'ru', 'en'] as $locale) {
+            $package->translateOrNew($locale)->name = $data['name'][$locale];
+            $package->translateOrNew($locale)->slug = \Str::slug($data['name'][$locale]);
+
+
+            if (isset($data['service_id'][$locale]) && is_array($data['service_id'][$locale])) {
+                foreach ($data['service_id'][$locale] as $serviceId) {
+                    $service = Service::find($serviceId);
+                    $package->translateOrNew($locale)->service_name .= $service->translate($locale)->title . ', ';
+                }
+                $package->translateOrNew($locale)->service_name = rtrim($package->translateOrNew($locale)->service_name, ', ');
+            }
         }
 
-        // Store translations
-        foreach ($request->name as $locale => $name) {
-            $translation = $package->translateOrNew($locale);
-            $translation->name = $name;
-            $translation->slug = Str::slug($name);
-            $translation->save();
-        }
+        $package->save();
 
-        return redirect()->route('pricing.index')->with('success', 'Paket uğurla əlavə olundu.');
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi yaradıldı.');
     }
-
-
 
     public function edit($id)
     {
         $package = PricingPackage::findOrFail($id);
-        return view('admin.pricing.edit', compact('package'));
+        $services = Service::with('translations')->get();
+        return view('admin.pricing.edit', compact('package', 'services'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name.*' => 'required|string', // Validation for multilingual names
+        $data = $request->validate([
             'price' => 'required|numeric',
-            'services.*' => 'exists:services,id', // Ensure each selected service ID exists
+            'name.*' => 'required|string',
+            'service_id.*' => 'required|exists:services,id',
         ]);
 
         $package = PricingPackage::findOrFail($id);
 
-        // Update price
         $package->update([
-            'price' => $request->price,
+            'price' => $data['price'],
         ]);
 
-        // Update attached services
-        $package->services()->sync($request->services);
+        foreach (['az', 'ru', 'en'] as $locale) {
+            $package->translateOrNew($locale)->name = $data['name'][$locale];
+            $package->translateOrNew($locale)->slug = \Str::slug($data['name'][$locale]);
 
-        // Update translations
-        foreach ($request->name as $locale => $name) {
-            $package->translateOrNew($locale)->fill([
-                'name' => $name,
-                'slug' => Str::slug($name),
-            ])->save();
+            $package->translateOrNew($locale)->service_name = '';
+
+            if (isset($data['service_id'][$locale]) && is_array($data['service_id'][$locale])) {
+                foreach ($data['service_id'][$locale] as $serviceId) {
+                    $service = Service::find($serviceId);
+                    $package->translateOrNew($locale)->service_name .= $service->translate($locale)->title . ', ';
+                }
+                $package->translateOrNew($locale)->service_name = rtrim($package->translateOrNew($locale)->service_name, ', ');
+            }
         }
 
-        return redirect()->route('pricing.index')->with('success', 'Paket uğurla yeniləndi.');
+        $package->save();
+
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi güncəlləndi.');
+    }
+
+
+    public function destroy($id)
+    {
+        $package = PricingPackage::findOrFail($id);
+        $package->delete();
+
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi silindi.');
     }
 
 }

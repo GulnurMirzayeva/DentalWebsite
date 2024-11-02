@@ -49,10 +49,10 @@ class GalleryController extends Controller
                 'description' => $request->input('description'),
             ]);
 
-            return redirect()->back()->with('success', 'Image uploaded successfully!');
+            return redirect()->back()->with('success', 'Şəkil əlavə edildi!');
         }
 
-        return back()->withErrors('Invalid image upload. Please ensure a valid image is provided.');
+        return back()->withErrors('Etibarsız şəkil yüklənməsi. Zəhmət olmasa şəklin etibarlı olduğuna diqqət edin.');
     }
 
 
@@ -73,7 +73,7 @@ class GalleryController extends Controller
         $image->description = $request->input('description');
         $image->save();
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Gallery updated successfully.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Qaleriya güncəlləndi.');
     }
 
 
@@ -87,6 +87,6 @@ class GalleryController extends Controller
 
         $images->delete();
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Image deleted successfully.');
+        return redirect()->route('admin.gallery.index')->with('success', 'Şəkil silindi.');
     }
 }

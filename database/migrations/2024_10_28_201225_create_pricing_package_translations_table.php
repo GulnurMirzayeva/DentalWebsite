@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +13,7 @@ return new class extends Migration
             $table->string('locale')->index();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('service_name'); // Multilingual service name
+            $table->text('service_name')->nullable(); // Multilingual service names
             $table->timestamps();
 
             $table->unique(['pricing_package_id', 'locale']);
@@ -26,3 +25,4 @@ return new class extends Migration
         Schema::dropIfExists('pricing_package_translations');
     }
 };
+

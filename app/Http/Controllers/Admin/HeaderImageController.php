@@ -34,7 +34,7 @@ class HeaderImageController extends Controller
             ]);
         }
 
-        return redirect()->route('header_images.index')->with('success', 'Header image uploaded successfully');
+        return redirect()->route('header_images.index')->with('success', 'Header image yükləndi.');
     }
 
     public function edit(HeaderImage $headerImage)
@@ -58,7 +58,7 @@ class HeaderImageController extends Controller
             $headerImage->update(['header_image' => $fileName]);
         }
 
-        return redirect()->route('header_images.index')->with('success', 'Header image updated successfully');
+        return redirect()->route('header_images.index')->with('success', 'Header image güncəlləndi.');
     }
 
     public function destroy(HeaderImage $headerImage)
@@ -69,7 +69,7 @@ class HeaderImageController extends Controller
 
         $headerImage->delete();
 
-        return redirect()->route('header_images.index')->with('success', 'Header image deleted successfully');
+        return redirect()->route('header_images.index')->with('success', 'Header image silindi.');
     }
 
     public function show(HeaderImage $headerImage)

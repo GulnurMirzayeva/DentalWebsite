@@ -17,7 +17,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total Reservations</div>
+                                    Ümumi rezervasiyalar</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ App\Models\Reservation::count() }}
                                 </div>
@@ -37,7 +37,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Pending Reservations</div>
+                                    Gözləmədə olan rezervasiyalar</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ App\Models\Reservation::where('status', 'pending')->count() }}
                                 </div>
@@ -57,7 +57,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Accepted Reservations</div>
+                                    Qəbul edilən rezervasiyalar</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ App\Models\Reservation::where('status', 'accepted')->count() }}
                                 </div>
@@ -77,7 +77,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                    Rejected Reservations</div>
+                                    Qəbul edilməyən rezervasiyalar</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ App\Models\Reservation::where('status', 'rejected')->count() }}
                                 </div>

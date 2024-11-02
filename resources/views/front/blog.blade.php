@@ -3,7 +3,7 @@
 @section('title', 'Blog')
 
 @section('header-text')
-    Blog
+    {{ __('blog') }}
 @endsection
 
 @section('content')

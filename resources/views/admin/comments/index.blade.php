@@ -18,7 +18,7 @@
             </thead>
             <tbody>
             @foreach ($comments as $comment)
-                <tr id="comment-{{ $comment->id }}"> <!-- Assign ID based on comment ID -->
+                <tr id="comment-{{ $comment->id }}">
                     <td>{{ $comment->id }}</td>
                     <td>{{ $comment->name }}</td>
                     <td>{{ $comment->email }}</td>
@@ -39,21 +39,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Get the hash from the URL
             const hash = window.location.hash;
             if (hash) {
                 const element = document.querySelector(hash);
                 if (element) {
-                    // Scroll to the element and apply highlight
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                    // Add the highlight class
                     element.classList.add('highlight');
 
-                    // Optionally, remove the highlight class after a few seconds
                     setTimeout(() => {
                         element.classList.remove('highlight');
-                    }, 2000);  // Remove after 2 seconds
+                    }, 2000);
                 }
             }
         });

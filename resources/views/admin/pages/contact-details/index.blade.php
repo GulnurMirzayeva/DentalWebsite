@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" id="address" name="address" value="{{ $contactDetails->address ?? '' }}">
             </div>
             <div class="form-group">
-                <label for="map">Map:</label>
+                <label for="map">Xəritə:</label>
                 <input type="text" class="form-control" id="map" name="map" value="{{ $contactDetails->map ?? '' }}">
             </div>
             <div class="form-group">

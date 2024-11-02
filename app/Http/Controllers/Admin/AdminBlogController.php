@@ -41,7 +41,6 @@ class AdminBlogController extends Controller
         ]);
         $blog->save();
 
-        // Çeviriler için döngü
         foreach ($request->title as $locale => $title) {
             $blog->translateOrNew($locale)->title = $title;
             $blog->translateOrNew($locale)->slug = Str::slug($title);
@@ -50,7 +49,7 @@ class AdminBlogController extends Controller
         }
         $blog->save();
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog başarıyla eklendi.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog əlavə edildi.');
     }
 
 
@@ -89,13 +88,13 @@ class AdminBlogController extends Controller
         }
         $blog->save();
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog başarıyla güncellendi.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog güncəlləndi.');
     }
 
 
     public function destroy(Blog $blog)
     {
         $blog->delete();
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog başarıyla silindi.');
+        return redirect()->route('admin.blogs.index')->with('success', 'Blog silindi.');
     }
 }

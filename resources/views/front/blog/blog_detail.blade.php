@@ -19,7 +19,7 @@
 
 
                 <div class="comments-section">
-                    <h3 class="comments-title">{{ $blog->blog_comments->count() }} Şərh</h3>
+                    <h3 class="comments-title">{{ $blog->blog_comments->count() }} {{ __('comment') }}</h3>
                     <ul class="comment-list">
                         @foreach($blog_comments as $blog_comment)
                             <li class="comment-item">
@@ -33,13 +33,12 @@
                         @endforeach
                     </ul>
 
-                    <!-- Yorum formu -->
                     <div class="comment-form-container">
-                        <h3 class="comment-form-title">Şərh yazın</h3>
+                        <h3 class="comment-form-title">{{ __('comments-add') }}</h3>
                         <form action="{{ route('comment.store', $blog->id) }}" method="POST" class="comment-form">
                             @csrf
                             <div class="form-group">
-                                <label for="name" class="form-label">Ad *</label>
+                                <label for="name" class="form-label">{{ __('name') }} *</label>
                                 <input type="text" class="form-input" id="name" name="name" required>
                             </div>
                             <div class="form-group">
@@ -47,22 +46,21 @@
                                 <input type="email" class="form-input" id="email" name="email" required>
                             </div>
                             <div class="form-group">
-                                <label for="message" class="form-label">Mesaj</label>
+                                <label for="message" class="form-label">{{ __('message') }}</label>
                                 <textarea id="message" name="comment" cols="30" rows="10" class="form-textarea"
                                           required></textarea>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Şərhi Göndər" class="submit-button">
+                                <input type="submit" value="{{ __('send-comment') }}" class="submit-button">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar - Son Bloglar -->
             <div class="sidebar">
                 <div class="recent-blog-box">
-                    <h3 class="sidebar-title">Son Blog</h3>
+                    <h3 class="sidebar-title">{{ __('last-blog') }}</h3>
                     @foreach($recentBlogs as $recentBlog)
                         <div class="recent-blog-item">
                             <a href="{{ route('blog.show', $recentBlog->slug) }}" class="recent-blog-image"
@@ -77,7 +75,7 @@
                                         </a></div>
                                     <div><a href="#"><span
                                                 class="meta-icon chat"></span> {{ $recentBlog->blog_comments->count() }}
-                                            Şərh</a></div>
+                                            {{ __('comment') }}</a></div>
                                 </div>
                             </div>
                         </div>

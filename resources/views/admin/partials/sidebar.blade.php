@@ -16,7 +16,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Ana Səhifə</span></a>
     </li>
 
     <!-- Divider -->
@@ -24,7 +24,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Interface
+        İnterfeys
     </div>
 
 
@@ -40,17 +40,17 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pages Components</h6>
 
-                <a class="collapse-item" href="{{ route('admin.blogs.index') }}">Blogs</a>
+                <a class="collapse-item" href="{{ route('admin.blogs.index') }}">Bloqlar</a>
                 <a class="collapse-item" href="{{ route('admin.comments.index') }}">Şərhlər</a>
 
-                <a class="collapse-item" href="{{ route('admin.gallery.index') }}">Gallery</a>
-                <a class="collapse-item" href="{{ route('admin.services.index') }}">Our services</a>
-                <a class="collapse-item" href="{{ route('pricing.index') }}">Prices</a>
-                <a class="collapse-item" href="{{ route('header_images.index') }}">Header Image</a>
-                <a class="collapse-item" href="{{ route('about_images.index') }}">About Image</a>
+                <a class="collapse-item" href="{{ route('admin.gallery.index') }}">Qaleriya</a>
+                <a class="collapse-item" href="{{ route('admin.services.index') }}">Xidmətlər</a>
+                <a class="collapse-item" href="{{ route('pricing.index') }}">Qiymət Paketləri</a>
+                <a class="collapse-item" href="{{ route('header_images.index') }}">Başlıq Rəsmi</a>
+                <a class="collapse-item" href="{{ route('about_images.index') }}">Haqqında Rəsmi</a>
                 <a class="collapse-item" href="{{ route('sliders.index') }}">Slider</a>
-                <a class="collapse-item" href="{{ route('admin.contact-details.index') }}">Contact Details</a>
-                <a class="collapse-item" href="{{ route('admin.contact.show') }}">Complaints-Suggestions</a>
+                <a class="collapse-item" href="{{ route('admin.contact-details.index') }}">Əlaqə Məlumatları</a>
+                <a class="collapse-item" href="{{ route('admin.contact.show') }}">Təkliflər&Şikayətlər</a>
             </div>
         </div>
     </li>
@@ -60,7 +60,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.reservation') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Reservation Data</span></a>
+            <span>Rezervasiya</span></a>
     </li>
 
     <!-- Divider -->

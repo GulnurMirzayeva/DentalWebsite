@@ -1,10 +1,10 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'About Images')
+@section('title', 'About Image')
 
 @section('content')
     <div class="container">
-        <h1>Hakkımızda Şəkilləri</h1>
+        <h1>Haqqımızda Şəkilləri</h1>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
