@@ -25,10 +25,9 @@
                         <td>{{ $message->email }}</td>
                         <td>
                             <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#messageModal{{ $message->id }}">
-                                View Message
+                                Mesaja bax
                             </button>
 
-                            <!-- Modal -->
                             <div class="modal fade" id="messageModal{{ $message->id }}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel{{ $message->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -51,9 +50,9 @@
                         </td>
                         <td>
                             @if($message->viewed)
-                                <span class="badge badge-success">Viewed</span>
+                                <span class="badge badge-success">Baxıldı</span>
                             @else
-                                <span class="badge badge-warning">Unviewed</span>
+                                <span class="badge badge-warning">Baxılmayıb</span>
                             @endif
                         </td>
                         <td>

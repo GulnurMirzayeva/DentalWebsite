@@ -34,7 +34,7 @@ class AboutImageController extends Controller
             ]);
         }
 
-        return redirect()->route('about_images.index')->with('success', 'About image uploaded successfully');
+        return redirect()->route('about_images.index')->with('success', 'About image əlavə edildi.');
     }
 
     public function edit(AboutImage $aboutImage)
@@ -58,7 +58,7 @@ class AboutImageController extends Controller
             $aboutImage->update(['about_image' => $fileName]);
         }
 
-        return redirect()->route('about_images.index')->with('success', 'About image updated successfully');
+        return redirect()->route('about_images.index')->with('success', 'About image güncəlləndi.');
     }
 
     public function destroy(AboutImage $aboutImage)
@@ -69,7 +69,7 @@ class AboutImageController extends Controller
 
         $aboutImage->delete();
 
-        return redirect()->route('about_images.index')->with('success', 'About image deleted successfully');
+        return redirect()->route('about_images.index')->with('success', 'About image silindi.');
     }
 
     public function show(AboutImage $aboutImage)

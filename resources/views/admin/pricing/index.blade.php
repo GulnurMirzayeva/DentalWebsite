@@ -4,21 +4,21 @@
 
 @section('content')
     <div class="container">
-        <h1>Pricing Packages</h1>
+        <h1>Qiymət Paketləri</h1>
 
-        <a href="{{ route('pricing.create') }}" class="btn btn-primary mb-3">Create New Package</a>
+        <a href="{{ route('pricing.create') }}" class="btn btn-primary mb-3">Yeni paket yarat</a>
 
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Name (AZ)</th>
-                <th>Name (RU)</th>
-                <th>Name (EN)</th>
-                <th>Price</th>
-                <th>Service (AZ)</th>
-                <th>Service (RU)</th>
-                <th>Service (EN)</th>
-                <th>Actions</th>
+                <th>Ad (AZ)</th>
+                <th>Ad (RU)</th>
+                <th>Ad (EN)</th>
+                <th>Qiymət</th>
+                <th>Xidmət (AZ)</th>
+                <th>Xidmət (RU)</th>
+                <th>Xidmət (EN)</th>
+                <th>Proseslər</th>
             </tr>
             </thead>
             <tbody>
@@ -33,11 +33,11 @@
                     <td>{{ $package->translate('en')->service_name ?? 'N/A' }}</td>
 
                     <td>
-                        <a href="{{ route('pricing.edit', $package->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{{ route('pricing.edit', $package->id) }}" class="btn btn-sm btn-warning">Düzənlə</a>
                         <form action="{{ route('pricing.destroy', $package->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Sil</button>
                         </form>
                     </td>
                 </tr>

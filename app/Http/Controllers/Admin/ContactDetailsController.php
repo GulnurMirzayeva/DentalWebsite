@@ -21,6 +21,6 @@ class ContactDetailsController extends Controller
         $contactDetail->fill($request->all());
         $contactDetail->save();
 
-        return redirect()->route('admin.contact-details.index')->with('success', 'Contact details updated successfully.');
+        return redirect()->route('admin.contact-details.index')->with('success', 'Əlaqə məlumatları uğurla yeniləndi.');
     }
 }

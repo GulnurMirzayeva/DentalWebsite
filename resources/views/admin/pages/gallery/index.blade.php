@@ -4,8 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Galeri</h1>
-
+        <h1>Qaleriya</h1>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -13,10 +12,7 @@
             </div>
         @endif
 
-
-        <a href="{{ route('admin.gallery.create') }}" class="btn btn-primary mb-3">Add New Image</a>
-
-
+        <a href="{{ route('admin.gallery.create') }}" class="btn btn-primary mb-3">Yeni şəkil əlavə et</a>
 
         <div class="table-responsive">
             <table class="table table-hover table-sm">
@@ -25,7 +21,7 @@
                 <tr>
                     <th scope="col">Şəkil</th>
                     <th scope="col">Məzmun</th>
-                    <th scope="col">Alt Text</th>
+                    <th scope="col">Alt Yazı</th>
                     <th scope="col">Proses</th>
                 </tr>
                 </thead>

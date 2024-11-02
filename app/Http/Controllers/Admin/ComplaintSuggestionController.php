@@ -21,7 +21,7 @@ class ComplaintSuggestionController extends Controller
 
         ComplaintSuggestion::create($request->all());
 
-        return redirect()->back()->with('success', 'Message sent successfully!');
+        return redirect()->back()->with('success', 'Mesaj göndərildi!');
     }
 
     public function markAsViewed($id)
@@ -48,6 +48,6 @@ class ComplaintSuggestionController extends Controller
 
         $message->delete();
 
-        return redirect()->back()->with('success', 'Message deleted successfully!');
+        return redirect()->back()->with('success', 'Mesaj silindi!');
     }
 }

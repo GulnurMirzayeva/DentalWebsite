@@ -87,14 +87,14 @@
     @if(session()->has('success'))
         <div class="alert alert-success">{{session('success')}}</div>
     @endif
-        <p style="color: var(--blue)">We will send a link to your email, use that link to reset password.</p>
+        <p style="color: var(--blue)">Biz e-poçtunuza bir link göndərəcəyik, o linki istifadə edərək şifrəni yeniləyə bilərsiniz.</p>
     <form method="POST" action="{{ route('forget.password.post') }}">
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Təsdiq Et</button>
     </form>
 </div>
 

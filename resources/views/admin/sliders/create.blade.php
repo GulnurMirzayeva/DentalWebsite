@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Sliders')
+
 @section('content')
     <div class="container my-4">
         <h1 class="mb-4">Yeni Slider Şəkli Əlavə Et</h1>

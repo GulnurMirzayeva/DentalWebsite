@@ -4,35 +4,35 @@
 
 @section('content')
     <div class="container">
-        <h1>Create Pricing Package</h1>
+        <h1>Yeni Qiymət Paketi Yaratma</h1>
 
         <form action="{{ route('pricing.store') }}" method="POST">
             @csrf
             <div class="card">
                 <div class="card-header">
-                    Package Details
+                    Paket detayları
                 </div>
                 <div class="card-body">
                     @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
                         <div class="form-group">
-                            <label>{{ $language }} Name</label>
+                            <label>{{ $language }} Ad</label>
                             <input type="text" name="name[{{ $locale }}]" class="form-control" required>
                         </div>
                     @endforeach
 
                     <div class="form-group">
-                        <label>Price</label>
+                        <label>Qiymət</label>
                         <input type="number" name="price" class="form-control" step="0.01" required>
                     </div>
 
                     <div class="form-group" id="services-container">
-                        <label>Select Services</label>
+                        <label>Xidmət seç</label>
                         <div class="service-group">
                             @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
                                 <div class="form-group">
-                                    <label>{{ $language }} Service</label>
+                                    <label>{{ $language }} Xidmət</label>
                                     <select name="service_id[{{ $locale }}][]" class="form-control">
-                                        <option value="">Select a service</option>
+                                        <option value="">Xidmət seç</option>
                                         @foreach($services as $service)
                                             <option value="{{ $service->id }}">
                                                 {{ $service->translate($locale)->title ?? $service->title }}
@@ -42,10 +42,10 @@
                                 </div>
                             @endforeach
                         </div>
-                        <button type="button" id="add-service" class="btn btn-secondary">Add Service</button>
+                        <button type="button" id="add-service" class="btn btn-secondary">Xidmət əlavə et</button>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Create Package</button>
+                    <button type="submit" class="btn btn-primary">Paketi yarat</button>
                 </div>
             </div>
         </form>

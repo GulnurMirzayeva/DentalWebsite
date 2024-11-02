@@ -24,7 +24,7 @@ class PricingPackageController extends Controller
 
     public function create()
     {
-        $services = Service::with('translations')->get(); // Get all services with translations
+        $services = Service::with('translations')->get();
         return view('admin.pricing.create', compact('services'));
     }
 
@@ -34,7 +34,7 @@ class PricingPackageController extends Controller
         $data = $request->validate([
             'price' => 'required|numeric',
             'name.*' => 'required|string',
-            'service_id.*' => 'required|exists:services,id', // Ensure selected service exists
+            'service_id.*' => 'required|exists:services,id',
         ]);
 
         $package = PricingPackage::create([
@@ -45,21 +45,19 @@ class PricingPackageController extends Controller
             $package->translateOrNew($locale)->name = $data['name'][$locale];
             $package->translateOrNew($locale)->slug = \Str::slug($data['name'][$locale]);
 
-            // Get the selected service's translated title and save as `service_name`
-            // If multiple services are selected, iterate through each
+
             if (isset($data['service_id'][$locale]) && is_array($data['service_id'][$locale])) {
                 foreach ($data['service_id'][$locale] as $serviceId) {
                     $service = Service::find($serviceId);
-                    $package->translateOrNew($locale)->service_name .= $service->translate($locale)->title . ', '; // Append each service name
+                    $package->translateOrNew($locale)->service_name .= $service->translate($locale)->title . ', ';
                 }
-                // Trim the last comma and space
                 $package->translateOrNew($locale)->service_name = rtrim($package->translateOrNew($locale)->service_name, ', ');
             }
         }
 
         $package->save();
 
-        return redirect()->route('pricing.index')->with('success', 'Pricing Package created successfully.');
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi yaradıldı.');
     }
 
     public function edit($id)
@@ -87,23 +85,20 @@ class PricingPackageController extends Controller
             $package->translateOrNew($locale)->name = $data['name'][$locale];
             $package->translateOrNew($locale)->slug = \Str::slug($data['name'][$locale]);
 
-            // Reset service_name for this locale before adding new services
             $package->translateOrNew($locale)->service_name = '';
 
-            // Get the selected service's translated title and save as `service_name`
             if (isset($data['service_id'][$locale]) && is_array($data['service_id'][$locale])) {
                 foreach ($data['service_id'][$locale] as $serviceId) {
                     $service = Service::find($serviceId);
                     $package->translateOrNew($locale)->service_name .= $service->translate($locale)->title . ', ';
                 }
-                // Trim the last comma and space
                 $package->translateOrNew($locale)->service_name = rtrim($package->translateOrNew($locale)->service_name, ', ');
             }
         }
 
         $package->save();
 
-        return redirect()->route('pricing.index')->with('success', 'Pricing Package updated successfully.');
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi güncəlləndi.');
     }
 
 
@@ -112,7 +107,7 @@ class PricingPackageController extends Controller
         $package = PricingPackage::findOrFail($id);
         $package->delete();
 
-        return redirect()->route('pricing.index')->with('success', 'Package deleted successfully');
+        return redirect()->route('pricing.index')->with('success', 'Qiymət paketi silindi.');
     }
 
 }

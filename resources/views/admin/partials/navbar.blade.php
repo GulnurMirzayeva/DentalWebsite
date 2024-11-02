@@ -10,7 +10,7 @@
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
           onsubmit="return handleSearch(event)">
         <div class="input-group">
-            <input id="searchInput" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+            <input id="searchInput" type="text" class="form-control bg-light border-0 small" placeholder="Axtar"
                    aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
@@ -55,7 +55,6 @@
                 <i class="fas fa-calendar-alt fa-fw"></i>
                 <!-- Counter - Reservations -->
                 @php
-                    // Fetch the latest 5 reservations with 'pending' status
                     $pendingReservationsCount = App\Models\Reservation::where('status', 'pending')->count();
                     $latestPendingReservations = App\Models\Reservation::where('status', 'pending')
                         ->orderBy('created_at', 'desc')
@@ -68,7 +67,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="reservationsDropdown">
                 <h6 class="dropdown-header">
-                    Reservations Center
+                    Rezervasiya
                 </h6>
                 @forelse($latestPendingReservations as $reservation)
                     <a class="dropdown-item d-flex align-items-center"
@@ -83,12 +82,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new reservations</div>
+                            <div class="text-truncate">Yeni rezervasiya yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.reservation') }}">Read
-                    More Reservations</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.reservation') }}">Bütün rezervasiyalara bax</a>
             </div>
         </li>
 
@@ -99,7 +97,6 @@
                 <i class="fas fa-comments fa-fw"></i>
                 <!-- Counter - Comments -->
                 @php
-                    // Fetch the latest 5 comments without filtering by status
                     $comments = App\Models\BlogComment::orderBy('created_at', 'desc')->take(5)->get();
                 @endphp
                 <span class="badge badge-danger badge-counter">{{ $comments->count() }}</span>
@@ -108,7 +105,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="commentsDropdown">
                 <h6 class="dropdown-header">
-                    Comment Center
+                    Şərhlər
                 </h6>
                 @forelse($comments as $comment)
                     <a class="dropdown-item d-flex align-items-center"
@@ -122,12 +119,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new comments</div>
+                            <div class="text-truncate">Yeni şərh yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">Read
-                    More Comments</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">Bütün şərhlərə bax</a>
             </div>
         </li>
 
@@ -149,7 +145,7 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
-                    Message Center
+                    Mesaj Qutusu
                 </h6>
                 @forelse($messages as $message)
                     <a class="dropdown-item d-flex align-items-center"
@@ -167,12 +163,11 @@
                 @empty
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">No new messages</div>
+                            <div class="text-truncate">Yeni mesaj yoxdur.</div>
                         </div>
                     </a>
                 @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.contact.show') }}">Read
-                    More Messages</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.contact.show') }}">Bütün mesajlara bax</a>
             </div>
         </li>
 
@@ -193,7 +188,7 @@
                  aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{ route('admin.profile') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
+                    Profil
                 </a>
                 <div class="dropdown-divider"></div>
                 <!-- Logout Form -->
@@ -201,7 +196,7 @@
                     @csrf
                     <button type="submit" class="dropdown-item">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
+                        Çıxış
                     </button>
                 </form>
             </div>

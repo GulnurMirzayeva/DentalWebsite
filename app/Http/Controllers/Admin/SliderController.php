@@ -21,7 +21,7 @@ class SliderController extends Controller
         $sliderImagesCount = Slider::count();
 
         if ($sliderImagesCount >= 2) {
-            return redirect()->route('sliders.index')->with('error', 'You cannot upload more than 2 slider images. If you want to add new image, delete both of them firstly.');
+            return redirect()->route('sliders.index')->with('error', 'Siz 2-dən daha çox slider rəsmi əlavə edə bilməzsiniz. Əgər yeni rəsim əlavə etmək istəyirsinizsə, öncəliklə var olan rəsimlərdən birini silməlisiniz.');
         }
 
         return view('admin.sliders.create');
@@ -33,7 +33,7 @@ class SliderController extends Controller
         $sliderImagesCount = Slider::count();
 
         if ($sliderImagesCount >= 2) {
-            return redirect()->route('sliders.index')->with('error', 'You cannot upload more than 2 slider images. If you want to add new image, delete both of them firstly.');
+            return redirect()->route('sliders.index')->with('error', 'Siz 2-dən daha çox slider rəsmi əlavə edə bilməzsiniz. Əgər yeni rəsim əlavə etmək istəyirsinizsə, öncəliklə var olan rəsimlərdən birini silməlisiniz.');
         }
 
         $filePath = $request->file('file')->store('sliders', 'public');
@@ -42,7 +42,7 @@ class SliderController extends Controller
             'file' => $filePath,
         ]);
 
-        return redirect()->route('sliders.index')->with('success', 'Slider image uploaded successfully');
+        return redirect()->route('sliders.index')->with('success', 'Slider rəsmi əlavə edildi.');
     }
 
 
@@ -65,7 +65,7 @@ class SliderController extends Controller
             $slider->update(['file' => $filePath]);
         }
 
-        return redirect()->route('sliders.index')->with('success', 'Slider image updated successfully');
+        return redirect()->route('sliders.index')->with('success', 'Slider rəsmi güncəlləndi.');
     }
 
     public function destroy(Slider $slider)
@@ -76,7 +76,7 @@ class SliderController extends Controller
 
         $slider->delete();
 
-        return redirect()->route('sliders.index')->with('success', 'Slider image deleted successfully');
+        return redirect()->route('sliders.index')->with('success', 'Slider rəsmi silindi.');
     }
 
 

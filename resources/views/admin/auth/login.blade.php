@@ -81,7 +81,7 @@
 </head>
 <body>
 <div class="login-container">
-    <h2>Admin Login</h2>
+    <h2>Admin Giriş</h2>
     @if(session('error'))
         <p class="error-message">{{ session('error') }}</p>
     @endif
@@ -92,13 +92,13 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">Parol</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="forgot-password">
-            <a href="{{ route('forget.password') }}">Forgot Password?</a>
+            <a href="{{ route('forget.password') }}">Parolu unuttun?</a>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Giriş</button>
     </form>
 </div>
 
