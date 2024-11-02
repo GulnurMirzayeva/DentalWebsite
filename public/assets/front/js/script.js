@@ -428,9 +428,38 @@ backToTopButton.addEventListener('click', function(e) {
 
 document.addEventListener('DOMContentLoaded', function () {
     flatpickr("#date-picker-appointment", {
-        minDate: "today",
-        dateFormat: "Y-m-d",
-        defaultDate: null
+        minDate: "today", // Disable all past dates
+        dateFormat: "Y-m-d", // Format the date
+        onChange: function(selectedDates, dateStr, instance) {
+            // Update the time picker when the date changes
+            updateAvailableTimes(dateStr);
+        }
+    });
+
+    function updateAvailableTimes(dateStr) {
+        const currentTime = new Date();
+        let minTime = "00:00"; // Default to the beginning of the day
+
+        if (dateStr === currentTime.toISOString().split('T')[0]) {
+            const currentHour = currentTime.getHours();
+            const currentMinute = currentTime.getMinutes();
+            minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        }
+
+        flatpickr("#time-picker-appointment", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            minTime: minTime // Set the minimum time dynamically
+        });
+    }
+
+    flatpickr("#time-picker-appointment", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
     });
 });
 
