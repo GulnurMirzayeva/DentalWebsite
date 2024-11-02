@@ -407,7 +407,6 @@ backToTopButton.addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function () {
     let dateSelected = false;
 
-    // Initialize flatpickr for date pickers
     ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
@@ -427,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentTime = new Date();
         let minTime = "00:00";
 
-        if (dateStr === currentTime.toISOString().split('T')[0]) { // If the selected date is today
+        if (dateStr === currentTime.toISOString().split('T')[0]) {
             const currentHour = currentTime.getHours();
             const currentMinute = currentTime.getMinutes();
             minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
@@ -452,7 +451,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     disableMobile: true
                 });
 
-                // Clear the value if it's invalid
                 if (timeInput.value) {
                     const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
                     const selectedDate = new Date();
@@ -463,14 +461,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     minDate.setHours(minHour, minMinute, 0);
 
                     if (selectedDate < minDate) {
-                        timeInput.value = ''; // Clear the invalid time
+                        timeInput.value = '';
                     }
                 }
             }
         });
     }
 
-    // Function to enable/disable time pickers
     function toggleTimePickers(enabled) {
         ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
             const timeInput = document.querySelector(selector);
@@ -480,7 +477,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Initially disable time pickers
     toggleTimePickers(false);
 });
 
