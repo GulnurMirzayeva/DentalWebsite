@@ -407,10 +407,10 @@ backToTopButton.addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function () {
     let dateSelected = false;
 
-    // Initialize flatpickr for both date pickers only once
+    // Initialize flatpickr for date pickers
     ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
         const dateInput = document.querySelector(selector);
-        if (dateInput && !dateInput._flatpickr) { // Check if flatpickr is already initialized
+        if (dateInput) {
             flatpickr(dateInput, {
                 minDate: "today",
                 dateFormat: "Y-m-d",
@@ -436,39 +436,41 @@ document.addEventListener('DOMContentLoaded', function () {
         ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
-                if (!timeInput._flatpickr) { // Initialize flatpickr if not already done
-                    flatpickr(timeInput, {
-                        enableTime: true,
-                        noCalendar: true,
-                        dateFormat: "H:i",
-                        time_24hr: true,
-                        minTime: minTime,
-                        minuteIncrement: 15
-                    });
-                } else { // Update minTime dynamically
-                    timeInput._flatpickr.set("minTime", minTime);
+                // Clear any existing flatpickr instance
+                if (timeInput._flatpickr) {
+                    timeInput._flatpickr.destroy();
+                }
 
-                    // If the selected time is before the new minTime, reset it
-                    const selectedTime = timeInput._flatpickr.input.value;
-                    if (selectedTime) {
-                        const [selectedHour, selectedMinute] = selectedTime.split(':').map(Number);
-                        const selectedDate = new Date();
-                        selectedDate.setHours(selectedHour, selectedMinute, 0);
+                // Reinitialize flatpickr with updated minTime
+                flatpickr(timeInput, {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    minTime: minTime,
+                    minuteIncrement: 15,
+                    disableMobile: true // Ensure mobile support is consistent
+                });
 
-                        const minDate = new Date();
-                        const [minHour, minMinute] = minTime.split(':').map(Number);
-                        minDate.setHours(minHour, minMinute, 0);
+                // Clear the value if it's invalid
+                if (timeInput.value) {
+                    const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
+                    const selectedDate = new Date();
+                    selectedDate.setHours(selectedHour, selectedMinute, 0);
 
-                        if (selectedDate < minDate) {
-                            timeInput._flatpickr.clear(); // Clear the invalid time
-                        }
+                    const minDate = new Date();
+                    const [minHour, minMinute] = minTime.split(':').map(Number);
+                    minDate.setHours(minHour, minMinute, 0);
+
+                    if (selectedDate < minDate) {
+                        timeInput.value = ''; // Clear the invalid time
                     }
                 }
             }
         });
     }
 
-    // Toggle time pickers based on date selection
+    // Function to enable/disable time pickers
     function toggleTimePickers(enabled) {
         ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
             const timeInput = document.querySelector(selector);
