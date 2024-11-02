@@ -427,15 +427,18 @@ backToTopButton.addEventListener('click', function(e) {
 // Date
 
 document.addEventListener('DOMContentLoaded', function () {
-    flatpickr("#date-picker-appointment", {
-        minDate: "today", // Disable all past dates
-        dateFormat: "Y-m-d", // Format the date
-        onChange: function(selectedDates, dateStr, instance) {
-            // Update the time picker when the date changes
-            updateAvailableTimes(dateStr);
-        }
+    // Initialize flatpickr for both date pickers
+    ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
+        flatpickr(selector, {
+            minDate: "today", // Disable all past dates
+            dateFormat: "Y-m-d", // Format the date
+            onChange: function (selectedDates, dateStr, instance) {
+                updateAvailableTimes(dateStr);
+            }
+        });
     });
 
+    // Function to update available times dynamically
     function updateAvailableTimes(dateStr) {
         const currentTime = new Date();
         let minTime = "00:00"; // Default to the beginning of the day
@@ -446,22 +449,29 @@ document.addEventListener('DOMContentLoaded', function () {
             minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
         }
 
-        flatpickr("#time-picker-appointment", {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            time_24hr: true,
-            minTime: minTime // Set the minimum time dynamically
+        // Initialize flatpickr for both time pickers
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+            flatpickr(selector, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                minTime: minTime // Set the minimum time dynamically
+            });
         });
     }
 
-    flatpickr("#time-picker-appointment", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
+    // Initialize flatpickr for both time pickers with default settings
+    ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+        flatpickr(selector, {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true
+        });
     });
 });
+
 
 
 // Date ends
