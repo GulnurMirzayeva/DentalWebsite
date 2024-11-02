@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     timeInput._flatpickr.destroy();
                 }
 
-                // Reinitialize flatpickr with updated minTime
+
                 flatpickr(timeInput, {
                     enableTime: true,
                     noCalendar: true,
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     time_24hr: true,
                     minTime: minTime,
                     minuteIncrement: 15,
-                    disableMobile: true // Ensure mobile support is consistent
+                    disableMobile: true
                 });
 
                 // Clear the value if it's invalid
