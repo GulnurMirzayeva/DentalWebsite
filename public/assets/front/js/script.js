@@ -258,28 +258,6 @@ if (experienceElement) {
     console.warn('Experience part not found here.');
 }
 
-
-// Date Picker and Flatpickr Time JS
-function initializeAppointmentPickers() {
-    const appointmentPicker = new easepick.create({
-        element: document.getElementById('date-picker-appointment'),
-        css: [
-            'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css'
-        ],
-        format: 'YYYY-MM-DD',
-        lang: 'en-US',
-        zIndex: 10
-    });
-
-    flatpickr("#time-picker-appointment", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 15
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('nav-appointment-btn').addEventListener('click', function () {
         document.getElementById('overlay').classList.remove('hidden');
@@ -429,59 +407,80 @@ backToTopButton.addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function () {
     let dateSelected = false;
 
+    // Initialize flatpickr for both date pickers only once
     ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
-        flatpickr(selector, {
-            minDate: "today",
-            dateFormat: "Y-m-d",
-            onChange: function (selectedDates, dateStr, instance) {
-                dateSelected = true;
-                updateAvailableTimes(dateStr);
-            }
-        });
+        const dateInput = document.querySelector(selector);
+        if (dateInput && !dateInput._flatpickr) { // Check if flatpickr is already initialized
+            flatpickr(dateInput, {
+                minDate: "today",
+                dateFormat: "Y-m-d",
+                onChange: function (selectedDates, dateStr, instance) {
+                    dateSelected = !!selectedDates.length;
+                    updateAvailableTimes(dateStr);
+                    toggleTimePickers(dateSelected);
+                }
+            });
+        }
     });
 
     function updateAvailableTimes(dateStr) {
         const currentTime = new Date();
         let minTime = "00:00";
 
-        if (dateStr === currentTime.toISOString().split('T')[0]) {
+        if (dateStr === currentTime.toISOString().split('T')[0]) { // If the selected date is today
             const currentHour = currentTime.getHours();
             const currentMinute = currentTime.getMinutes();
             minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
         }
 
-        if (dateSelected) {
-            ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
-                flatpickr(selector, {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    minTime: minTime
-                });
-            });
-        }
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+            const timeInput = document.querySelector(selector);
+            if (timeInput) {
+                if (!timeInput._flatpickr) { // Initialize flatpickr if not already done
+                    flatpickr(timeInput, {
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: "H:i",
+                        time_24hr: true,
+                        minTime: minTime,
+                        minuteIncrement: 15
+                    });
+                } else { // Update minTime dynamically
+                    timeInput._flatpickr.set("minTime", minTime);
+
+                    // If the selected time is before the new minTime, reset it
+                    const selectedTime = timeInput._flatpickr.input.value;
+                    if (selectedTime) {
+                        const [selectedHour, selectedMinute] = selectedTime.split(':').map(Number);
+                        const selectedDate = new Date();
+                        selectedDate.setHours(selectedHour, selectedMinute, 0);
+
+                        const minDate = new Date();
+                        const [minHour, minMinute] = minTime.split(':').map(Number);
+                        minDate.setHours(minHour, minMinute, 0);
+
+                        if (selectedDate < minDate) {
+                            timeInput._flatpickr.clear(); // Clear the invalid time
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
-        const timeInput = document.querySelector(selector);
-        if (timeInput) {
-            timeInput.disabled = true;
-        }
-    });
-
-    document.querySelectorAll("#date-picker-appointment, #date-picker-main").forEach(function (element) {
-        element.addEventListener('change', function () {
-            ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
-                const timeInput = document.querySelector(selector);
-                if (timeInput) {
-                    timeInput.disabled = false;
-                }
-            });
+    // Toggle time pickers based on date selection
+    function toggleTimePickers(enabled) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+            const timeInput = document.querySelector(selector);
+            if (timeInput) {
+                timeInput.disabled = !enabled;
+            }
         });
-    });
-});
+    }
 
+    // Initially disable time pickers
+    toggleTimePickers(false);
+});
 
 
 // Date ends

@@ -118,25 +118,3 @@
 
     </div>
 </div>
-
-<!-- Date Picker and Flatpickr Time JS -->
-<script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
-<script>
-    const picker = new easepick.create({
-        element: document.getElementById('date-picker-main'),
-        css: [
-            'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css'
-        ],
-        format: 'YYYY-MM-DD',
-        lang: 'en-US',
-        zIndex: 10
-    });
-
-    flatpickr("#time-picker-main", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 15
-    });
-</script>
