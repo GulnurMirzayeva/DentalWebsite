@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const appointmentBtn = document.getElementById('nav-appointment-btn');
     const mobileAppointmentBtn = document.querySelector('#navOffcanvas .appointment-btn');
 
-    // Existing hamburger menu code
     hamburgerIcon.addEventListener('click', function () {
         offcanvas.classList.add('active');
         navContent.classList.add('offcanvas-active');
@@ -38,15 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
         navContent.classList.remove('offcanvas-active');
     });
 
-    // New code for mobile appointment button
     mobileAppointmentBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        // Close the mobile menu
         offcanvas.classList.remove('active');
         navContent.classList.remove('offcanvas-active');
 
-        // Open your appointment form here
-        // Assuming you have code to show the appointment form
+
         const appointmentForm = document.getElementById('appointment-form');
         const overlay = document.getElementById('overlay');
         if (appointmentForm && overlay) {
@@ -55,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 // Multilanguage Dropdown
 document.addEventListener('DOMContentLoaded', function() {
@@ -408,236 +405,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Chatbot
-
-$(document).ready(function () {
-    let questionCount = {};
-    let totalQuestionCount = 0;
-    let whatsappIconAdded = false;
-    let questionsClickable = true;
-
-    $('#chatbot-icon').click(function (e) {
-        e.stopPropagation();
-        $('#chatbot-container').toggleClass('show');
-        $(this).toggleClass('active');
-        if ($('#chatbot-container').hasClass('show')) {
-            $('#chatbot-container').css({
-                'visibility': 'visible',
-                'opacity': 1,
-                'transform': 'translateX(0)',
-            });
-        } else {
-            $('#chatbot-container').css({
-                'opacity': 0,
-                'transform': 'translateX(100%)',
-                'visibility': 'hidden',
-            });
-        }
-    });
-
-    $(document).click(function (e) {
-        if (!$(e.target).closest('#chatbot-container').length && !$(e.target).is('#chatbot-icon')) {
-            $('#chatbot-container').hide();
-        }
-    });
-
-    $(document).on('click', '.question', function (e) {
-        if (!questionsClickable) return;
-
-        e.stopPropagation();
-
-        const questionText = $(this).text();
-        const answer = $(this).data('answer');
-        const nextGroup = $(this).data('next');
-
-        if (!questionCount[questionText]) {
-            questionCount[questionText] = 0;
-        }
-        questionCount[questionText]++;
-        totalQuestionCount++;
-
-        if (questionCount[questionText] === 3) {
-            $('#chat-response-inside').append('<p class="answer">Zəhmət olmasa klinikamızla əlaqə saxlayın.</p>');
-            questionCount[questionText] = 0;
-            return;
-        }
-
-
-        $('#chat-response-inside').append('<p class="answer">' + answer + '</p>');
-
-        $('#chat-response-inside').scrollTop($('#chat-response-inside')[0].scrollHeight);
-
-        if (nextGroup && questionGroups[nextGroup]) {
-            questionGroups[nextGroup].forEach(subQuestion => {
-                $('#chat-response-inside').append('<p class="next-question" data-answer="' + subQuestion.answer + '">' + subQuestion.question + '</p>');
-            });
-        }
-
-        if (totalQuestionCount >= 9 && !whatsappIconAdded) {
-            $('#chat-response-inside').append(`
-                <p class="answer">Zəhmət olmasa WhatsApp ilə əlaqə saxlayın.</p>
-                <div id="whatsapp-icon" style="position:fixed; bottom:20px; right:20px; width:50px; height:50px; background-color:#25d366; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10000; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
-                    <i class="fab fa-whatsapp" style="font-size:30px;"></i>
-                </div>
-            `);
-            whatsappIconAdded = true;
-            questionsClickable = false;
-        }
-
-        $('#chat-response-inside').scrollTop($('#chat-response-inside')[0].scrollHeight);
-    });
-
-    $(document).on('click', '#whatsapp-icon', function () {
-        const phoneNumber = '994776154585';
-        const message = encodeURIComponent('Salam, suallarınızı cavabladım. Zəhmət olmasa mənimlə əlaqə saxlayın.');
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-        window.open(whatsappUrl, '_blank');
-    });
-
-    $(document).on('click', '.next-question', function (e) {
-        if (!questionsClickable) return;
-
-        e.stopPropagation();
-
-        const subQuestionText = $(this).text();
-        const answer = $(this).data('answer');
-
-        $('#chat-response-inside').append('<p class="answer">' + answer + '</p>');
-
-        $('#chat-response-inside').scrollTop($('#chat-response-inside')[0].scrollHeight);
-    });
-
-    const questionGroups = {
-        group1: [
-            {
-                question: "Klinikanızda istirahət günü varmı?",
-                answer: "Bəli, klinikamız bazar günü bağlıdır.",
-                nextGroup: 'group1_1'
-            },
-            {
-                question: "Klinika təcili hallarda işləyirmi?",
-                answer: "Bəli, təcili hallar üçün xüsusi xidmətimiz var.",
-                nextGroup: 'group1_2'
-            },
-        ],
-        group2: [
-            {
-                question: "Diş təmizlənməsi ağrılıdırmı?",
-                answer: "Diş təmizlənməsi adətən ağrısız olur, lakin bəzi hallarda narahatlıq yarana bilər.",
-                nextGroup: 'group2_1'
-            },
-            {
-                question: "Neçə müddətdən bir diş təmizlənməsinə gəlmək lazımdır?",
-                answer: "Hər 6 aydan bir diş təmizlənməsi tövsiyə olunur.",
-                nextGroup: 'group2_2'
-            },
-        ],
-        group3: [
-            {
-                question: "Ortodontik müalicə təklif edirsinizmi?",
-                answer: "Bəli, biz ortodontik müalicə də təklif edirik.",
-                nextGroup: 'group3_1'
-            },
-            {
-                question: "Uşaqlar üçün diş müayinəsi xidmətiniz varmı?",
-                answer: "Bəli, uşaqlar üçün xüsusi müayinə və müalicə xidmətimiz mövcuddur.",
-                nextGroup: 'group3_2'
-            },
-        ],
-        group4: [
-            {
-                question: "Steril avadanlıqlardan istifadə edirsinizmi?",
-                answer: "Bəli, bütün avadanlıqlarımız tam steril və təhlükəsizdir.",
-                nextGroup: 'group4_1'
-            },
-            {
-                question: "Klinikada hansı texnologiyalardan istifadə olunur?",
-                answer: "Biz lazer texnologiyası və digər müasir avadanlıqlardan istifadə edirik.",
-                nextGroup: 'group4_2'
-            },
-        ],
-        group5: [
-            {
-                question: "Onlayn qeydiyyatdan keçmək mümkündürmü?",
-                answer: "Bəli, vebsaytımızdan onlayn qeydiyyat mümkündür.",
-                nextGroup: 'group5_1'
-            },
-            {
-                question: "Telefonla müayinə sifariş edə bilərəmmi?",
-                answer: "Bəli, klinikamızın telefon nömrəsinə zəng edərək sifariş verə bilərsiniz.",
-                nextGroup: 'group5_2'
-            },
-        ],
-        group6: [
-            {
-                question: "Diş implantları nə qədər müddətə yerinə yetirilir?",
-                answer: "Diş implantı adətən 2-3 mərhələdə tamamlanır və bu proses bir neçə ay çəkə bilər.",
-                nextGroup: 'group6_1'
-            },
-            {
-                question: "Diş implantlarına necə qulluq etmək lazımdır?",
-                answer: "Diş implantlarına adi dişlər kimi diqqətli qulluq edilməlidir, yəni gündəlik fırçalama və diş ipi istifadəsi vacibdir.",
-                nextGroup: 'group6_2'
-            },
-        ],
-        group7: [
-            {
-                question: "Diş ağartma təhlükəsizdirmi?",
-                answer: "Bəli, klinikamızda tətbiq olunan diş ağartma prosedurları tamamilə təhlükəsizdir.",
-                nextGroup: 'group7_1'
-            },
-            {
-                question: "Diş ağartma nəticələri nə qədər davamlıdır?",
-                answer: "Diş ağartma nəticələri düzgün qulluq olduqda 1 ilə qədər davam edə bilər.",
-                nextGroup: 'group7_2'
-            },
-        ],
-        group8: [
-            {
-                question: "Diş dolğusu üçün nə qədər vaxt tələb olunur?",
-                answer: "Diş dolğusu adətən 30-60 dəqiqə arasında tamamlanır.",
-                nextGroup: 'group8_1'
-            },
-            {
-                question: "Diş müalicəsi zamanı ağrı hiss olunurmu?",
-                answer: "Diş müalicəsi zamanı lokal anesteziya istifadə edildiyi üçün ağrı hiss olunmur.",
-                nextGroup: 'group8_2'
-            },
-        ],
-        group9: [
-            {
-                question: "Klinikanızda hansı müayinə xidmətləri var?",
-                answer: "Biz müayinələr, diaqnostikalar və müalicə xidmətləri təklif edirik.",
-                nextGroup: 'group9_1'
-            },
-            {
-                question: "Hansı diş müalicələri təklif edirsiniz?",
-                answer: "Biz diş ağrıları, çürük müalicəsi və estetik müalicələr təklif edirik.",
-                nextGroup: 'group9_2'
-            },
-        ],
-    };
-});
-
-
-
-// ox
-
-// script.js
-
-// Yuxarıya qalxma ikonu
+// Arrow starts
 const backToTopButton = document.getElementById('backToTop');
 
-// Scroll hadisəsini izləyin
 window.onscroll = function() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        backToTopButton.classList.add('show'); // İkonu göstərin
+        backToTopButton.classList.add('show');
     } else {
-        backToTopButton.classList.remove('show'); // İkonu gizlədin
+        backToTopButton.classList.remove('show');
     }
 };
-// arrow icon
-
 backToTopButton.addEventListener('click', function(e) {
     e.preventDefault();
     window.scrollTo({
@@ -645,8 +422,7 @@ backToTopButton.addEventListener('click', function(e) {
         behavior: 'smooth'
     });
 });
-// arrow icon end
-
+// Arrow ends
 
 
 
