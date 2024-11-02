@@ -65,4 +65,3 @@
     //     appointmentForm.submit();
     // });
 </script>
-

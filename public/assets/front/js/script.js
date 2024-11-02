@@ -424,12 +424,15 @@ backToTopButton.addEventListener('click', function(e) {
 });
 // Arrow ends
 
+// Date
+
+document.addEventListener('DOMContentLoaded', function () {
+    flatpickr("#date-picker-appointment", {
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        defaultDate: null
+    });
+});
 
 
-
-
-
-
-
-
-
+// Date ends
