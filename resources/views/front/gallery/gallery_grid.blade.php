@@ -202,26 +202,28 @@
     @endforeach
 </div>
 
-<div class="gallery-navigation-container">
-    @if ($images->onFirstPage())
-        <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
-    @else
-        <a href="{{ $images->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
-    @endif
+@if ($images->lastPage() > 1)
+    <div class="gallery-navigation-container">
+        @if ($images->onFirstPage())
+            <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
+        @else
+            <a href="{{ $images->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
+        @endif
 
-    <div class="gallery-pagination">
-        @foreach ($images->getUrlRange(1, $images->lastPage()) as $page => $url)
-            @if ($page == $images->currentPage())
-                <span class="gallery-pagination-button active" aria-current="page">{{ $page }}</span>
-            @else
-                <a href="{{ $url }}" class="gallery-pagination-button">{{ $page }}</a>
-            @endif
-        @endforeach
+        <div class="gallery-pagination">
+            @foreach ($images->getUrlRange(1, $images->lastPage()) as $page => $url)
+                @if ($page == $images->currentPage())
+                    <span class="gallery-pagination-button active" aria-current="page">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}" class="gallery-pagination-button">{{ $page }}</a>
+                @endif
+            @endforeach
+        </div>
+
+        @if ($images->hasMorePages())
+            <a href="{{ $images->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
+        @else
+            <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
+        @endif
     </div>
-
-    @if ($images->hasMorePages())
-        <a href="{{ $images->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
-    @else
-        <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
-    @endif
-</div>
+@endif
