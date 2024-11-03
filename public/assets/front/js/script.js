@@ -466,8 +466,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     time_24hr: true,
                     minTime: minTime,
                     maxTime: maxTime,
-                    minuteIncrement: 40, // Time increment set to 40 minutes
+                    minuteIncrement: 30, // Time increment set to 30 minutes
                     disableMobile: true
+                });
+
+                timeInput.addEventListener('input', function () {
+                    const [hour, minute] = timeInput.value.split(':').map(Number);
+                    let adjustedHour = hour;
+                    let adjustedMinute = minute;
+
+                    if (minute >= 1 && minute <= 29) {
+                        adjustedMinute = 30;
+                    } else if (minute >= 31 && minute <= 59) {
+                        adjustedMinute = 0;
+                        adjustedHour = (hour + 1) % 24; // Wrap around to 00 if hour exceeds 23
+                    }
+
+                    timeInput.value = `${String(adjustedHour).padStart(2, '0')}:${String(adjustedMinute).padStart(2, '0')}`;
                 });
 
                 if (timeInput.value) {
