@@ -46,9 +46,9 @@
                         if ($dayOfWeek == 0) {
                             $workingHours = __('rest-days');
                         } elseif ($date->day % 2 == 0) {
-                            $workingHours = "14:00 - 18:00";
+                            $workingHours = "15:00 - 20:00";
                         } else {
-                            $workingHours = "09:00 - 13:00";
+                            $workingHours = "09:00 - 14:30";
                         }
                     @endphp
                     <li>

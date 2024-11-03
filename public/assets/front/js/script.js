@@ -405,12 +405,10 @@ backToTopButton.addEventListener('click', function (e) {
 // Date
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Modal elements
     const overlay = document.getElementById('overlay');
     const appointmentModal = document.getElementById('appointment-form');
     const appointmentBtn = document.getElementById('appointment-btn');
 
-    // Form elements - both main and modal forms
     const forms = {
         main: {
             form: document.querySelector('.custom_appointment form'),
@@ -426,7 +424,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let dateSelected = false;
 
-    // Initialize Flatpickr for dates
     ["#date-picker-appointment", "#date-picker-main"].forEach(function(selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
@@ -435,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dateFormat: "Y-m-d",
                 disable: [
                     function(date) {
-                        return date.getDay() === 0; // Disable Sundays
+                        return date.getDay() === 0;
                     }
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
@@ -515,7 +512,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Modal controls
     function openModal() {
         overlay.classList.remove('hidden');
         appointmentModal.classList.remove('hidden');
@@ -534,7 +530,6 @@ document.addEventListener('DOMContentLoaded', function() {
         overlay.addEventListener('click', closeModal);
     }
 
-    // Time availability checker
     async function checkTimeAvailability(date, time) {
         try {
             const response = await fetch('/check-time-availability', {
@@ -554,17 +549,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Setup form validation and submission
     function setupForm(formElements) {
         const { form, timeInput, dateInput } = formElements;
 
         if (!form) return;
 
-        // Form submission
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Validate time slot again before submission
             const date = dateInput.value;
             const time = timeInput.value;
 
@@ -607,22 +599,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Setup both forms
     setupForm(forms.main);
     setupForm(forms.modal);
 
-    // Add escape key listener for modal
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && !appointmentModal.classList.contains('hidden')) {
             closeModal();
         }
     });
 
-    // Prevent modal close when clicking inside the form
     appointmentModal.addEventListener('click', function(e) {
         e.stopPropagation();
     });
 
-    // Initially disable time pickers
     toggleTimePickers(false);
 });
+
+// Date ends
