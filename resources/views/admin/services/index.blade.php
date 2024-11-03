@@ -33,9 +33,9 @@
                     <td>{{ Str::limit(optional($service->translate('az'))->title ?? 'Başlıq Yox', 16) }}</td>
                     <td>{{ Str::limit(optional($service->translate('ru'))->title ?? 'Başlıq Yox', 16) }}</td>
                     <td>{{ Str::limit(optional($service->translate('en'))->title ?? 'Başlıq Yox', 16) }}</td>
-                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 100) }}</td>
-                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 100) }}</td>
-                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 100) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 150) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 150) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 150) }}</td>
                     <td>
                         <a href="{{ route('admin.services.edit', $service) }}" class="btn btn-sm btn-primary mb-1 w-100">Düzənlə</a>
                         <form action="{{ route('admin.services.destroy', $service) }}" method="POST" class="d-inline w-100">
