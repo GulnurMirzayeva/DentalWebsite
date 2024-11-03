@@ -12,8 +12,8 @@ return new class extends Migration
             $table->foreignId('pricing_package_id')->constrained()->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('service_name')->nullable(); // Multilingual service names
+            $table->string('slug');
+            $table->text('service_name')->nullable();
             $table->timestamps();
 
             $table->unique(['pricing_package_id', 'locale']);

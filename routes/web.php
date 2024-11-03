@@ -141,14 +141,16 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::prefix('admin/pricing')->name('pricing.')->group(function() {
-    Route::get('/', [PricingPackageController::class, 'index'])->name('index');
-    Route::get('/create', [PricingPackageController::class, 'create'])->name('create');
-    Route::post('/store', [PricingPackageController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [PricingPackageController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [PricingPackageController::class, 'update'])->name('update');
-    Route::delete('/delete/{id}', [PricingPackageController::class, 'destroy'])->name('destroy');
-});
+//Route::prefix('admin/pricing')->name('pricing.')->group(function() {
+//    Route::get('/', [PricingPackageController::class, 'index'])->name('index');
+//    Route::get('/create', [PricingPackageController::class, 'create'])->name('create');
+//    Route::post('/store', [PricingPackageController::class, 'store'])->name('store');
+//    Route::get('/edit/{id}', [PricingPackageController::class, 'edit'])->name('edit');
+//    Route::post('/update/{id}', [PricingPackageController::class, 'update'])->name('update');
+//    Route::delete('/delete/{id}', [PricingPackageController::class, 'destroy'])->name('destroy');
+//});
+
+Route::resource('admin/pricing', PricingPackageController::class);
 
 
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Pricing Package')
+@section('title', 'Qiymət Paketini Düzənlə')
 
 @section('content')
     <div class="container">
@@ -8,52 +8,49 @@
 
         <form action="{{ route('pricing.update', $package->id) }}" method="POST">
             @csrf
-            @method('PUT')
+            @method('PUT') <!-- PUT metodunu istifadə edirik -->
+
             <div class="card">
                 <div class="card-header">
-                    Paket detayları
+                    Paket Detalları
                 </div>
                 <div class="card-body">
                     @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
                         <div class="form-group">
                             <label>{{ $language }} Ad</label>
-                            <input type="text" name="name[{{ $locale }}]" class="form-control"
-                                   value="{{ $package->translate($locale)->name ?? '' }}" required>
+                            <input type="text" name="name[{{ $locale }}]" class="form-control" required
+                                   value="{{ $package->translate($locale)->name ?? '' }}">
                         </div>
                     @endforeach
 
                     <div class="form-group">
                         <label>Qiymət</label>
-                        <input type="number" name="price" class="form-control" step="0.01"
-                               value="{{ $package->price }}" required>
+                        <input type="number" name="price" class="form-control" step="0.01" required
+                               value="{{ $package->price }}">
                     </div>
 
                     <div class="form-group" id="services-container">
                         <label>Xidmət seç</label>
-
-                        @foreach($package->services as $index => $packageService)
-                            <div class="service-group">
-                                @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
-                                    <div class="form-group">
-                                        <label>{{ $language }} Xidmət</label>
-                                        <select name="service_id[{{ $locale }}][]" class="form-control">
-                                            <option value="">Xidmət seç</option>
-                                            @foreach($services as $service)
-                                                <option value="{{ $service->id }}"
-                                                    {{ $packageService->id == $service->id ? 'selected' : '' }}>
-                                                    {{ $service->translate($locale)->title ?? $service->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endforeach
-
+                        <div class="service-group">
+                            @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
+                                <div class="form-group">
+                                    <label>{{ $language }} Xidmət</label>
+                                    <select name="service_id[{{ $locale }}][]" class="form-control">
+                                        <option value="">Xidmət seç</option>
+                                        @foreach($services as $service)
+                                            <option value="{{ $service->id }}"
+                                                {{ in_array($service->id, $package->services->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                                {{ $service->translate($locale)->title ?? $service->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endforeach
+                        </div>
                         <button type="button" id="add-service" class="btn btn-secondary">Xidmət əlavə et</button>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Əlavə et</button>
+                    <button type="submit" class="btn btn-primary">Paketi Yenilə</button>
                 </div>
             </div>
         </form>
@@ -63,7 +60,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             let servicesContainer = document.getElementById('services-container');
             let addServiceButton = document.getElementById('add-service');
-            let serviceCount = {{ count($package->services) }};
+            let serviceCount = {{ $package->services->count() }}; // Hal-hazırda olan xidmət sayını alın
 
             addServiceButton.addEventListener('click', function () {
                 if (serviceCount < 5) {
@@ -74,12 +71,12 @@
 
                     serviceGroup.innerHTML = `
                         <div class="form-group">
-                            <label>Select Services</label>
+                            <label>Xidmət Seç</label>
                             @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
                     <div class="form-group">
-                        <label>{{ $language }} Service</label>
+                        <label>{{ $language }} Xidmət</label>
                                 <select name="service_id[{{ $locale }}][]" class="form-control">
-                                    <option value="">Select a service</option>
+                                    <option value="">Xidmət seç</option>
                                     @foreach($services as $service)
                     <option value="{{ $service->id }}">
                                         {{ $service->translate($locale)->title ?? $service->title }}
@@ -92,7 +89,7 @@
 `;
                     servicesContainer.appendChild(serviceGroup);
                 } else {
-                    alert('Yalnız  xidmət əlavə edə bilərsən.');
+                    alert('Maksimum 5 xidmət əlavə edə bilərsiniz.');
                 }
             });
         });

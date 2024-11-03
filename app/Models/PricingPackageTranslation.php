@@ -13,7 +13,7 @@ class PricingPackageTranslation extends Model
         'name',
         'slug',
         'service_name',
-        'locale',  // Add locale to fillable attributes
-        'pricing_package_id'  // Also add this to ensure it can be set
+        'locale',
+        'pricing_package_id'
     ];
 }

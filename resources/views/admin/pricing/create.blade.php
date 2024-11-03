@@ -66,12 +66,12 @@
 
                     serviceGroup.innerHTML = `
                         <div class="form-group">
-                            <label>Select Services</label>
+                            <label>Xidmət Seç</label>
                             @foreach(['az' => 'Azerbaijani', 'ru' => 'Russian', 'en' => 'English'] as $locale => $language)
                     <div class="form-group">
-                        <label>{{ $language }} Service</label>
+                        <label>{{ $language }} Xidmət</label>
                                     <select name="service_id[{{ $locale }}][]" class="form-control">
-                                        <option value="">Select a service</option>
+                                        <option value="">Xidmət seç</option>
                                         @foreach($services as $service)
                     <option value="{{ $service->id }}">
                                                 {{ $service->translate($locale)->title ?? $service->title }}
@@ -84,7 +84,7 @@
 `;
                     servicesContainer.appendChild(serviceGroup);
                 } else {
-                    alert('You can only add up to 5 services.');
+                    alert('Maksimum 5 xidmət əlavə edə bilərsiniz.');
                 }
             });
         });

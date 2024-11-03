@@ -25,5 +25,4 @@ class Service extends Model implements TranslatableContract
     {
         return $this->belongsToMany(PricingPackage::class, 'pricing_package_service');
     }
-
 }

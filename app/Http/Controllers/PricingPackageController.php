@@ -62,8 +62,9 @@ class PricingPackageController extends Controller
 
     public function edit($id)
     {
-        $package = PricingPackage::findOrFail($id);
+        $package = PricingPackage::with(['services', 'translations'])->findOrFail($id);
         $services = Service::with('translations')->get();
+
         return view('admin.pricing.edit', compact('package', 'services'));
     }
 
@@ -81,10 +82,13 @@ class PricingPackageController extends Controller
             'price' => $data['price'],
         ]);
 
+        // Attach services
+        $serviceIds = array_merge(...array_values($data['service_id'])); // Flattening the array
+        $package->services()->sync($serviceIds); // Use sync to update pivot table
+
         foreach (['az', 'ru', 'en'] as $locale) {
             $package->translateOrNew($locale)->name = $data['name'][$locale];
             $package->translateOrNew($locale)->slug = \Str::slug($data['name'][$locale]);
-
             $package->translateOrNew($locale)->service_name = '';
 
             if (isset($data['service_id'][$locale]) && is_array($data['service_id'][$locale])) {
@@ -100,7 +104,6 @@ class PricingPackageController extends Controller
 
         return redirect()->route('pricing.index')->with('success', 'Qiymət paketi güncəlləndi.');
     }
-
 
     public function destroy($id)
     {

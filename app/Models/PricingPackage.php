@@ -18,10 +18,9 @@ class PricingPackage extends Model implements TranslatableContract
     public $translatedAttributes = [
         'name',
         'slug',
-        'service_name', // Add service_name to translated attributes
+        'service_name',
     ];
 
-    // Define many-to-many relationship with the Service model
 
     public function services()
     {
