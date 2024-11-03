@@ -459,11 +459,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (dateOfMonth % 2 === 0) {
-            minTime = "14:00";
-            maxTime = "18:00";
+            minTime = "15:00";
+            maxTime = "19:30";
         } else {
             minTime = "09:00";
-            maxTime = "13:00";
+            maxTime = "14:00";
         }
 
         ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
