@@ -17,34 +17,36 @@
             </div>
         @endforeach
     </div>
+
+
+    @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator && $services->count() > 4)
         <div class="pagination">
-        @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                <div class="gallery-navigation-container">
-                    @if ($services->onFirstPage())
-                        <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
-                    @else
-                        <a href="{{ $services->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
-                    @endif
+            <div class="gallery-navigation-container">
+                @if ($services->onFirstPage())
+                    <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
+                @else
+                    <a href="{{ $services->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
+                @endif
 
-                    <div class="gallery-pagination">
-                        @foreach ($services->getUrlRange(1, $services->lastPage()) as $page => $url)
-                            @if ($page == $services->currentPage())
-                                <span class="gallery-pagination-button active" aria-current="page">{{ $page }}</span>
-                            @else
-                                <a href="{{ $url }}" class="gallery-pagination-button">{{ $page }}</a>
-                            @endif
-                        @endforeach
-                    </div>
-
-                    @if ($services->hasMorePages())
-                        <a href="{{ $services->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
-                    @else
-                        <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
-                    @endif
+                <div class="gallery-pagination">
+                    @foreach ($services->getUrlRange(1, $services->lastPage()) as $page => $url)
+                        @if ($page == $services->currentPage())
+                            <span class="gallery-pagination-button active" aria-current="page">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="gallery-pagination-button">{{ $page }}</a>
+                        @endif
+                    @endforeach
                 </div>
+
+                @if ($services->hasMorePages())
+                    <a href="{{ $services->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
+                @else
+                    <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
+                @endif
+            </div>
         </div>
-        @endif
-    </div>
+    @endif
+</div>
 
 
 <style>
