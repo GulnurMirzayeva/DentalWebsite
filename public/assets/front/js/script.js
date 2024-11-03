@@ -413,6 +413,12 @@ document.addEventListener('DOMContentLoaded', function () {
             flatpickr(dateInput, {
                 minDate: "today",
                 dateFormat: "Y-m-d",
+                disable: [
+                    function (date) {
+                        // Disable Sundays (0 is Sunday)
+                        return date.getDay() === 0;
+                    }
+                ],
                 onChange: function (selectedDates, dateStr, instance) {
                     dateSelected = !!selectedDates.length;
                     updateAvailableTimes(dateStr);
@@ -423,13 +429,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateAvailableTimes(dateStr) {
-        const currentTime = new Date();
-        let minTime = "00:00";
+        const selectedDate = new Date(dateStr);
+        const dayOfWeek = selectedDate.getDay();
+        const dateOfMonth = selectedDate.getDate();
+        let minTime, maxTime;
 
-        if (dateStr === currentTime.toISOString().split('T')[0]) {
-            const currentHour = currentTime.getHours();
-            const currentMinute = currentTime.getMinutes();
-            minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        // Disable time pickers if date is invalid
+        if (dayOfWeek === 0) {
+            toggleTimePickers(false);
+            return;
+        }
+
+        // Check if the date is even or odd and set time restrictions
+        if (dateOfMonth % 2 === 0) {
+            // Even day: 14:00 - 18:00
+            minTime = "14:00";
+            maxTime = "18:00";
+        } else {
+            // Odd day: 09:00 - 13:00
+            minTime = "09:00";
+            maxTime = "13:00";
         }
 
         ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
@@ -440,32 +459,38 @@ document.addEventListener('DOMContentLoaded', function () {
                     timeInput._flatpickr.destroy();
                 }
 
-
                 flatpickr(timeInput, {
                     enableTime: true,
                     noCalendar: true,
                     dateFormat: "H:i",
                     time_24hr: true,
                     minTime: minTime,
-                    minuteIncrement: 15,
+                    maxTime: maxTime,
+                    minuteIncrement: 40, // Time increment set to 40 minutes
                     disableMobile: true
                 });
 
                 if (timeInput.value) {
                     const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
-                    const selectedDate = new Date();
-                    selectedDate.setHours(selectedHour, selectedMinute, 0);
+                    const selectedTime = new Date();
+                    selectedTime.setHours(selectedHour, selectedMinute, 0);
 
-                    const minDate = new Date();
+                    const minTimeDate = new Date();
                     const [minHour, minMinute] = minTime.split(':').map(Number);
-                    minDate.setHours(minHour, minMinute, 0);
+                    minTimeDate.setHours(minHour, minMinute, 0);
 
-                    if (selectedDate < minDate) {
+                    const maxTimeDate = new Date();
+                    const [maxHour, maxMinute] = maxTime.split(':').map(Number);
+                    maxTimeDate.setHours(maxHour, maxMinute, 0);
+
+                    if (selectedTime < minTimeDate || selectedTime > maxTimeDate) {
                         timeInput.value = '';
                     }
                 }
             }
         });
+
+        toggleTimePickers(true);
     }
 
     function toggleTimePickers(enabled) {
