@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navContent.classList.remove('offcanvas-active');
     });
 
-    mobileAppointmentBtn.addEventListener('click', function(e) {
+    mobileAppointmentBtn.addEventListener('click', function (e) {
         e.preventDefault();
         offcanvas.classList.remove('active');
         navContent.classList.remove('offcanvas-active');
@@ -54,17 +54,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Multilanguage Dropdown
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var languageDropdown = document.querySelector('.dropdown-content');
 
     if (languageDropdown) languageDropdown.style.display = 'none';
 
-    document.querySelector('.language i').addEventListener('click', function() {
+    document.querySelector('.language i').addEventListener('click', function () {
         languageDropdown.style.display = languageDropdown.style.display === 'block' ? 'none' : 'block';
         this.classList.toggle('open');
     });
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (!event.target.closest('.language')) {
             if (languageDropdown.style.display === 'block') {
                 languageDropdown.style.display = 'none';
@@ -386,14 +386,14 @@ document.addEventListener('DOMContentLoaded', function () {
 // Arrow starts
 const backToTopButton = document.getElementById('backToTop');
 
-window.onscroll = function() {
+window.onscroll = function () {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         backToTopButton.classList.add('show');
     } else {
         backToTopButton.classList.remove('show');
     }
 };
-backToTopButton.addEventListener('click', function(e) {
+backToTopButton.addEventListener('click', function (e) {
     e.preventDefault();
     window.scrollTo({
         top: 0,
@@ -404,16 +404,38 @@ backToTopButton.addEventListener('click', function(e) {
 
 // Date
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('overlay');
+    const appointmentModal = document.getElementById('appointment-form');
+    const appointmentBtn = document.getElementById('appointment-btn');
+
+    const forms = {
+        main: {
+            form: document.querySelector('.custom_appointment form'),
+            timeInput: document.getElementById('time-picker-main'),
+            dateInput: document.getElementById('date-picker-main')
+        },
+        modal: {
+            form: document.getElementById('appointment-form').querySelector('form'),
+            timeInput: document.getElementById('time-picker-appointment'),
+            dateInput: document.getElementById('date-picker-appointment')
+        }
+    };
+
     let dateSelected = false;
 
-    ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
+    ["#date-picker-appointment", "#date-picker-main"].forEach(function(selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
             flatpickr(dateInput, {
                 minDate: "today",
                 dateFormat: "Y-m-d",
-                onChange: function (selectedDates, dateStr, instance) {
+                disable: [
+                    function(date) {
+                        return date.getDay() === 0;
+                    }
+                ],
+                onChange: function(selectedDates, dateStr, instance) {
                     dateSelected = !!selectedDates.length;
                     updateAvailableTimes(dateStr);
                     toggleTimePickers(dateSelected);
@@ -423,23 +445,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateAvailableTimes(dateStr) {
-        const currentTime = new Date();
-        let minTime = "00:00";
+        const selectedDate = new Date(dateStr);
+        const dayOfWeek = selectedDate.getDay();
+        const dateOfMonth = selectedDate.getDate();
+        let minTime, maxTime;
 
-        if (dateStr === currentTime.toISOString().split('T')[0]) {
-            const currentHour = currentTime.getHours();
-            const currentMinute = currentTime.getMinutes();
-            minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        if (dayOfWeek === 0) {
+            toggleTimePickers(false);
+            return;
         }
 
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+        if (dateOfMonth % 2 === 0) {
+            minTime = "15:00";
+            maxTime = "19:30";
+        } else {
+            minTime = "09:00";
+            maxTime = "14:00";
+        }
+
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
-                // Clear any existing flatpickr instance
                 if (timeInput._flatpickr) {
                     timeInput._flatpickr.destroy();
                 }
-
 
                 flatpickr(timeInput, {
                     enableTime: true,
@@ -447,29 +476,35 @@ document.addEventListener('DOMContentLoaded', function () {
                     dateFormat: "H:i",
                     time_24hr: true,
                     minTime: minTime,
-                    minuteIncrement: 15,
-                    disableMobile: true
-                });
+                    maxTime: maxTime,
+                    minuteIncrement: 30,
+                    disableMobile: true,
+                    onChange: async function(selectedDates, timeStr, instance) {
+                        const dateInput = timeInput.id.includes('main') ?
+                            document.getElementById('date-picker-main') :
+                            document.getElementById('date-picker-appointment');
 
-                if (timeInput.value) {
-                    const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
-                    const selectedDate = new Date();
-                    selectedDate.setHours(selectedHour, selectedMinute, 0);
-
-                    const minDate = new Date();
-                    const [minHour, minMinute] = minTime.split(':').map(Number);
-                    minDate.setHours(minHour, minMinute, 0);
-
-                    if (selectedDate < minDate) {
-                        timeInput.value = '';
+                        if (dateInput.value && timeStr) {
+                            const isTaken = await checkTimeAvailability(dateInput.value, timeStr);
+                            if (isTaken) {
+                                timeInput.style.borderColor = '#ff4444';
+                                timeInput.setCustomValidity('This time slot is already taken. Please select another time.');
+                            } else {
+                                timeInput.style.borderColor = '';
+                                timeInput.setCustomValidity('');
+                            }
+                            timeInput.reportValidity();
+                        }
                     }
-                }
+                });
             }
         });
+
+        toggleTimePickers(true);
     }
 
     function toggleTimePickers(enabled) {
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
                 timeInput.disabled = !enabled;
@@ -477,8 +512,107 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function openModal() {
+        overlay.classList.remove('hidden');
+        appointmentModal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        overlay.classList.add('hidden');
+        appointmentModal.classList.add('hidden');
+    }
+
+    if (appointmentBtn) {
+        appointmentBtn.addEventListener('click', openModal);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeModal);
+    }
+
+    async function checkTimeAvailability(date, time) {
+        try {
+            const response = await fetch('/check-time-availability', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ date, time })
+            });
+
+            const data = await response.json();
+            return data.taken;
+        } catch (error) {
+            console.error('Error checking time availability:', error);
+            return false;
+        }
+    }
+
+    function setupForm(formElements) {
+        const { form, timeInput, dateInput } = formElements;
+
+        if (!form) return;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const date = dateInput.value;
+            const time = timeInput.value;
+
+            if (date && time) {
+                const isTaken = await checkTimeAvailability(date, time);
+                if (isTaken) {
+                    timeInput.style.borderColor = '#ff4444';
+                    alert('This time slot is no longer available. Please select another time.');
+                    return;
+                }
+            }
+
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    form.reset();
+                    if (appointmentModal && !appointmentModal.classList.contains('hidden')) {
+                        closeModal();
+                    }
+                } else {
+                    alert(data.message || 'An error occurred. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    }
+
+    setupForm(forms.main);
+    setupForm(forms.modal);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !appointmentModal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    appointmentModal.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
     toggleTimePickers(false);
 });
-
 
 // Date ends
