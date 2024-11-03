@@ -19,7 +19,7 @@
     </div>
 
 
-    @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator && $services->count() > 4)
+    @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator && $services->count() > 8)
         <div class="pagination">
             <div class="gallery-navigation-container">
                 @if ($services->onFirstPage())
