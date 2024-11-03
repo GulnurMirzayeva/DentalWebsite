@@ -258,28 +258,6 @@ if (experienceElement) {
     console.warn('Experience part not found here.');
 }
 
-
-// Date Picker and Flatpickr Time JS
-function initializeAppointmentPickers() {
-    const appointmentPicker = new easepick.create({
-        element: document.getElementById('date-picker-appointment'),
-        css: [
-            'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css'
-        ],
-        format: 'YYYY-MM-DD',
-        lang: 'en-US',
-        zIndex: 10
-    });
-
-    flatpickr("#time-picker-appointment", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 15
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('nav-appointment-btn').addEventListener('click', function () {
         document.getElementById('overlay').classList.remove('hidden');
@@ -424,12 +402,83 @@ backToTopButton.addEventListener('click', function(e) {
 });
 // Arrow ends
 
+// Date
+
+document.addEventListener('DOMContentLoaded', function () {
+    let dateSelected = false;
+
+    ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
+        const dateInput = document.querySelector(selector);
+        if (dateInput) {
+            flatpickr(dateInput, {
+                minDate: "today",
+                dateFormat: "Y-m-d",
+                onChange: function (selectedDates, dateStr, instance) {
+                    dateSelected = !!selectedDates.length;
+                    updateAvailableTimes(dateStr);
+                    toggleTimePickers(dateSelected);
+                }
+            });
+        }
+    });
+
+    function updateAvailableTimes(dateStr) {
+        const currentTime = new Date();
+        let minTime = "00:00";
+
+        if (dateStr === currentTime.toISOString().split('T')[0]) {
+            const currentHour = currentTime.getHours();
+            const currentMinute = currentTime.getMinutes();
+            minTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        }
+
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+            const timeInput = document.querySelector(selector);
+            if (timeInput) {
+                // Clear any existing flatpickr instance
+                if (timeInput._flatpickr) {
+                    timeInput._flatpickr.destroy();
+                }
 
 
+                flatpickr(timeInput, {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i",
+                    time_24hr: true,
+                    minTime: minTime,
+                    minuteIncrement: 15,
+                    disableMobile: true
+                });
+
+                if (timeInput.value) {
+                    const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
+                    const selectedDate = new Date();
+                    selectedDate.setHours(selectedHour, selectedMinute, 0);
+
+                    const minDate = new Date();
+                    const [minHour, minMinute] = minTime.split(':').map(Number);
+                    minDate.setHours(minHour, minMinute, 0);
+
+                    if (selectedDate < minDate) {
+                        timeInput.value = '';
+                    }
+                }
+            }
+        });
+    }
+
+    function toggleTimePickers(enabled) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+            const timeInput = document.querySelector(selector);
+            if (timeInput) {
+                timeInput.disabled = !enabled;
+            }
+        });
+    }
+
+    toggleTimePickers(false);
+});
 
 
-
-
-
-
-
+// Date ends

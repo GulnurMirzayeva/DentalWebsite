@@ -109,7 +109,7 @@ Route::post('/blog/{id}/blog_comment', [BlogController::class, 'store'])->name('
 // Frontend Contact Details View
 Route::get('/front/contact-details', [ContactController::class, 'contact'])->name('contact.details');
 
-// Admin Contact Details Routes
+// Admin Contact Routes
 Route::prefix('admin')->group(function () {
     Route::get('/contact-details', [ContactDetailsController::class, 'index'])->name('admin.contact-details.index');
     Route::put('/contact-details', [ContactDetailsController::class, 'update'])->name('admin.contact-details.update');
@@ -118,6 +118,8 @@ Route::prefix('admin')->group(function () {
     Route::delete('contact/{id}/delete', [ComplaintSuggestionController::class, 'destroy'])->name('admin.contact.delete');
     Route::post('contact/{id}/markAsViewed', [ComplaintSuggestionController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
 });
+
+// Gallery Routes
 Route::prefix('admin')->group(function () {
     Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('admin.gallery.index');
     Route::get('/gallery/create', [AdminGalleryController::class, 'create'])->name('admin.gallery.create');
@@ -137,14 +139,6 @@ Route::prefix('admin')->group(function () {
     Route::put('sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
     Route::delete('sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
 });
-
-
-
-
-
-
-
-
 
 
 Route::prefix('admin/pricing')->name('pricing.')->group(function() {

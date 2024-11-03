@@ -418,6 +418,10 @@ input:focus,
 .working_hours li {
     text-align: center;
     padding: 2px;
+    padding: 3px;
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 2px;
     color: var(--light);
 }
 

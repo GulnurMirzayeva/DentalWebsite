@@ -2,7 +2,7 @@
 
 
 {{-- SEO optimizasiya meta teqləri --}}
-@section('title', 'AygunCare')
+@section('title', 'saglam dis')
 @section('meta_keywords', 'stomatoloq, diş həkimi, stomatologiya, diş müalicəsi, implant, ağız sağlamlığı')
 @section('meta_description', 'Peşəkar stomatoloqlarımız tərəfindən təqdim edilən diş müalicəsi, implantlar, və estetik stomatologiya xidmətləri ilə dişlərinizi sağlam saxlayın.')
 @section('og_title', 'Ana Səhifə - Stomatoloq Xidmətləri')
