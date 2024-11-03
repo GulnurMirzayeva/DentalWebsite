@@ -11,6 +11,7 @@
 @section('og_url', url()->current())
 
 @section('content')
+    @include('front.help.sign_help')
     @include('front.home.background_slider')
     @include('front.services.our_services')
     @include('front.about.advantages')
