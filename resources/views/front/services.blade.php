@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 
-@section('title', 'Services')
+@section('title', __('services'))
 
 @section('header-text')
     {{ __('our-services') }}

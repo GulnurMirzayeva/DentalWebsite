@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 
-@section('title', 'Contact')
+@section('title', __('contact'))
 
 @section('header-text')
     {{ __('contact-us') }}
