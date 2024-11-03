@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>FAQ</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -115,6 +116,22 @@
                 <div class="answer">
                     <p>{{ __('answer9') }}</p>
                 </div>
+            </div>
+        </div>
+
+        <div class="faq-item contact-item" style="margin-top: 18px">
+            <div class="question">
+                <h3>{{ __('question10') }}</h3>
+                <div class="icon">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="answer">
+                <p>
+                    <a href="https://wa.me/+9940554215346" class="whatsapp-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> {{ __('answer10') }}
+                    </a>
+                </p>
             </div>
         </div>
 
@@ -264,6 +281,29 @@
     .back-button:hover {
         background: #5a67d8;
         transform: translateY(-2px);
+    }
+
+    .whatsapp-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #25D366;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+    }
+
+    .whatsapp-link:hover {
+        color: #128C7E;
+    }
+
+    .whatsapp-link i {
+        font-size: 1.5rem;
+    }
+
+    .contact-item .answer {
+        background-color: white;
     }
 
     @media (max-width: 768px) {
