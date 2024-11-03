@@ -115,6 +115,5 @@
                 <button type="submit" class="button" id="appointment-btn button">{{ __('appointment') }}</button>
             </form>
         </div>
-
     </div>
 </div>

@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Mail; // Correctly import Mail
 
 class ReservationDataController extends Controller
 {
+    public function checkTimeAvailability(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+        ]);
+
+        $exists = Reservation::where('date', $request->date)
+            ->where('time', $request->time)
+            ->where('status', '!=', 'rejected')
+            ->exists();
+
+        return response()->json([
+            'taken' => $exists
+        ]);
+    }
+
     public function storeReservation(Request $request)
     {
         $request->validate([
@@ -20,6 +37,19 @@ class ReservationDataController extends Controller
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
         ]);
+
+        // Check if time slot is already taken
+        $timeExists = Reservation::where('date', $request->date)
+            ->where('time', $request->time)
+            ->where('status', '=', 'accepted')
+            ->exists();
+
+        if ($timeExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Seçilmiş vaxt rezervasiya olunub. Zəhmət olmasa, başqa vaxt seçin.',
+            ], 422);
+        }
 
         $reservation = Reservation::create([
             'service_id' => $request->department,
@@ -32,7 +62,10 @@ class ReservationDataController extends Controller
 
         Mail::to('stomotology.dentist@gmail.com')->send(new ReservationCreated($reservation));
 
-        return redirect()->back()->with('success', 'Rezervasiya yaradıldı ve email göndərildi.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Rezervasiya uğurla yaradıldı.',
+        ]);
     }
 
     public function index()

@@ -160,7 +160,7 @@ Route::get('/chatbot', [ChatBotController::class, 'index']);
 
 
 Route::post('/reservations', [ReservationDataController::class, 'storeReservation'])->name('reservation.store');
-
+Route::post('/check-time-availability', [ReservationDataController::class, 'checkTimeAvailability']);
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 

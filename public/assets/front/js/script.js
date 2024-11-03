@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navContent.classList.remove('offcanvas-active');
     });
 
-    mobileAppointmentBtn.addEventListener('click', function(e) {
+    mobileAppointmentBtn.addEventListener('click', function (e) {
         e.preventDefault();
         offcanvas.classList.remove('active');
         navContent.classList.remove('offcanvas-active');
@@ -54,17 +54,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Multilanguage Dropdown
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var languageDropdown = document.querySelector('.dropdown-content');
 
     if (languageDropdown) languageDropdown.style.display = 'none';
 
-    document.querySelector('.language i').addEventListener('click', function() {
+    document.querySelector('.language i').addEventListener('click', function () {
         languageDropdown.style.display = languageDropdown.style.display === 'block' ? 'none' : 'block';
         this.classList.toggle('open');
     });
 
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (!event.target.closest('.language')) {
             if (languageDropdown.style.display === 'block') {
                 languageDropdown.style.display = 'none';
@@ -386,14 +386,14 @@ document.addEventListener('DOMContentLoaded', function () {
 // Arrow starts
 const backToTopButton = document.getElementById('backToTop');
 
-window.onscroll = function() {
+window.onscroll = function () {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         backToTopButton.classList.add('show');
     } else {
         backToTopButton.classList.remove('show');
     }
 };
-backToTopButton.addEventListener('click', function(e) {
+backToTopButton.addEventListener('click', function (e) {
     e.preventDefault();
     window.scrollTo({
         top: 0,
@@ -404,22 +404,41 @@ backToTopButton.addEventListener('click', function(e) {
 
 // Date
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal elements
+    const overlay = document.getElementById('overlay');
+    const appointmentModal = document.getElementById('appointment-form');
+    const appointmentBtn = document.getElementById('appointment-btn');
+
+    // Form elements - both main and modal forms
+    const forms = {
+        main: {
+            form: document.querySelector('.custom_appointment form'),
+            timeInput: document.getElementById('time-picker-main'),
+            dateInput: document.getElementById('date-picker-main')
+        },
+        modal: {
+            form: document.getElementById('appointment-form').querySelector('form'),
+            timeInput: document.getElementById('time-picker-appointment'),
+            dateInput: document.getElementById('date-picker-appointment')
+        }
+    };
+
     let dateSelected = false;
 
-    ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
+    // Initialize Flatpickr for dates
+    ["#date-picker-appointment", "#date-picker-main"].forEach(function(selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
             flatpickr(dateInput, {
                 minDate: "today",
                 dateFormat: "Y-m-d",
                 disable: [
-                    function (date) {
-                        // Disable Sundays (0 is Sunday)
-                        return date.getDay() === 0;
+                    function(date) {
+                        return date.getDay() === 0; // Disable Sundays
                     }
                 ],
-                onChange: function (selectedDates, dateStr, instance) {
+                onChange: function(selectedDates, dateStr, instance) {
                     dateSelected = !!selectedDates.length;
                     updateAvailableTimes(dateStr);
                     toggleTimePickers(dateSelected);
@@ -434,27 +453,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const dateOfMonth = selectedDate.getDate();
         let minTime, maxTime;
 
-        // Disable time pickers if date is invalid
         if (dayOfWeek === 0) {
             toggleTimePickers(false);
             return;
         }
 
-        // Check if the date is even or odd and set time restrictions
         if (dateOfMonth % 2 === 0) {
-            // Even day: 14:00 - 18:00
             minTime = "14:00";
             maxTime = "18:00";
         } else {
-            // Odd day: 09:00 - 13:00
             minTime = "09:00";
             maxTime = "13:00";
         }
 
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
-                // Clear any existing flatpickr instance
                 if (timeInput._flatpickr) {
                     timeInput._flatpickr.destroy();
                 }
@@ -466,42 +480,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     time_24hr: true,
                     minTime: minTime,
                     maxTime: maxTime,
-                    minuteIncrement: 30, // Time increment set to 30 minutes
-                    disableMobile: true
-                });
+                    minuteIncrement: 30,
+                    disableMobile: true,
+                    onChange: async function(selectedDates, timeStr, instance) {
+                        const dateInput = timeInput.id.includes('main') ?
+                            document.getElementById('date-picker-main') :
+                            document.getElementById('date-picker-appointment');
 
-                timeInput.addEventListener('input', function () {
-                    const [hour, minute] = timeInput.value.split(':').map(Number);
-                    let adjustedHour = hour;
-                    let adjustedMinute = minute;
-
-                    if (minute >= 1 && minute <= 29) {
-                        adjustedMinute = 30;
-                    } else if (minute >= 31 && minute <= 59) {
-                        adjustedMinute = 0;
-                        adjustedHour = (hour + 1) % 24; // Wrap around to 00 if hour exceeds 23
+                        if (dateInput.value && timeStr) {
+                            const isTaken = await checkTimeAvailability(dateInput.value, timeStr);
+                            if (isTaken) {
+                                timeInput.style.borderColor = '#ff4444';
+                                timeInput.setCustomValidity('This time slot is already taken. Please select another time.');
+                            } else {
+                                timeInput.style.borderColor = '';
+                                timeInput.setCustomValidity('');
+                            }
+                            timeInput.reportValidity();
+                        }
                     }
-
-                    timeInput.value = `${String(adjustedHour).padStart(2, '0')}:${String(adjustedMinute).padStart(2, '0')}`;
                 });
-
-                if (timeInput.value) {
-                    const [selectedHour, selectedMinute] = timeInput.value.split(':').map(Number);
-                    const selectedTime = new Date();
-                    selectedTime.setHours(selectedHour, selectedMinute, 0);
-
-                    const minTimeDate = new Date();
-                    const [minHour, minMinute] = minTime.split(':').map(Number);
-                    minTimeDate.setHours(minHour, minMinute, 0);
-
-                    const maxTimeDate = new Date();
-                    const [maxHour, maxMinute] = maxTime.split(':').map(Number);
-                    maxTimeDate.setHours(maxHour, maxMinute, 0);
-
-                    if (selectedTime < minTimeDate || selectedTime > maxTimeDate) {
-                        timeInput.value = '';
-                    }
-                }
             }
         });
 
@@ -509,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function toggleTimePickers(enabled) {
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
                 timeInput.disabled = !enabled;
@@ -517,8 +515,114 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Modal controls
+    function openModal() {
+        overlay.classList.remove('hidden');
+        appointmentModal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        overlay.classList.add('hidden');
+        appointmentModal.classList.add('hidden');
+    }
+
+    if (appointmentBtn) {
+        appointmentBtn.addEventListener('click', openModal);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeModal);
+    }
+
+    // Time availability checker
+    async function checkTimeAvailability(date, time) {
+        try {
+            const response = await fetch('/check-time-availability', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ date, time })
+            });
+
+            const data = await response.json();
+            return data.taken;
+        } catch (error) {
+            console.error('Error checking time availability:', error);
+            return false;
+        }
+    }
+
+    // Setup form validation and submission
+    function setupForm(formElements) {
+        const { form, timeInput, dateInput } = formElements;
+
+        if (!form) return;
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate time slot again before submission
+            const date = dateInput.value;
+            const time = timeInput.value;
+
+            if (date && time) {
+                const isTaken = await checkTimeAvailability(date, time);
+                if (isTaken) {
+                    timeInput.style.borderColor = '#ff4444';
+                    alert('This time slot is no longer available. Please select another time.');
+                    return;
+                }
+            }
+
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    form.reset();
+                    if (appointmentModal && !appointmentModal.classList.contains('hidden')) {
+                        closeModal();
+                    }
+                } else {
+                    alert(data.message || 'An error occurred. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    }
+
+    // Setup both forms
+    setupForm(forms.main);
+    setupForm(forms.modal);
+
+    // Add escape key listener for modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !appointmentModal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    // Prevent modal close when clicking inside the form
+    appointmentModal.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Initially disable time pickers
     toggleTimePickers(false);
 });
-
-
-// Date ends
