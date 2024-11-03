@@ -2,7 +2,7 @@
 
 
 {{-- SEO optimizasiya meta teqləri --}}
-@section('title', 'saglam dis')
+@section('title', __('home'))
 @section('meta_keywords', 'stomatoloq, diş həkimi, stomatologiya, diş müalicəsi, implant, ağız sağlamlığı')
 @section('meta_description', 'Peşəkar stomatoloqlarımız tərəfindən təqdim edilən diş müalicəsi, implantlar, və estetik stomatologiya xidmətləri ilə dişlərinizi sağlam saxlayın.')
 @section('og_title', 'Ana Səhifə - Stomatoloq Xidmətləri')
@@ -11,6 +11,7 @@
 @section('og_url', url()->current())
 
 @section('content')
+    @include('front.help.sign_help')
     @include('front.home.background_slider')
     @include('front.services.our_services')
     @include('front.about.advantages')

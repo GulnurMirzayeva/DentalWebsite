@@ -21,24 +21,84 @@ body {
     overflow-x: hidden;
 }
 
+/* Help icon starts */
+.chatbot-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    z-index: 1000;
+    color: var(--light);
+    cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.chatbot-icon:hover {
+    background-color: #005bb5;
+    transform: scale(1);
+}
+.chatbot-icon .tooltip {
+    visibility: hidden;
+    width: 60px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+    background-color: var(--light);
+    color: var(--blue);
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    left: 50%;
+    margin-left: -30px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chatbot-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+/* Help icon ends */
+
+
 /* Arrow icon starts */
 .back-to-top {
     position: fixed;
-    bottom: 40px;
+    bottom: 30px;
     right: 20px;
     font-size: 20px;
     color: var(--light);
-    display: none;
     text-decoration: none;
     background-color: var(--blue);
     border-radius: 50%;
-    padding: 13px 18px;
+    width: 50px;
+    height: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.back-to-top:hover {
+    background-color: #005bb5;
+    transform: scale(1);
 }
 
 .back-to-top.show {
-    display: block;
+    display: flex;
 }
 /* Arrow icon ends */
 

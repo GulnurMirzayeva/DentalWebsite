@@ -34,11 +34,11 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
+            <span>Səhifələr</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Pages Components</h6>
+                <h6 class="collapse-header">Bütün səhifələr</h6>
 
                 <a class="collapse-item" href="{{ route('admin.blogs.index') }}">Bloqlar</a>
                 <a class="collapse-item" href="{{ route('admin.comments.index') }}">Şərhlər</a>

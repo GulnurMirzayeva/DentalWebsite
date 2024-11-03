@@ -121,7 +121,7 @@
             var myPieChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Pending', 'Accepted', 'Rejected'],
+                    labels: ['Gözləmədə', 'Qəbul edilmiş', 'Qəbul edilməmiş'],
                     datasets: [{
                         data: [pendingCount, acceptedCount, rejectedCount],
                         backgroundColor: ['#f6c23e', '#1cc88a', '#e74a3b'],
@@ -206,9 +206,9 @@
                 var myLineChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        labels: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
                         datasets: [{
-                            label: "Reservations",
+                            label: "Rezervasiyalar",
                             lineTension: 0.3,
                             backgroundColor: "rgba(78, 115, 223, 0.05)",
                             borderColor: "rgba(78, 115, 223, 1)",
@@ -275,9 +275,9 @@
                 var myBarChart = new Chart(ctxBar, {
                     type: 'bar',
                     data: {
-                        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                        labels: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
                         datasets: [{
-                            label: "Reservations",
+                            label: "Rezervasiyalar",
                             backgroundColor: "#4e73df",
                             hoverBackgroundColor: "#2e59d9",
                             borderColor: "#4e73df",

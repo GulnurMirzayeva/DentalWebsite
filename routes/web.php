@@ -8,6 +8,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\QuestionsAnswersController;
 use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
@@ -22,7 +23,6 @@ use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\PricingPackageController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\AdminCommentController;
-use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\admin\AdminProfileController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordManager;
@@ -156,12 +156,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-Route::get('/chatbot', [ChatBotController::class, 'index']);
-
-
 Route::post('/reservations', [ReservationDataController::class, 'storeReservation'])->name('reservation.store');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+Route::get('/questions_answers', [QuestionsAnswersController::class, 'index'])->name('front.help.questions_answers');
 
 
 
