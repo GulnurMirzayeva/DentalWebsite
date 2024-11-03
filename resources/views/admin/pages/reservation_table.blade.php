@@ -3,31 +3,31 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Reservation Data</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Rezervasiya Məlumatları</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Service</th>
-                        <th>Name</th>
+                        <th>Xidmət</th>
+                        <th>Ad</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th> <!-- Column for status -->
+                        <th>Telefon</th>
+                        <th>Tarix</th>
+                        <th>Saat</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>Service</th>
-                        <th>Name</th>
+                        <th>Xidmət</th>
+                        <th>Ad</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th> <!-- Column for status -->
+                        <th>Telefon</th>
+                        <th>Tarix</th>
+                        <th>Saat</th>
+                        <th>Status</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -43,16 +43,16 @@
                                 @if($reservation->status === 'pending')
                                     <form method="POST" action="{{ route('reservations.accept', $reservation->id) }}" style="display:inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-success">Accept</button>
+                                        <button type="submit" class="btn btn-sm btn-success">Qəbul et</button>
                                     </form>
                                     <form method="POST" action="{{ route('reservations.reject', $reservation->id) }}" style="display:inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                                        <button type="submit" class="btn btn-sm btn-danger">Qəbul etmə</button>
                                     </form>
                                 @elseif($reservation->status === 'accepted')
-                                    <span class="badge badge-success">Accepted</span>
+                                    <span class="badge badge-success">Qəbul edilmiş</span>
                                 @elseif($reservation->status === 'rejected')
-                                    <span class="badge badge-danger">Rejected</span>
+                                    <span class="badge badge-danger">Qəbul edilməmiş</span>
                                 @endif
                             </td>
                         </tr>
@@ -69,19 +69,15 @@
         if (window.location.hash) {
             const row = document.querySelector(window.location.hash);
             if (row) {
-                // Scroll to the row
                 row.scrollIntoView({ behavior: "smooth", block: "start" });
 
-                // Adjust scroll position for offset (e.g., 100px above the element)
-                const offset = 300;  // Adjust this value for how far above you want the element to appear
+                const offset = 300;
                 const yOffset = -offset;
                 const y = row.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({ top: y, behavior: 'smooth' });
 
-                // Highlight the row
-                row.style.backgroundColor = "#ffffcc";  // Yellow highlight
+                row.style.backgroundColor = "#ffffcc";
 
-                // Remove the highlight after 3 seconds
                 setTimeout(() => {
                     row.style.backgroundColor = "";
                 }, 3000);

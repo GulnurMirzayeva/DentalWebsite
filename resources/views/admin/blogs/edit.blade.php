@@ -1,29 +1,26 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Blog Düzənlə')
+@section('title', 'Blog')
 
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Blog Düzənlə</h1>
+        <h1 class="mb-4">Bloq Düzənlə</h1>
 
         <form action="{{ route('admin.blogs.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="form-row">
-                <!-- Azerbaijani Title -->
                 <div class="form-group col-md-6">
                     <label for="title_az">Başlıq (AZ)</label>
                     <input type="text" class="form-control" id="title_az" name="title[az]" value="{{ $blog->translate('az')->title }}" required>
                 </div>
 
-                <!-- Russian Title -->
                 <div class="form-group col-md-6">
                     <label for="title_ru">Название (RU)</label>
                     <input type="text" class="form-control" id="title_ru" name="title[ru]" value="{{ $blog->translate('ru')->title }}" required>
                 </div>
 
-                <!-- English Title -->
                 <div class="form-group col-md-6">
                     <label for="title_en">Title (EN)</label>
                     <input type="text" class="form-control" id="title_en" name="title[en]" value="{{ $blog->translate('en')->title }}" required>
@@ -35,9 +32,8 @@
                 </div>
             </div>
 
-            <!-- Azerbaijani, Russian, and English Descriptions for First Image -->
             <div class="form-group">
-                <label for="image_one">Birinci Resim</label>
+                <label for="image_one">Birinci Rəsim</label>
                 @if($blog->image_one)
                     <div class="mb-2">
                         <img src="{{ asset('storage/' . $blog->image_one) }}" alt="Birinci Resim" width="150" class="img-thumbnail">
@@ -47,7 +43,7 @@
             </div>
 
             <div class="form-group">
-                <label for="description_one_az">Birinci Resim Açıqlaması (AZ)</label>
+                <label for="description_one_az">Birinci Rəsim Açıqlaması (AZ)</label>
                 <textarea class="form-control" id="description_one_az" name="description_one[az]" rows="5" placeholder="Birinci resim üçün açıqlama yazın">{{ $blog->translate('az')->description_one }}</textarea>
             </div>
             <div class="form-group">
@@ -59,9 +55,8 @@
                 <textarea class="form-control" id="description_one_en" name="description_one[en]" rows="5" placeholder="Enter description for the first image">{{ $blog->translate('en')->description_one }}</textarea>
             </div>
 
-            <!-- Azerbaijani, Russian, and English Descriptions for Second Image -->
             <div class="form-group">
-                <label for="image_two">İkinci Resim</label>
+                <label for="image_two">İkinci Rəsim</label>
                 @if($blog->image_two)
                     <div class="mb-2">
                         <img src="{{ asset('storage/' . $blog->image_two) }}" alt="İkinci Resim" width="150" class="img-thumbnail">
@@ -71,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                <label for="description_two_az">İkinci Resim Açıqlaması (AZ)</label>
+                <label for="description_two_az">İkinci Rəsim Açıqlaması (AZ)</label>
                 <textarea class="form-control" id="description_two_az" name="description_two[az]" rows="5" placeholder="İkinci resim üçün açıqlama yazın">{{ $blog->translate('az')->description_two }}</textarea>
             </div>
             <div class="form-group">

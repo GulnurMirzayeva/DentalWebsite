@@ -1,7 +1,7 @@
 <div class="container-for-services">
     <div class="information_about_services">
-        <h1>Diş müalicə xidmətləri: Sağlam və gözəl gülüşə gedən yol</h1>
-        <p>Sağlam və estetik baxımdan mükəmməl bir gülüş yaratmaq üçün müxtəlif stomatoloji xidmətlər təklif edirik.</p>
+        <h1>{{ __('service-title') }}</h1>
+        <p>{{ __('service-paragraph') }}</p>
     </div>
 
     <div class="our_services">
@@ -12,7 +12,7 @@
                 </div>
                 <div class="our_service_information">
                     <h2>{{ $service->title }}</h2>
-                    <p>{{ $service->description }}</p>
+                    <p style="text-align: center">{{ $service->description }}</p>
                 </div>
             </div>
         @endforeach
@@ -21,9 +21,9 @@
         @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator)
                 <div class="gallery-navigation-container">
                     @if ($services->onFirstPage())
-                        <span class="gallery-button gallery-button--previous disabled">&#8249; Prev</span>
+                        <span class="gallery-button gallery-button--previous disabled">&#8249; {{ __('prev') }}</span>
                     @else
-                        <a href="{{ $services->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; Prev</a>
+                        <a href="{{ $services->previousPageUrl() }}" class="gallery-button gallery-button--previous">&#8249; {{ __('prev') }}</a>
                     @endif
 
                     <div class="gallery-pagination">
@@ -37,12 +37,11 @@
                     </div>
 
                     @if ($services->hasMorePages())
-                        <a href="{{ $services->nextPageUrl() }}" class="gallery-button gallery-button--next">Next &#8250;</a>
+                        <a href="{{ $services->nextPageUrl() }}" class="gallery-button gallery-button--next">{{ __('next') }} &#8250;</a>
                     @else
-                        <span class="gallery-button gallery-button--next disabled">Next &#8250;</span>
+                        <span class="gallery-button gallery-button--next disabled">{{ __('next') }} &#8250;</span>
                     @endif
                 </div>
-
         </div>
         @endif
     </div>
@@ -149,5 +148,4 @@
             font-size: 12px;
         }
     }
-
 </style>

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Yeni Başlıq Şəkli Əlavə Et</h1>
+        <h1>Yeni "Başlıq Şəkli" Əlavə Et</h1>
 
         @if($errors->any())
             <div class="alert alert-danger">

@@ -20,7 +20,7 @@ class AdminCommentController extends Controller
         $comment->status = 'accepted';
         $comment->save();
 
-        return redirect()->route('admin.comments.index')->with('success', 'Comment accepted successfully.');
+        return redirect()->route('admin.comments.index')->with('success', 'Şərh qəbul edildi.');
     }
 
     public function destroy($id)
@@ -28,6 +28,6 @@ class AdminCommentController extends Controller
         $comment = BlogComment::findOrFail($id);
         $comment->delete();
 
-        return redirect()->route('admin.comments.index')->with('success', 'Comment deleted successfully.');
+        return redirect()->route('admin.comments.index')->with('success', 'Şərh silindi.');
     }
 }

@@ -3,7 +3,7 @@
 @section('title', 'About')
 
 @section('header-text')
-    About Us
+    {{ __('about-us') }}
 @endsection
 
 @section('content')

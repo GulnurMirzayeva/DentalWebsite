@@ -22,29 +22,26 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        // Verilerin doğrulanması
         $request->validate([
-            'icon' => 'required|image|max:2048', // İkon alanı için gereklilik
-            'title.*' => 'required|string|max:255', // Tüm diller için başlık
-            'description.*' => 'nullable|string', // Tüm diller için açıklama
+            'icon' => 'required|image|max:2048',
+            'title.*' => 'required|string|max:255',
+            'description.*' => 'nullable|string',
         ]);
 
-        // Yeni bir Service nesnesi oluştur
         $service = new Service([
-            'icon' => $request->file('icon')->store('services', 'public'), // İkon dosyası
+            'icon' => $request->file('icon')->store('services', 'public'),
         ]);
         $service->save();
 
-        // Çeviriler için döngü
         foreach ($request->title as $locale => $title) {
             $translation = $service->translateOrNew($locale);
             $translation->title = $title;
-            $translation->slug = Str::slug($title); // Başlıktan slug oluşturma
-            $translation->description = $request->input("description.$locale"); // Açıklama
+            $translation->slug = Str::slug($title);
+            $translation->description = $request->input("description.$locale");
             $translation->save();
         }
 
-        return redirect()->route('admin.services.index')->with('success', 'Hizmet başarıyla eklendi.');
+        return redirect()->route('admin.services.index')->with('success', 'Xidmət əlavə edildi.');
     }
 
 
@@ -55,36 +52,33 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
-        // Verilerin doğrulanması
         $request->validate([
-            'icon' => 'nullable|image|max:2048', // İkon alanı isteğe bağlı
-            'title.*' => 'required|string|max:255', // Tüm diller için başlık
-            'description.*' => 'nullable|string', // Tüm diller için açıklama
+            'icon' => 'nullable|image|max:2048',
+            'title.*' => 'required|string|max:255',
+            'description.*' => 'nullable|string',
         ]);
 
-        // Resim güncelleme
         if ($request->hasFile('icon')) {
-            $service->icon = $request->file('icon')->store('services', 'public'); // Yeni ikon yükle
+            $service->icon = $request->file('icon')->store('services', 'public');
         }
 
-        $service->save(); // Diğer alanlar için kaydetme
+        $service->save();
 
-        // Çevirileri güncelle
         foreach ($request->title as $locale => $title) {
             $translation = $service->translateOrNew($locale);
             $translation->title = $title;
-            $translation->slug = Str::slug($title); // Başlıktan slug oluşturma
-            $translation->description = $request->input("description.$locale"); // Açıklama
+            $translation->slug = Str::slug($title);
+            $translation->description = $request->input("description.$locale");
             $translation->save();
         }
 
-        return redirect()->route('admin.services.index')->with('success', 'Hizmet başarıyla güncellendi.');
+        return redirect()->route('admin.services.index')->with('success', 'Xidmət güncəlləndi.');
     }
 
 
     public function destroy(Service $service)
     {
         $service->delete();
-        return redirect()->route('admin.services.index')->with('success', 'Xidmət uğurla silindi.');
+        return redirect()->route('admin.services.index')->with('success', 'Xidmət silindi.');
     }
 }

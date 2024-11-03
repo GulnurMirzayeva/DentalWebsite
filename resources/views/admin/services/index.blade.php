@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Xidmətlər')
+@section('title', 'Services')
 
 @section('content')
     <h1>Xidmətlər</h1>
@@ -23,7 +23,6 @@
             <tbody>
             @foreach($services as $service)
                 <tr>
-                    <!-- Icon -->
                     <td>
                         @if($service->icon)
                             <img src="{{ asset('storage/'.$service->icon) }}" width="50" alt="{{ $service->title }}">
@@ -31,19 +30,12 @@
                             <span class="text-muted">Icon Yox</span>
                         @endif
                     </td>
-                    <!-- Azerbaijani Title -->
                     <td>{{ Str::limit(optional($service->translate('az'))->title ?? 'Başlıq Yox', 16) }}</td>
-                    <!-- Russian Title -->
                     <td>{{ Str::limit(optional($service->translate('ru'))->title ?? 'Başlıq Yox', 16) }}</td>
-                    <!-- English Title -->
                     <td>{{ Str::limit(optional($service->translate('en'))->title ?? 'Başlıq Yox', 16) }}</td>
-                    <!-- Azerbaijani Description -->
-                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 60) }}</td>
-                    <!-- Russian Description -->
-                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 60) }}</td>
-                    <!-- English Description -->
-                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 60) }}</td>
-                    <!-- Actions -->
+                    <td>{{ Str::limit(optional($service->translate('az'))->description ?? 'Məzmun Yox', 100) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('ru'))->description ?? 'Məzmun Yox', 100) }}</td>
+                    <td>{{ Str::limit(optional($service->translate('en'))->description ?? 'Məzmun Yox', 100) }}</td>
                     <td>
                         <a href="{{ route('admin.services.edit', $service) }}" class="btn btn-sm btn-primary mb-1 w-100">Düzənlə</a>
                         <form action="{{ route('admin.services.destroy', $service) }}" method="POST" class="d-inline w-100">

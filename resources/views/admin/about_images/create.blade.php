@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Yeni Haqqımızda Şəkli Əlavə Et</h1>
+        <h1>Yeni "Haqqımzda Şəkli" Əlavə Et</h1>
 
         @if($errors->any())
             <div class="alert alert-danger">
@@ -23,7 +23,7 @@
                 <input type="file" name="about_image" id="about_image" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-primary">Yüklə</button>
+            <button type="submit" class="btn btn-primary">Əlavə et</button>
         </form>
     </div>
 @endsection

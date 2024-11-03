@@ -5,24 +5,24 @@
         </div>
         <div style="display: flex">
             <ul class="nav-list-elements">
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('about') }}">About</a></li>
-                <li><a href="{{ route('services') }}">Services</a></li>
-                <li><a href="{{ route('gallery') }}">Gallery</a></li>
-                <li><a href="{{ route('blog') }}">Blog</a></li>
-                <li><a href="{{ route('contact') }}">Contact</a></li>
-                <li><a href="#" class="appointment-btn" id="nav-appointment-btn">Make an Appointment</a></li>
+                <li><a href="{{ route('home') }}">{{ __('home') }}</a></li>
+                <li><a href="{{ route('about') }}">{{ __('about') }}</a></li>
+                <li><a href="{{ route('services') }}">{{ __('services') }}</a></li>
+                <li><a href="{{ route('gallery') }}">{{ __('gallery') }}</a></li>
+                <li><a href="{{ route('blog') }}">{{ __('blog') }}</a></li>
+                <li><a href="{{ route('contact') }}">{{ __('contact') }}</a></li>
+                <li><a href="#" class="appointment-btn" id="nav-appointment-btn">{{ __('appointment') }}</a></li>
             </ul>
             <div class="for-language">
                 <div class="language">
                     <i class="fa-solid fa-globe"></i>
                     <div class="dropdown-content">
-                        {{--                            <a href="{{ route('locale', ['locale' => 'az']) }}">Az</a>--}}
-                        {{--                            <a href="{{ route('locale', ['locale' => 'ru']) }}">Ru</a>--}}
-                        {{--                            <a href="{{ route('locale', ['locale' => 'en']) }}">En</a>--}}
-                        <a href="">Az</a>
-                        <a href="">Ru</a>
-                        <a href="">En</a>
+                        @foreach(Config::get('translatable.locales') as $locale)
+                            <a href="{{ route('set.language', ['locale' => $locale]) }}"
+                               class="{{ Config::get('translatable.locale') === $locale ? 'active' : '' }}">
+                                {{ strtoupper($locale) }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -42,14 +42,16 @@
     </div>
     <div class="offcanvas-body">
         <ul class="nav-list-elements">
-            <li style="margin-top: 30px"><a href="{{ route('home') }}">Home</a></li>
-            <li><a href="{{ route('about') }}">About</a></li>
-            <li><a href="{{ route('services') }}">Services</a></li>
-            <li><a href="{{ route('gallery') }}">Gallery</a></li>
-            <li><a href="{{ route('blog') }}">Blog</a></li>
-            <li><a href="{{ route('contact') }}">Contact</a></li>
-            <li><a href="#" class="appointment-btn" id="nav-appointment-btn">Make an Appointment</a></li>
+            <li style="margin-top: 30px"><a href="{{ route('home') }}">{{ __('home') }}</a></li>
+            <li><a href="{{ route('about') }}">{{ __('about') }}</a></li>
+            <li><a href="{{ route('services') }}">{{ __('services') }}</a></li>
+            <li><a href="{{ route('gallery') }}">{{ __('gallery') }}</a></li>
+            <li><a href="{{ route('blog') }}">{{ __('blog') }}</a></li>
+            <li><a href="{{ route('contact') }}">{{ __('contact') }}</a></li>
+            <li><a href="#" class="appointment-btn" id="nav-appointment-btn">{{ __('appointment') }}</a></li>
         </ul>
     </div>
 </div>
+
+
 

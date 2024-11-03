@@ -18,22 +18,19 @@
     const carouselTrack = document.querySelector('.slider-carousel-track');
     const totalImages = document.querySelectorAll('.slider-carousel-track img').length;
     let currentIndex = 0;
-    let imagesVisible = 4; // Adjusted dynamically based on screen size
+    let imagesVisible = 4;
     let slideInterval;
 
-    // Start auto sliding
     function startAutoSlide() {
         slideInterval = setInterval(() => {
             slideCarouselRight();
-        }, 7000); // 7 seconds interval
+        }, 7000);
     }
 
-    // Stop auto sliding
     function stopAutoSlide() {
         clearInterval(slideInterval);
     }
 
-    // Function to slide left
     function slideCarouselLeft() {
         stopAutoSlide();
         currentIndex--;
@@ -41,52 +38,47 @@
             currentIndex = totalImages - imagesVisible;
         }
         updateCarouselPosition();
-        startAutoSlide(); // Restart timer after manual slide
+        startAutoSlide();
     }
 
-    // Function to slide right
     function slideCarouselRight() {
         stopAutoSlide();
         currentIndex++;
         if (currentIndex >= totalImages - imagesVisible) {
-            currentIndex = 0; // Loop back to the first image after the duplicated set
-            carouselTrack.style.transition = 'none'; // Remove transition for the reset
+            currentIndex = 0;
+            carouselTrack.style.transition = 'none';
             updateCarouselPosition();
             setTimeout(() => {
-                carouselTrack.style.transition = 'transform 0.6s ease-in-out'; // Reapply transition
+                carouselTrack.style.transition = 'transform 0.6s ease-in-out';
             }, 20);
         } else {
             updateCarouselPosition();
         }
-        startAutoSlide(); // Restart timer after manual slide
+        startAutoSlide();
     }
 
-    // Update the position of the carousel
     function updateCarouselPosition() {
-        const offset = -(currentIndex * (100 / imagesVisible)); // Adjust dynamically
+        const offset = -(currentIndex * (100 / imagesVisible));
         carouselTrack.style.transform = `translateX(${offset}%)`;
     }
 
-    // Adjust visible images based on screen size
     function adjustVisibleImages() {
         const screenWidth = window.innerWidth;
         if (screenWidth <= 480) {
-            imagesVisible = 1; // 1 image on mobile
+            imagesVisible = 1;
         } else if (screenWidth <= 767) {
-            imagesVisible = 2; // 2 images on small tablets
+            imagesVisible = 2;
         } else if (screenWidth <= 1024) {
-            imagesVisible = 3; // 3 images on tablets
+            imagesVisible = 3;
         } else {
-            imagesVisible = 4; // 4 images on desktops
+            imagesVisible = 4;
         }
         updateCarouselPosition();
     }
 
-    // Add event listeners to the arrows
     document.querySelector('.slider-carousel-arrow-left').addEventListener('click', slideCarouselLeft);
     document.querySelector('.slider-carousel-arrow-right').addEventListener('click', slideCarouselRight);
 
-    // Start auto-slide initially and adjust based on window size
     startAutoSlide();
     adjustVisibleImages();
     window.addEventListener('resize', adjustVisibleImages);

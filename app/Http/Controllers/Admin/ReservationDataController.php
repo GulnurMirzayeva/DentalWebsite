@@ -30,10 +30,9 @@ class ReservationDataController extends Controller
             'time' => $request->time,
         ]);
 
-        // Send an email to the specified address
         Mail::to('stomotology.dentist@gmail.com')->send(new ReservationCreated($reservation));
 
-        return redirect()->back()->with('success', 'Reservation is created successfully and email is sent.');
+        return redirect()->back()->with('success', 'Rezervasiya yaradıldı ve email göndərildi.');
     }
 
     public function index()
@@ -48,7 +47,7 @@ class ReservationDataController extends Controller
         $reservation->status = 'accepted';
         $reservation->save();
 
-        return redirect()->back()->with('success', 'Reservation accepted.');
+        return redirect()->back()->with('success', 'Rezervasiya qəbul edildi.');
     }
 
     public function reject($id)
@@ -57,6 +56,6 @@ class ReservationDataController extends Controller
         $reservation->status = 'rejected';
         $reservation->save();
 
-        return redirect()->back()->with('success', 'Reservation rejected.');
+        return redirect()->back()->with('success', 'Rezervasiya qəbul edilmədi.');
     }
 }

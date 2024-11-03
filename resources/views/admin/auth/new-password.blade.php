@@ -81,7 +81,6 @@
 </head>
 <body>
 <div class="login-container">
-{{--    <p style="color: var(--blue)">We will send a link to your email, use that link to reset password.</p>--}}
     @if(session('error'))
         <p class="error-message">{{ session('error') }}</p>
     @endif
@@ -89,18 +88,18 @@
         @csrf
         <input type="text" name="token" hidden value="{{$token}}">
         <div class="mb-3">
-            <label class="form-label">Email address</label>
+            <label class="form-label">Email adresi</label>
             <input type="email" class="form-control" name="email" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Enter new password</label>
+            <label class="form-label">Yeni parolu daxil et</label>
             <input type="password" class="form-control" name="password" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Confirm password</label>
+            <label class="form-label">Parolu təsdiqlə</label>
             <input type="password" class="form-control" name="password_confirmation" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Təsdiq Et</button>
     </form>
 </div>
 

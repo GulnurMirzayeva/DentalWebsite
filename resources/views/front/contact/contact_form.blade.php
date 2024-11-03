@@ -2,7 +2,7 @@
     <div class="map-size">
         @php
             $contactDetails = \App\Models\ContactDetail::first();
-            $defaultMap = "26 Rashid Behbudov St"; // Default address for Sahil Bağı
+            $defaultMap = "26 Rashid Behbudov St";
             $map = $contactDetails->map ?? $defaultMap;
         @endphp
         <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
@@ -14,28 +14,28 @@
         <div class="contact-detail-item">
             <i class="fa-solid fa-map-location-dot contact-icon"></i>
             <div class="contact-info">
-                <div class="contact-title">Address</div>
+                <div class="contact-title">{{ __('address') }}</div>
                 <div class="contact-value">{{ $contactDetails->address ?? 'Address not set' }}</div>
             </div>
         </div>
         <div class="contact-detail-item">
             <i class="fa-solid fa-phone-flip contact-icon"></i>
             <div class="contact-info">
-                <div class="contact-title">Phone</div>
+                <div class="contact-title">{{ __('phone') }}</div>
                 <div class="contact-value">{{ $contactDetails->phone ?? 'Phone not set' }}</div>
             </div>
         </div>
         <div class="contact-detail-item">
             <i class="fa-solid fa-envelope contact-icon"></i>
             <div class="contact-info">
-                <div class="contact-title">Email</div>
+                <div class="contact-title">{{ __('email') }}</div>
                 <div class="contact-value">{{ $contactDetails->email ?? 'Email not set' }}</div>
             </div>
         </div>
         <div class="contact-detail-item">
             <i class="fa-brands fa-square-instagram contact-icon"></i>
             <div class="contact-info">
-                <div class="contact-title">Instagram</div>
+                <div class="contact-title">{{ __('instagram') }}</div>
                 <div class="contact-value">
                     <a href="https://www.instagram.com/{{ $contactDetails->instagram ?? '' }}" target="_blank" class="social-link-contact instagram-link">
                         {{ $contactDetails->instagram ?? 'Instagram not set' }}
@@ -46,7 +46,7 @@
         <div class="contact-detail-item">
             <i class="fa-brands fa-square-facebook contact-icon"></i>
             <div class="contact-info">
-                <div class="contact-title">Facebook</div>
+                <div class="contact-title">{{ __('facebook') }}</div>
                 <div class="contact-value">
                     <a href="https://www.facebook.com/{{ $contactDetails->facebook ?? '' }}" target="_blank" class="social-link-contact facebook-link">
                         {{ $contactDetails->facebook ?? 'Facebook not set' }}
@@ -55,15 +55,10 @@
             </div>
         </div>
     </div>
-
+</div>
     <style>
         .social-link-contact {
-            text-decoration: none; /* Remove underline */
+            text-decoration: none;
             color: var(--gray-dark) ;
         }
-
-
-
     </style>
-
-

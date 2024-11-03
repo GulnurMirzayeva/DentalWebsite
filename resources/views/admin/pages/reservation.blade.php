@@ -21,7 +21,7 @@
             <!-- Left Side - 2*2 Grid Cards -->
             <div class="col-xl-8 col-lg-7">
                 <div class="card-header shadow py-3 mb-3 mt-2" style="background-color: white; height: 50px; text-align: center; border-radius: 10px">
-                    <h6 class="m-0 font-weight-bold text-primary">Reservations Status</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Rezervasiya statusu</h6>
                 </div>
 
                 <div class="row">
@@ -32,7 +32,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Total Reservations</div>
+                                            Ümumi rezervasiyalar</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             {{ App\Models\Reservation::count() }}
                                         </div>
@@ -52,7 +52,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Pending Reservations</div>
+                                            Gözləmədə olan rezervasiyalar</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             {{ App\Models\Reservation::where('status', 'pending')->count() }}
                                         </div>
@@ -72,7 +72,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Accepted Reservations</div>
+                                            Qəbul edilən rezervasiyalar</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             {{ App\Models\Reservation::where('status', 'accepted')->count() }}
                                         </div>
@@ -92,7 +92,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                            Rejected Reservations</div>
+                                            Qəbul edilməyən rezervasiyalar</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             {{ App\Models\Reservation::where('status', 'rejected')->count() }}
                                         </div>
@@ -113,12 +113,10 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            // Fetch reservation counts dynamically
             var pendingCount = {{ App\Models\Reservation::where('status', 'pending')->count() }};
             var acceptedCount = {{ App\Models\Reservation::where('status', 'accepted')->count() }};
             var rejectedCount = {{ App\Models\Reservation::where('status', 'rejected')->count() }};
 
-            // Create the Pie Chart
             var ctx = document.getElementById('reservationPieChart').getContext('2d');
             var myPieChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -157,13 +155,12 @@
 
         <!-- Content Row -->
             <div class="row">
-                <!-- Full-Width Column for Annual and Monthly Charts -->
                 <div class="col-12">
 
                     <!-- Annual Reservation Count Area Chart -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Annual Reservation Count</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">İllik Rezervasiya Sayı</h6>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -175,7 +172,7 @@
                     <!-- Monthly Reservation Bar Chart -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Monthly Reservation Count</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Aylıq Rezervasiya Sayı</h6>
                         </div>
                         <div class="card-body">
                             <div class="chart-bar">
@@ -190,7 +187,6 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
             <script>
-                // Fetch reservation counts dynamically for each month
                 var monthlyReservations = [
                     {{ App\Models\Reservation::whereYear('created_at', now()->year)->whereMonth('created_at', 1)->count() }},
                     {{ App\Models\Reservation::whereYear('created_at', now()->year)->whereMonth('created_at', 2)->count() }},
@@ -206,7 +202,6 @@
                     {{ App\Models\Reservation::whereYear('created_at', now()->year)->whereMonth('created_at', 12)->count() }}
                 ];
 
-                // Create the Area Chart for Annual Reservations
                 var ctx = document.getElementById("annualReservationChart").getContext('2d');
                 var myLineChart = new Chart(ctx, {
                     type: 'line',
@@ -276,7 +271,6 @@
                     }
                 });
 
-                // Create the Bar Chart for Monthly Reservations
                 var ctxBar = document.getElementById("monthlyReservationBarChart").getContext('2d');
                 var myBarChart = new Chart(ctxBar, {
                     type: 'bar',
@@ -317,8 +311,8 @@
                             yAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    stepSize: 1, // Ensure only whole numbers (natural numbers) are displayed
-                                    callback: function(value) { if (Number.isInteger(value)) { return value; } }, // Filter out floats
+                                    stepSize: 1,
+                                    callback: function(value) { if (Number.isInteger(value)) { return value; } },
                                     padding: 10,
                                 },
                                 gridLines: {
@@ -349,8 +343,4 @@
                     }
                 });
             </script>
-
-
-
-
 @endsection

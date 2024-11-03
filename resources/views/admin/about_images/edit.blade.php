@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label for="about_image">Yeni Şəkil Seç (optional)</label>
+                <label for="about_image">Yeni Şəkil Seç (istəyə bağlı)</label>
                 <input type="file" name="about_image" id="about_image" class="form-control">
             </div>
 

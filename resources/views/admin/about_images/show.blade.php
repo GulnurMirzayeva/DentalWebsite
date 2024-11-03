@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'About Image Details')
+@section('title', 'About Image')
 
 @section('content')
     <div class="container">

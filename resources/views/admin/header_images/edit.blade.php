@@ -26,7 +26,7 @@
             </div>
 
             <div class="form-group">
-                <label for="header_image">Yeni Başlıq Şəkli Seç (optional)</label>
+                <label for="header_image">Yeni Başlıq Şəkli Seç (istəyə bağlı)</label>
                 <input type="file" name="header_image" id="header_image" class="form-control">
             </div>
 

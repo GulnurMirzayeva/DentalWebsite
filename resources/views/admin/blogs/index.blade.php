@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Blogs')
+@section('title', 'Blog')
 
 @section('content')
     <h1>Bloglar</h1>

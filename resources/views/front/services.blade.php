@@ -3,7 +3,7 @@
 @section('title', 'Services')
 
 @section('header-text')
-    Our Services
+    {{ __('our-services') }}
 @endsection
 
 @section('content')
@@ -12,5 +12,4 @@
     @include('front.services.our_services')
     @include('front.about.achievements')
     @include('front.services.prices')
-
 @endsection

@@ -6,7 +6,7 @@
 
         <div class="about-AygunCare">
             <h2>AygunCare</h2>
-            <p>Müasir yanaşma və peşəkarlıqla hər bir xəstəyə fərdi müalicə planı təqdim edir.</p>
+            <p>{{ __('footer-paragraph') }}</p>
 
             <div class="social-media-addresses">
                 @if($contactDetails)
@@ -29,24 +29,24 @@
 
 
         <div class="quick-links">
-            <h2>Quick Links</h2>
-            <a href="{{ route('home') }}">Home</a>
-            <a href="{{ route('about') }}">About</a>
-            <a href="{{ route('services') }}">Services</a>
-            <a href="{{ route('gallery') }}">Gallery</a>
-            <a href="{{ route('blog') }}">Blog</a>
-            <a href="{{ route('contact') }}">Contact</a>
+            <h2>{{ __('links') }}</h2>
+            <a href="{{ route('home') }}">{{ __('home') }}</a>
+            <a href="{{ route('about') }}">{{ __('about') }}</a>
+            <a href="{{ route('services') }}">{{ __('services') }}</a>
+            <a href="{{ route('gallery') }}">{{ __('gallery') }}</a>
+            <a href="{{ route('blog') }}">{{ __('blog') }}</a>
+            <a href="{{ route('contact') }}">{{ __('contact') }}</a>
         </div>
 
         <div class="quick-services">
-            <h2>Services</h2>
+            <h2>{{ __('services') }}</h2>
             @foreach($footerServices->slice(-6) as $service)
                 <a href="{{ route('services') }}#{{ Str::slug($service->title) }}">{{ $service->title }}</a>
             @endforeach
         </div>
 
         <div class="office-contact-data">
-            <h2>Contact Us</h2>
+            <h2>{{ __('contact-us') }}</h2>
             <p><i class="fa-solid fa-map-location-dot"></i> {{ $contactDetails->address ?? 'Address not set' }}</p>
             <p><i class="fa-solid fa-phone"></i> {{ $contactDetails->phone ?? 'Phone not set' }}</p>
             <p><i class="fa-solid fa-envelope"></i> {{ $contactDetails->email ?? 'Email not set' }}</p>
