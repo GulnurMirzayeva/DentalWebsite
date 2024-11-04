@@ -439,10 +439,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     dateSelected = !!selectedDates.length;
                     updateAvailableTimes(dateStr);
                     toggleTimePickers(dateSelected);
+
+                    // Automatically adjust the time input to the beginning of the valid time range
+                    if (dateSelected) {
+                        const timeInput = selector.includes('main') ?
+                            document.getElementById('time-picker-main') :
+                            document.getElementById('time-picker-appointment');
+
+                        const minTime = getMinTimeForDate(dateStr);
+                        timeInput.value = minTime;
+                    }
                 }
             });
         }
     });
+
+    function getMinTimeForDate(dateStr) {
+        const selectedDate = new Date(dateStr);
+        const dateOfMonth = selectedDate.getDate();
+
+        // Determine the beginning hour based on the date
+        if (dateOfMonth % 2 === 0) {
+            return "15:00"; // Beginning of working hours for even days
+        } else {
+            return "09:00"; // Beginning of working hours for odd days
+        }
+    }
 
     function updateAvailableTimes(dateStr) {
         const selectedDate = new Date(dateStr);
@@ -496,6 +518,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             timeInput.reportValidity();
                         }
                     }
+                });
+
+                // Add minute rounding logic
+                timeInput.addEventListener('input', function() {
+                    const [hour, minute] = timeInput.value.split(':').map(Number);
+                    let adjustedHour = hour;
+                    let adjustedMinute = minute;
+
+                    if (minute >= 1 && minute <= 29) {
+                        adjustedMinute = 30;
+                    } else if (minute >= 31 && minute <= 59) {
+                        adjustedMinute = 0;
+                        adjustedHour = (hour + 1) % 24; // Wrap around to 00 if hour exceeds 23
+                    }
+
+                    timeInput.value = `${String(adjustedHour).padStart(2, '0')}:${String(adjustedMinute).padStart(2, '0')}`;
                 });
             }
         });
@@ -614,5 +652,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
     toggleTimePickers(false);
 });
-
-// Date ends
