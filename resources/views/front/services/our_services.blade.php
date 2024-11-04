@@ -143,7 +143,7 @@
 
     @media screen and (max-width: 768px) {
         .gallery-button {
-            font-size: 16px;
+            font-size: 12px !important;
             padding: 10px 20px;
         }
         .gallery-pagination-button {
@@ -155,8 +155,8 @@
 
     @media screen and (max-width: 480px) {
         .gallery-button {
-            font-size: 14px;
-            padding: 8px 16px;
+            font-size: 10px !important;
+            padding: 8px 18px !important;
         }
         .gallery-pagination-button {
             width: 20px;
