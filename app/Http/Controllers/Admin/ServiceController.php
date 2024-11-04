@@ -29,7 +29,7 @@ class ServiceController extends Controller
         ]);
 
         $service = new Service([
-            'icon' => $request->file('icon')->store('services', 'public'),
+            'icon' => $request->hasFile('icon') ? $request->file('icon')->store('services', 'public') : null,
         ]);
         $service->save();
 
@@ -57,6 +57,7 @@ class ServiceController extends Controller
             'title.*' => 'required|string|max:255',
             'description.*' => 'nullable|string',
         ]);
+
 
         if ($request->hasFile('icon')) {
             $service->icon = $request->file('icon')->store('services', 'public');

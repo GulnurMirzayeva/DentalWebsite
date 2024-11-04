@@ -4,6 +4,18 @@
 
 @section('content')
     <div class="container">
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h1>Qiymət Paketləri</h1>
 
         <a href="{{ route('pricing.create') }}" class="btn btn-primary mb-3">Yeni paket yarat</a>

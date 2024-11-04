@@ -1054,8 +1054,8 @@ input, select {
     }
 
     .servis_icon img {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         align-items: center;
     }
 
@@ -1066,7 +1066,8 @@ input, select {
     .our_service_information p {
         font-size: 14px;
         width: auto;
-        margin-left: 30px;
+        margin: auto;
+        padding: 0 30px;
     }
 }
 
@@ -1092,9 +1093,9 @@ input, select {
     }
 
     .servis_icon img {
-        width: 30px;
-        height: 30px;
-        margin-left: 45%;
+        width: 50px;
+        height: 50px;
+        margin-left: 42%;
     }
 
     .our_service_information h2 {
@@ -1105,7 +1106,7 @@ input, select {
     .our_service_information p {
         font-size: 15px;
         width: auto;
-        margin-left: 30px;
+        margin: auto;
     }
 }
 

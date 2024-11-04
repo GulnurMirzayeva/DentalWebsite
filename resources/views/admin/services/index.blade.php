@@ -25,7 +25,7 @@
                 <tr>
                     <td>
                         @if($service->icon)
-                            <img src="{{ asset('storage/'.$service->icon) }}" width="50" alt="{{ $service->title }}">
+                            <img src="{{ asset('storage/' . $service->icon) }}" width="50" alt="{{ $service->title }}" >
                         @else
                             <span class="text-muted">Icon Yox</span>
                         @endif

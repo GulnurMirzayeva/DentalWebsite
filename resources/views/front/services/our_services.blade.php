@@ -6,22 +6,22 @@
 
     <div class="our_services">
         @if(isset($homePage) && $homePage)
-        @foreach($services as $service)
-            <div class="our_services_dentis">
-                <div class="servis_icon">
-                    <img src="{{ asset('images/' . $service->icon) }}" alt="{{ $service->title }}">
+            @foreach($services as $service)
+                <div class="our_services_dentis">
+                    <div class="servis_icon">
+                        <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}">
+                    </div>
+                    <div class="our_service_information">
+                        <h2>{{ $service->title }}</h2>
+                        <p style="text-align: center">{{ $service->description }}</p>
+                    </div>
                 </div>
-                <div class="our_service_information">
-                    <h2>{{ $service->title }}</h2>
-                    <p style="text-align: center">{{ $service->description }}</p>
-                </div>
-            </div>
-        @endforeach
+            @endforeach
         @else
             @foreach($services as $service)
                 <div class="our_services_dentis">
                     <div class="servis_icon">
-                        <img src="{{ asset('images/'.$service->icon) }}" alt="{{ $service->title }}">
+                        <img src="{{ asset('storage/'.$service->icon) }}" alt="{{ $service->title }}">
                     </div>
                     <div class="our_service_information">
                         <h2>{{ $service->title }}</h2>
@@ -143,7 +143,7 @@
 
     @media screen and (max-width: 768px) {
         .gallery-button {
-            font-size: 16px;
+            font-size: 12px !important;
             padding: 10px 20px;
         }
         .gallery-pagination-button {
@@ -155,8 +155,8 @@
 
     @media screen and (max-width: 480px) {
         .gallery-button {
-            font-size: 14px;
-            padding: 8px 16px;
+            font-size: 10px !important;
+            padding: 8px 18px !important;
         }
         .gallery-pagination-button {
             width: 20px;
