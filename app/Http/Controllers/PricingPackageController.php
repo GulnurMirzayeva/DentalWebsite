@@ -31,6 +31,15 @@ class PricingPackageController extends Controller
 
     public function store(Request $request)
     {
+
+        // PricingPackage cədvəlində mövcud paketlərin sayını yoxlayırıq
+        $existingPackageCount = PricingPackage::count();
+
+        // Əgər 4-dən çox paket varsa, xəbərdarlıq mesajı göndəririk
+        if ($existingPackageCount >= 4) {
+            return redirect()->route('pricing.index')->with('error', 'Yalnız 4 qiymət paketi yarada bilərsiniz.');
+        }
+
         $data = $request->validate([
             'price' => 'required|numeric',
             'name.*' => 'required|string',

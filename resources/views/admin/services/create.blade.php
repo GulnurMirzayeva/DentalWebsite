@@ -52,10 +52,10 @@
 
 <script>
     function checkLength(input) {
-        const maxLength = parseInt(input.getAttribute("maxlength")); // Max length from the attribute
+        const maxLength = parseInt(input.getAttribute("maxlength"));
         if (input.value.length > maxLength) {
             alert(`Maksimum ${maxLength} simvol yazıla bilər.`);
-            input.value = input.value.substring(0, maxLength); // Remove extra characters
+            input.value = input.value.substring(0, maxLength);
         }
     }
 </script>

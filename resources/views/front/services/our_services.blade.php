@@ -8,7 +8,7 @@
         @foreach($services as $service)
             <div class="our_services_dentis">
                 <div class="servis_icon">
-                    <img src="{{ asset('images/'.$service->icon) }}" alt="{{ $service->title }}">
+                    <img src="{{ asset('storage/' . $service->icon) }}" width="50" alt="{{ $service->title }}" >
                 </div>
                 <div class="our_service_information">
                     <h2>{{ $service->title }}</h2>
