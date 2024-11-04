@@ -477,7 +477,6 @@ input:focus,
 
 .working_hours li {
     text-align: center;
-    padding: 2px;
     padding: 3px;
     color: var(--white);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -529,16 +528,40 @@ input:focus,
 
 .custom_appointment .input-group input::placeholder,
 .custom_appointment .input-group select::placeholder,
-#time-picker-main::placeholder,
+/*#time-picker-main::placeholder,*/
 #date-picker-main::placeholder {
     color: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     font-weight: 400;
 }
 
+.custom_appointment .time-input-group select {
+    color: rgba(255, 255, 255, 0.7); /* Text color for dropdown */
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #333; /* Background color for the select */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border styling */
+    padding: 8px; /* Padding */
+    cursor: pointer; /* Cursor style */
+}
+
+.custom_appointment .time-input-group select::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Placeholder color */
+}
+
+
 .selecting-services option {
     background-color: var(--light);
     color: var(--gray-dark);
+}
+#time-picker-main option {
+    color: var(--gray-dark);
+}
+#time-picker-main {
+    -webkit-appearance: none; /* For Safari and Chrome */
+    -moz-appearance: none; /* For Firefox */
+    appearance: none;
 }
 
 .custom_appointment button {

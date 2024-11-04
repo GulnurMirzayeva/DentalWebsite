@@ -163,6 +163,3 @@ Route::post('/check-time-availability', [ReservationDataController::class, 'chec
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 Route::get('/questions_answers', [QuestionsAnswersController::class, 'index'])->name('front.help.questions_answers');
-
-
-
