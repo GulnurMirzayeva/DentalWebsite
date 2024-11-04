@@ -18,7 +18,7 @@ class HomeController extends Controller
         $packages = PricingPackage::all();
         $blogs = Blog::latest()->take(3)->get();
         $services = Service::latest()->take(4)->get();
-        $allServices = Service::all();
+        $allServices = Service::paginate(8);
         $sliderImages = Slider::latest()->take(2)->get();
         $defaultImageSlider = asset('assets/front/img/bg_1.jpg');
         $defaultImage = asset('assets/front/img/bg_1.jpg');

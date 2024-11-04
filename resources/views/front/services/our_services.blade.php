@@ -5,21 +5,34 @@
     </div>
 
     <div class="our_services">
-        @foreach($services as $service)
-            <div class="our_services_dentis">
-                <div class="servis_icon">
-                    <img src="{{ asset('storage/' . $service->icon) }}" width="50" alt="{{ $service->title }}" >
+        @if(isset($homePage) && $homePage)
+            @foreach($services as $service)
+                <div class="our_services_dentis">
+                    <div class="servis_icon">
+                        <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}">
+                    </div>
+                    <div class="our_service_information">
+                        <h2>{{ $service->title }}</h2>
+                        <p style="text-align: center">{{ $service->description }}</p>
+                    </div>
                 </div>
-                <div class="our_service_information">
-                    <h2>{{ $service->title }}</h2>
-                    <p style="text-align: center">{{ $service->description }}</p>
+            @endforeach
+        @else
+            @foreach($services as $service)
+                <div class="our_services_dentis">
+                    <div class="servis_icon">
+                        <img src="{{ asset('storage/'.$service->icon) }}" alt="{{ $service->title }}">
+                    </div>
+                    <div class="our_service_information">
+                        <h2>{{ $service->title }}</h2>
+                        <p style="text-align: center">{{ $service->description }}</p>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        @endif
     </div>
 
-
-    @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator && $services->count() > 8)
+    @if ($services instanceof \Illuminate\Pagination\LengthAwarePaginator && $services->total() >8)
         <div class="pagination">
             <div class="gallery-navigation-container">
                 @if ($services->onFirstPage())
@@ -47,6 +60,7 @@
         </div>
     @endif
 </div>
+
 
 
 <style>
