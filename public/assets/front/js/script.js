@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function updateAvailableTimes(dateStr) {
+    async function updateAvailableTimes(dateStr) {
         const selectedDate = new Date(dateStr);
         const dayOfMonth = selectedDate.getDate();
         let startHour, endHour;
@@ -457,15 +457,18 @@ document.addEventListener('DOMContentLoaded', function () {
             endHour = 14; // 2 PM
         }
 
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
-            const timeInput = document.querySelector(selector);
-            if (timeInput) {
-                populateTimeOptions(timeInput, startHour, endHour);
-            }
-        });
+        const allSelectors = ["#time-picker-appointment", "#time-picker-main"];
+        const promises = allSelectors.map(selector => populateTimeOptions(selector, startHour, endHour, dateStr));
+
+        // Wait for all options to be generated before enabling pickers
+        await Promise.all(promises);
+        toggleTimePickers(true);
     }
 
-    function populateTimeOptions(selectElement, startHour, endHour) {
+    async function populateTimeOptions(selector, startHour, endHour, dateStr) {
+        const selectElement = document.querySelector(selector);
+        if (!selectElement) return;
+
         selectElement.innerHTML = ""; // Clear existing options
 
         const defaultOption = document.createElement('option');
@@ -475,13 +478,26 @@ document.addEventListener('DOMContentLoaded', function () {
         defaultOption.textContent = "Select Time";
         selectElement.appendChild(defaultOption);
 
+        const options = [];
         for (let hour = startHour; hour <= endHour; hour++) {
             const hourString = formatHour(hour);
             const option = document.createElement('option');
             option.value = hourString;
             option.textContent = hourString;
-            selectElement.appendChild(option);
+
+            // Check if the time slot is taken
+            const isTaken = await checkTimeAvailability(dateStr, hourString);
+            if (isTaken) {
+                option.style.color = "red"; // Style unavailable options
+                option.textContent += " (Taken)";
+                option.disabled = true; // Disable the option
+            }
+
+            options.push(option);
         }
+
+        // Append all options at once
+        selectElement.append(...options);
     }
 
     function formatHour(hour) {
@@ -497,7 +513,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    async function checkTimeAvailability(date, time) {
+        try {
+            const response = await fetch('/check-time-availability', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ date, time })
+            });
+
+            const data = await response.json();
+            return data.taken;
+        } catch (error) {
+            console.error('Error checking time availability:', error);
+            return false;
+        }
+    }
+
     setupForm(forms.main);
     setupForm(forms.modal);
 });
 
+
+// Date ends
