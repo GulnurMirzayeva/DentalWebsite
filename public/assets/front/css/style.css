@@ -486,19 +486,23 @@ input:focus,
     cursor: pointer; /* Cursor style */
 }
 
-.custom_appointment .time-input-group select::placeholder {
-    color: rgba(255, 255, 255, 0.7); /* Placeholder color */
+.custom_appointment .time-input-group select::placeholder,
+#custom_appointmentForm .time-input-group select::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
+
 
 
 .selecting-services option {
     background-color: var(--light);
     color: var(--gray-dark);
 }
-#time-picker-main option {
+#time-picker-main option, #time-picker-appointment option {
     color: var(--gray-dark);
 }
-#time-picker-main {
+
+
+#time-picker-main, #time-picker-appointment{
     -webkit-appearance: none; /* For Safari and Chrome */
     -moz-appearance: none; /* For Firefox */
     appearance: none;

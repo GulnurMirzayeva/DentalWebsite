@@ -36,17 +36,11 @@
                 <i class="fas fa-calendar-alt"></i>
             </div>
             <div class="time-input-group">
-                <input
-                    type="text"
-                    id="time-picker-appointment"
-                    name="time"
-                    placeholder="{{ __('time') }}"
-                    readonly
-                    required
-                    class="input-with-icon"
-                />
-                <i class="fas fa-clock"></i>
-            </div>
+                                    <select id="time-picker-appointment" name="time" required>
+                                        <option value="" disabled selected>{{ __('Select Time') }}</option> <!-- Placeholder option -->
+                                    </select>
+                                    <i class="fas fa-clock"></i>
+                                </div>
             <div class="phone-input-group">
                 <input type="tel" id="phone" name="phone" placeholder="{{ __('phone') }}" required
                        pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
