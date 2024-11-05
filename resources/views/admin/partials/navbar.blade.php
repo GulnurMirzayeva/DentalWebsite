@@ -94,14 +94,19 @@
         <!-- Nav Item - Comments -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="commentsDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               onclick="resetCommentCounter()">
                 <i class="fas fa-comments fa-fw"></i>
                 <!-- Counter - Comments -->
                 @php
-                    // Fetch the latest 5 comments without filtering by status
-                    $comments = App\Models\BlogComment::orderBy('created_at', 'desc')->take(5)->get();
+                    $comments = App\Models\BlogComment::orderBy('created_at', 'desc')
+                        ->where('is_read', false)
+                        ->take(5)
+                        ->get();
                 @endphp
-                <span class="badge badge-danger badge-counter">{{ $comments->count() }}</span>
+                <span class="badge badge-danger badge-counter" id="comment-counter">
+                    {{ $comments->count() }}
+                </span>
             </a>
             <!-- Dropdown - Comments -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -109,25 +114,47 @@
                 <h6 class="dropdown-header">
                     Şərhlər
                 </h6>
-                @forelse($comments as $comment)
-                    <a class="dropdown-item d-flex align-items-center"
-                       href="{{ route('admin.comments.index', ['comment_id' => $comment->id]) }}">
+                @if($comments->count() > 0)
+                    @foreach($comments as $comment)
+                        <a class="dropdown-item d-flex align-items-center"
+                           href="{{ route('admin.comments.index', ['comment_id' => $comment->id]) }}">
+                            <div class="font-weight-bold">
+                                <div class="text-truncate">{{ Str::limit($comment->content, 50) }}</div>
+                                <div class="small text-gray-500">{{ $comment->name }}
+                                    · {{ $comment->created_at->diffForHumans() }}</div>
+                            </div>
+                        </a>
+                    @endforeach
+                @else
+                    <div class="dropdown-item d-flex align-items-center">
                         <div class="font-weight-bold">
-                            <div class="text-truncate">{{ Str::limit($comment->content, 50) }}</div>
-                            <div class="small text-gray-500">{{ $comment->name }}
-                                · {{ $comment->created_at->diffForHumans() }}</div>
+                            <div class="text-truncate">Şərh yoxdur</div>
                         </div>
-                    </a>
-                @empty
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="font-weight-bold">
-                            <div class="text-truncate">Yeni şərh yoxdur.</div>
-                        </div>
-                    </a>
-                @endforelse
-                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">Bütün şərhlərə baxın.</a>
+                    </div>
+                @endif
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}">
+                    Bütün şərhlərə baxın.
+                </a>
             </div>
         </li>
+
+        <!-- Add this JavaScript code to your layout or separate JS file -->
+        <script>
+        function resetCommentCounter() {
+            // Reset counter to 0
+            document.getElementById('comment-counter').textContent = '0';
+
+            // Make AJAX call to mark comments as read
+            fetch('/admin/comments/mark-as-read', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+        </script>
 
 
         <li class="nav-item dropdown no-arrow mx-1">
