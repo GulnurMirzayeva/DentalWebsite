@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('blog_id')->constrained()->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->text('description_one')->nullable();
             $table->text('description_two')->nullable();
             $table->timestamps();

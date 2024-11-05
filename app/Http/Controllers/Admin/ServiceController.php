@@ -40,7 +40,7 @@ class ServiceController extends Controller
             // Process and store the icon as WebP with resizing
             $iconPath = 'services/' . uniqid() . '.webp';
             $iconImage = Image::make($request->file('icon'))
-                ->resize(100, 100) // Adjust icon dimensions as needed
+                ->resize(150, 150) // Adjust icon dimensions as needed
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($iconPath, (string) $iconImage);
@@ -89,7 +89,7 @@ class ServiceController extends Controller
             // Process and store the new icon as WebP with resizing
             $iconPath = 'services/' . uniqid() . '.webp';
             $iconImage = Image::make($request->file('icon'))
-                ->resize(100, 100) // Adjust icon dimensions as needed
+                ->resize(150, 150) // Adjust icon dimensions as needed
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($iconPath, (string) $iconImage);

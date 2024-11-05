@@ -44,7 +44,7 @@ class GalleryController extends Controller
             // Process and store the image as WebP with resizing
             $filePath = 'gallery/' . uniqid() . '.webp';
             $image = Image::make($request->file('image'))
-                ->resize(800, 600) // Resize to 800x600 pixels
+                ->resize(1280, 720) // Resize to 800x600 pixels
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($filePath, (string) $image);
@@ -80,7 +80,7 @@ class GalleryController extends Controller
             // Process and store the new image as WebP with resizing
             $filePath = 'gallery/' . uniqid() . '.webp';
             $newImage = Image::make($request->file('image'))
-                ->resize(800, 600) // Resize to 800x600 pixels
+                ->resize(1280, 720) // Resize to 800x600 pixels
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($filePath, (string) $newImage);

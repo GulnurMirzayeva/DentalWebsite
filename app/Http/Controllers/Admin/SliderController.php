@@ -52,7 +52,7 @@ class SliderController extends Controller
             Storage::disk('public')->put($filePath, (string) $image);
 
             Slider::create([
-                'file' => Storage::url($filePath),
+                'file' => $filePath,
             ]);
         }
 
@@ -89,7 +89,7 @@ class SliderController extends Controller
 
             Storage::disk('public')->put($filePath, (string) $newImage);
 
-            $slider->update(['file' => Storage::url($filePath)]);
+            $slider->update(['file' => $filePath]);
         }
 
         return redirect()->route('sliders.index')->with('success', 'Slider rəsmi güncəlləndi.');
