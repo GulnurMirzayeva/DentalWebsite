@@ -424,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let dateSelected = false;
 
+    // Tarih seçiciyi yapılandır
     ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
@@ -432,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 dateFormat: "Y-m-d",
                 disable: [
                     function (date) {
-                        return date.getDay() === 0; // Disable Sundays
+                        return date.getDay() === 0; // Pazar günlerini devre dışı bırak
                     }
                 ],
                 onChange: function (selectedDates, dateStr, instance) {
@@ -444,7 +445,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    async function updateAvailableTimes(dateStr) {
+    // Zaman seçeneklerini güncelle
+    function updateAvailableTimes(dateStr) {
         const selectedDate = new Date(dateStr);
         const dayOfMonth = selectedDate.getDate();
         let startHour, endHour;
@@ -458,47 +460,55 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const allSelectors = ["#time-picker-appointment", "#time-picker-main"];
-        const promises = allSelectors.map(selector => populateTimeOptions(selector, startHour, endHour, dateStr));
+        allSelectors.forEach(function (selector) {
+            populateTimeOptions(selector, startHour, endHour, dateStr);
+        });
 
-        // Wait for all options to be generated before enabling pickers
-        await Promise.all(promises);
         toggleTimePickers(true);
     }
 
-    async function populateTimeOptions(selector, startHour, endHour, dateStr) {
+    // Zaman seçeneklerini doldur
+    function populateTimeOptions(selector, startHour, endHour, dateStr) {
         const selectElement = document.querySelector(selector);
         if (!selectElement) return;
 
-        selectElement.innerHTML = ""; // Clear existing options
+        selectElement.innerHTML = ""; // Mevcut seçenekleri temizle
 
         const defaultOption = document.createElement('option');
         defaultOption.value = "";
         defaultOption.disabled = true;
         defaultOption.selected = true;
-        defaultOption.textContent = "Select Time";
+        defaultOption.textContent = "Saat Seçin";
         selectElement.appendChild(defaultOption);
 
-        const options = [];
+        const today = new Date();
+        const currentHour = today.getHours();
+        const selectedDate = new Date(dateStr);
+
+        // Saat seçeneklerini oluştur
         for (let hour = startHour; hour <= endHour; hour++) {
+            // Bugünün geçmiş saatlerini tamamen atla
+            if (selectedDate.toDateString() === today.toDateString() && hour <= currentHour) {
+                continue; // Geçmiş saatleri atla
+            }
+
             const hourString = formatHour(hour);
             const option = document.createElement('option');
             option.value = hourString;
             option.textContent = hourString;
 
-            // Check if the time slot is taken
-            const isTaken = await checkTimeAvailability(dateStr, hourString);
-            if (isTaken) {
-                option.style.color = "red"; // Style unavailable options
-                option.textContent += " (Taken)";
-                option.disabled = true; // Disable the option
-            }
-
-            options.push(option);
+            // Zaman dilimi dolu mu kontrol et
+            checkTimeAvailability(dateStr, hourString, function (isTaken) {
+                if (isTaken) {
+                    option.style.color = "red"; // Uygun olmayan seçenekleri renklendir
+                    option.textContent += " (Dolu)";
+                    option.disabled = true; // Seçeneği devre dışı bırak
+                }
+                selectElement.appendChild(option);
+            });
         }
-
-        // Append all options at once
-        selectElement.append(...options);
     }
+
 
     function formatHour(hour) {
         return `${hour.toString().padStart(2, '0')}:00`;
@@ -513,28 +523,61 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    async function checkTimeAvailability(date, time) {
-        try {
-            const response = await fetch('/check-time-availability', {
+    // Zaman uygunluk kontrol fonksiyonu
+    function checkTimeAvailability(date, time, callback) {
+        $.ajax({
+            url: '/check-time-availability',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                date: date,
+                time: time
+            },
+            success: function (response) {
+                callback(response.taken);
+            },
+            error: function (xhr, status, error) {
+                console.error('Zaman uygunluk kontrolü hatası:', error);
+                callback(false);
+            }
+        });
+    }
+
+    // Form gönderimi sırasında AJAX kullanarak rezervasyon yap
+    function setupForm(formObj) {
+        $(formObj.form).on('submit', function (e) {
+            e.preventDefault(); // Sayfanın yeniden yüklenmesini engelle
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: '/reservations',
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                body: JSON.stringify({ date, time })
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message); // Başarı mesajını göster
+                    } else {
+                        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Rezervasyon hatası:', error);
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
             });
-
-            const data = await response.json();
-            return data.taken;
-        } catch (error) {
-            console.error('Error checking time availability:', error);
-            return false;
-        }
+        });
     }
 
     setupForm(forms.main);
     setupForm(forms.modal);
 });
+
 
 
 // Date ends
