@@ -7,7 +7,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
 {
@@ -22,7 +22,6 @@ class AdminBlogController extends Controller
         return view('admin.blogs.create');
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -34,9 +33,34 @@ class AdminBlogController extends Controller
             'image_two' => 'nullable|image',
         ]);
 
+        // Create the directory if it doesn't exist
+        if (!Storage::exists('public/blogs')) {
+            Storage::makeDirectory('public/blogs');
+        }
+
+        // Process image_one
+        if ($request->hasFile('image_one')) {
+            $imageOne = $request->file('image_one');
+            $imageOnePath = 'blogs/' . Str::random(10) . '.webp';
+            Image::make($imageOne)
+                ->resize(800, 600)
+                ->encode('webp', 80)
+                ->save(storage_path("app/public/{$imageOnePath}"));
+        }
+
+        // Process image_two
+        if ($request->hasFile('image_two')) {
+            $imageTwo = $request->file('image_two');
+            $imageTwoPath = 'blogs/' . Str::random(10) . '.webp';
+            Image::make($imageTwo)
+                ->resize(800, 600)
+                ->encode('webp', 80)
+                ->save(storage_path("app/public/{$imageTwoPath}"));
+        }
+
         $blog = new Blog([
-            'image_one' => $request->hasFile('image_one') ? $request->file('image_one')->store('blogs', 'public') : null,
-            'image_two' => $request->hasFile('image_two') ? $request->file('image_two')->store('blogs', 'public') : null,
+            'image_one' => $imageOnePath ?? null,
+            'image_two' => $imageTwoPath ?? null,
             'date' => $request->date,
         ]);
         $blog->save();
@@ -51,7 +75,6 @@ class AdminBlogController extends Controller
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog əlavə edildi.');
     }
-
 
     public function edit(Blog $blog)
     {
@@ -69,17 +92,31 @@ class AdminBlogController extends Controller
             'image_two' => 'nullable|image',
         ]);
 
+        // Process image_one
         if ($request->hasFile('image_one')) {
-            $blog->image_one = $request->file('image_one')->store('blogs', 'public');
+            $imageOne = $request->file('image_one');
+            $imageOnePath = 'blogs/' . Str::random(10) . '.webp';
+            Image::make($imageOne)
+                ->resize(800, 600)
+                ->encode('webp', 80)
+                ->save(storage_path("app/public/{$imageOnePath}"));
+            $blog->image_one = $imageOnePath;
         }
+
+        // Process image_two
         if ($request->hasFile('image_two')) {
-            $blog->image_two = $request->file('image_two')->store('blogs', 'public');
+            $imageTwo = $request->file('image_two');
+            $imageTwoPath = 'blogs/' . Str::random(10) . '.webp';
+            Image::make($imageTwo)
+                ->resize(800, 600)
+                ->encode('webp', 80)
+                ->save(storage_path("app/public/{$imageTwoPath}"));
+            $blog->image_two = $imageTwoPath;
         }
 
         $blog->date = $request->date;
         $blog->save();
 
-        // Çevirileri güncelle
         foreach ($request->title as $locale => $title) {
             $blog->translateOrNew($locale)->title = $title;
             $blog->translateOrNew($locale)->slug = Str::slug($title);
@@ -90,7 +127,6 @@ class AdminBlogController extends Controller
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog güncəlləndi.');
     }
-
 
     public function destroy(Blog $blog)
     {

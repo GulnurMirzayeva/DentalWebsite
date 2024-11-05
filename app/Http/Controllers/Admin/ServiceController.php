@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ServiceController extends Controller
 {
@@ -28,11 +30,27 @@ class ServiceController extends Controller
             'description.*' => 'nullable|string',
         ]);
 
-        $service = new Service([
-            'icon' => $request->hasFile('icon') ? $request->file('icon')->store('services', 'public') : null,
-        ]);
+        // Ensure the directory exists
+        if (!Storage::exists('public/services')) {
+            Storage::makeDirectory('public/services');
+        }
+
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            // Process and store the icon as WebP with resizing
+            $iconPath = 'services/' . uniqid() . '.webp';
+            $iconImage = Image::make($request->file('icon'))
+                ->resize(100, 100) // Adjust icon dimensions as needed
+                ->encode('webp', 80); // Convert to WebP with 80% quality
+
+            Storage::disk('public')->put($iconPath, (string) $iconImage);
+        }
+
+        // Create new service with icon path
+        $service = new Service(['icon' => $iconPath]);
         $service->save();
 
+        // Handle translations
         foreach ($request->title as $locale => $title) {
             $translation = $service->translateOrNew($locale);
             $translation->title = $title;
@@ -43,7 +61,6 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.services.index')->with('success', 'Xidmət əlavə edildi.');
     }
-
 
     public function edit(Service $service)
     {
@@ -58,13 +75,30 @@ class ServiceController extends Controller
             'description.*' => 'nullable|string',
         ]);
 
+        // Ensure the directory exists
+        if (!Storage::exists('public/services')) {
+            Storage::makeDirectory('public/services');
+        }
 
         if ($request->hasFile('icon')) {
-            $service->icon = $request->file('icon')->store('services', 'public');
+            // Delete old icon if it exists
+            if ($service->icon && Storage::disk('public')->exists($service->icon)) {
+                Storage::disk('public')->delete($service->icon);
+            }
+
+            // Process and store the new icon as WebP with resizing
+            $iconPath = 'services/' . uniqid() . '.webp';
+            $iconImage = Image::make($request->file('icon'))
+                ->resize(100, 100) // Adjust icon dimensions as needed
+                ->encode('webp', 80); // Convert to WebP with 80% quality
+
+            Storage::disk('public')->put($iconPath, (string) $iconImage);
+            $service->icon = $iconPath;
         }
 
         $service->save();
 
+        // Handle translations
         foreach ($request->title as $locale => $title) {
             $translation = $service->translateOrNew($locale);
             $translation->title = $title;
@@ -76,9 +110,13 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('success', 'Xidmət güncəlləndi.');
     }
 
-
     public function destroy(Service $service)
     {
+        // Delete the icon from storage
+        if ($service->icon && Storage::disk('public')->exists($service->icon)) {
+            Storage::disk('public')->delete($service->icon);
+        }
+
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Xidmət silindi.');
     }
