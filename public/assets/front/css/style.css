@@ -932,6 +932,13 @@ input, select {
     padding-top: 50px;
 }
 
+.container-for-services, .our_services, .our_offer {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+}
+
 .our_services {
     width: 100%;
     padding: 0 50px;
@@ -988,6 +995,7 @@ input, select {
     justify-content: center;
     margin-bottom: 90px;
     padding: 0 150px;
+
 }
 
 .our_offer h1 {
@@ -1878,7 +1886,7 @@ input, select {
     position: absolute;
     background-color: transparent;
     min-width: 60px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
     margin-top: -30px;
     margin-left: -10px;
@@ -3351,7 +3359,7 @@ input, select {
 /* sSingle-blog starts */
 .main-container {
     max-width: 86%;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     padding: 20px;
     margin-top: 50px;
 
