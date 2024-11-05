@@ -935,7 +935,7 @@ input, select {
 .our_services {
     width: 100%;
     padding: 0 50px;
-    margin-top: 80px;
+    margin-top: 50px !important;
     margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -1000,7 +1000,7 @@ input, select {
 }
 
 .our_offer_card {
-    width: 250px;
+    width: 210px;
     height: 380px;
     border: 1px solid var(--light-gray);
     text-align: center;
