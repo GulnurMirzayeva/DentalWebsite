@@ -141,8 +141,13 @@
         <!-- Add this JavaScript code to your layout or separate JS file -->
         <script>
         function resetCommentCounter() {
+            // Reset counter to 0 on the front end
             document.getElementById('comment-counter').textContent = '0';
 
+            // Store the zero state in sessionStorage to maintain it across pages
+            sessionStorage.setItem('commentCounter', '0');
+
+            // Make an AJAX call to mark comments as read
             fetch('/admin/comments/mark-as-read', {
                 method: 'POST',
                 headers: {
@@ -150,14 +155,16 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-            }).then(response => response.json())
-              .then(data => {
-                  if (data.unread_count === 0) {
-                      document.getElementById('comment-counter').textContent = '0';
-                  }
-              });
+            });
         }
 
+        // On page load, check if the comment counter should be zero
+        document.addEventListener('DOMContentLoaded', function () {
+            const counter = sessionStorage.getItem('commentCounter');
+            if (counter === '0') {
+                document.getElementById('comment-counter').textContent = '0';
+            }
+        });
         </script>
 
 
