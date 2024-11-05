@@ -317,6 +317,7 @@ body {
     position: relative;
 }
 
+
 input {
     padding: 12px;
     width: 100%;
@@ -329,7 +330,7 @@ input {
 
 .name-input-group i,
 .email-input-group i,
-.phone-input-group i {
+.phone-input-group i{
     position: absolute;
     right: 12px;
     color: var(--gray);
@@ -401,6 +402,8 @@ input:focus,
         margin-bottom: 15px;
     }
 
+
+
     input,
     .service-select {
         font-size: 12px;
@@ -465,7 +468,7 @@ input:focus,
 
 .working_hours h2 {
     color: var(--light);
-    margin-left: 25px;
+    margin-left: 40px;
 }
 
 .working_hours ul {
@@ -473,15 +476,16 @@ input:focus,
     padding: 0;
     margin: 0;
     flex-grow: 1;
+    /*margin-bottom: 2px;*/
 }
 
 .working_hours li {
     text-align: center;
     padding: 3px;
     color: var(--white);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding-bottom: 2px;
-    color: var(--light);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    width: 70%; /* Xəttin uzunluğunu buradan tənzimləyə bilərsiniz */
+    margin: 0 auto;
 }
 
 
@@ -634,7 +638,6 @@ input, select {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
-
 }
 
 .submit-btn {
@@ -809,6 +812,7 @@ input, select {
         height: 70vh;
     }
 
+
     .background-slider-content h1 {
         font-size: 28px;
         margin-left: 0;
@@ -852,7 +856,14 @@ input, select {
         font-size: 13px;
     }
 
-
+    .working_hours li{
+        text-align: center;
+        padding: 3px;
+        color: var(--white);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        width: 40%; /* Xəttin uzunluğunu buradan tənzimləyə bilərsiniz */
+        margin: 0 auto;
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -898,6 +909,14 @@ input, select {
 
     .custom_appointment .input-group {
         width: 85%;
+    }
+    .working_hours li{
+        text-align: center;
+        padding: 3px;
+        color: var(--white);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        width: 50%; /* Xəttin uzunluğunu buradan tənzimləyə bilərsiniz */
+        margin: 0 auto;
     }
 }
 
