@@ -1,7 +1,7 @@
 <div class="blog-cards-2">
     @foreach($blogs as $blog)
         <div class="blog-card">
-            <a href="{{ route('blog.show', $blog->slug) }}">
+            <a href="{{ route('blog.show', optional($blog)->slug) }}">
                 <img src="{{ asset('storage/' . $blog->image_one) }}" alt="{{ $blog->title }}">
             </a>
             <div class="blog-card-content">

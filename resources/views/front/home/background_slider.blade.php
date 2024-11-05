@@ -26,7 +26,7 @@
     <div class="card_slider">
         <div class="emergency_cases">
             <h2>{{ __('emergency') }}</h2>
-            <p style="width: 85%; text-align: center" class="emergency-paragraph">{{ __('emergency-paragraph') }}</p>
+            <p  class="emergency-paragraph">{{ __('emergency-paragraph') }}</p>
             <span class="phone_number">{{ $contactDetails->phone ?? 'Phone not set' }}</span>
         </div>
         <div class="working_hours">
@@ -36,7 +36,7 @@
                     $today = now();
                 @endphp
 
-                @foreach(range(0, 5) as $i)
+                @foreach(range(0, 4) as $i)
                     @php
                         $date = $i === 0 ? $today : $today->copy()->addDays($i);
                         $dayName = $date->translatedFormat('j F');
@@ -111,3 +111,19 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.querySelectorAll('.input-group input, .date-input-group input, .time-input-group select').forEach(input => {
+        const icon = input.nextElementSibling; // İkona işarə edir
+
+        input.addEventListener('focus', () => {
+            icon.style.display = 'none'; // Fokuslananda ikonu gizlə
+        });
+
+        input.addEventListener('blur', () => {
+            icon.style.display = 'none'; // Fokusdan çıxanda ikonu göstər
+        });
+    });
+
+</script>

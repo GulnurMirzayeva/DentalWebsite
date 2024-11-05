@@ -40,7 +40,7 @@
                                         <option value="" disabled selected>{{ __('Select Time') }}</option> <!-- Placeholder option -->
                                     </select>
                                     <i class="fas fa-clock"></i>
-                                </div>
+            </div>
             <div class="phone-input-group">
                 <input type="tel" id="phone" name="phone" placeholder="{{ __('phone') }}" required
                        pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -51,6 +51,21 @@
         <button type="submit" class="appointment-submit-btn">{{ __('appointment') }}</button>
     </form>
 </div>
+
+<script>
+    document.querySelectorAll('.appointment-form-row input, .appointment-form-row select').forEach(input => {
+        const icon = input.nextElementSibling; // İkona işarə edir
+
+        input.addEventListener('focus', () => {
+            if (icon) icon.style.display = 'none'; // Fokuslandıqda ikonu gizləyir
+        });
+
+        input.addEventListener('blur', () => {
+            if (icon) icon.style.display = 'none'; // Fokusdan çıxanda ikonu göstərir
+        });
+    });
+
+</script>
 
 
 
