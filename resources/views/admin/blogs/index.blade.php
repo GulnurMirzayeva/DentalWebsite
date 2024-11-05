@@ -32,17 +32,17 @@
                         @endif
                     </td>
                     <!-- Azerbaijani Title -->
-                    <td>{{ Str::limit($blog->translate('az')->title, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('az'))->title, 30, '...') }}</td>
                     <!-- Russian Title -->
-                    <td>{{ Str::limit($blog->translate('ru')->title, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('ru'))->title, 30, '...') }}</td>
                     <!-- English Title -->
-                    <td>{{ Str::limit($blog->translate('en')->title, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('en'))->title, 30, '...') }}</td>
                     <!-- Azerbaijani Description -->
-                    <td>{{ Str::limit($blog->translate('az')->description_one, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('az'))->description_one, 30, '...') }}</td>
                     <!-- Russian Description -->
-                    <td>{{ Str::limit($blog->translate('ru')->description_one, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('ru'))->description_one, 30, '...') }}</td>
                     <!-- English Description -->
-                    <td>{{ Str::limit($blog->translate('en')->description_one, 30) }}</td>
+                    <td>{{ Str::limit(optional($blog->translate('en'))->description_one, 30, '...') }}</td>
                     <td>{{ $blog->date }}</td>
                     <td>
                         <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-primary btn-sm w-100 mb-1">Düzənlə</a>
