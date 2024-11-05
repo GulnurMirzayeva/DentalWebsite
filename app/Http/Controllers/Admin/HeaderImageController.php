@@ -36,14 +36,14 @@ class HeaderImageController extends Controller
             // Process and store the image as WebP with resizing
             $filePath = 'header_images/' . uniqid() . '.webp';
             $image = Image::make($request->file('header_image'))
-                ->resize(1600, 400) // Adjust dimensions as needed
+                ->resize(1280, 720) // Adjust dimensions as needed
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($filePath, (string) $image);
 
             // Save image path to the database
             HeaderImage::create([
-                'header_image' => Storage::url($filePath),
+                'header_image' => $filePath,
             ]);
         }
 
@@ -75,13 +75,13 @@ class HeaderImageController extends Controller
             // Process and store the new image as WebP with resizing
             $filePath = 'header_images/' . uniqid() . '.webp';
             $newImage = Image::make($request->file('header_image'))
-                ->resize(1600, 400) // Adjust dimensions as needed
+                ->resize(1280, 720) // Adjust dimensions as needed
                 ->encode('webp', 80); // Convert to WebP with 80% quality
 
             Storage::disk('public')->put($filePath, (string) $newImage);
 
             // Update the image path in the database
-            $headerImage->update(['header_image' => Storage::url($filePath)]);
+            $headerImage->update(['header_image' => $filePath]);
         }
 
         return redirect()->route('header_images.index')->with('success', 'Header image güncəlləndi.');
