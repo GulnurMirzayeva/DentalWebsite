@@ -936,10 +936,10 @@ input, select {
     width: 100%;
     padding: 0 50px;
     margin-top: 80px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 10px;
     justify-content: center;
 }
 
@@ -947,6 +947,7 @@ input, select {
     width: 300px;
     height: 300px;
     margin-left: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
     background-color: var(--light);
@@ -983,7 +984,7 @@ input, select {
 .our_offers_dentis {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 40px;
     justify-content: center;
     margin-bottom: 90px;
     padding: 0 150px;
@@ -1005,7 +1006,7 @@ input, select {
     text-align: center;
     overflow: hidden;
     background-color: var(--light);
-    margin: 40px auto 0;
+    margin: 30px 0;
     border-radius: 15px;
 }
 
