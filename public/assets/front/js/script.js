@@ -478,10 +478,20 @@ document.addEventListener('DOMContentLoaded', function () {
         defaultOption.value = "";
         defaultOption.disabled = true;
         defaultOption.selected = true;
-        defaultOption.textContent = "Select Time";
+        defaultOption.textContent = "Saat Seçin";
         selectElement.appendChild(defaultOption);
 
+        const today = new Date();
+        const currentHour = today.getHours();
+        const selectedDate = new Date(dateStr);
+
+        // Saat seçeneklerini oluştur
         for (let hour = startHour; hour <= endHour; hour++) {
+            // Bugünün geçmiş saatlerini tamamen atla
+            if (selectedDate.toDateString() === today.toDateString() && hour <= currentHour) {
+                continue; // Geçmiş saatleri atla
+            }
+
             const hourString = formatHour(hour);
             const option = document.createElement('option');
             option.value = hourString;
@@ -491,13 +501,14 @@ document.addEventListener('DOMContentLoaded', function () {
             checkTimeAvailability(dateStr, hourString, function (isTaken) {
                 if (isTaken) {
                     option.style.color = "red"; // Uygun olmayan seçenekleri renklendir
-                    option.textContent += " (Taken)";
+                    option.textContent += " (Dolu)";
                     option.disabled = true; // Seçeneği devre dışı bırak
                 }
                 selectElement.appendChild(option);
             });
         }
     }
+
 
     function formatHour(hour) {
         return `${hour.toString().padStart(2, '0')}:00`;
