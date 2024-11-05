@@ -128,7 +128,7 @@
             </div>
             <div class="answer">
                 <p>
-                    <a href="https://wa.me/+9940554215346" class="whatsapp-link" target="_blank">
+                    <a href="https://wa.me/+994502923161" class="whatsapp-link" target="_blank">
                         <i class="fab fa-whatsapp"></i> {{ __('answer10') }}
                     </a>
                 </p>

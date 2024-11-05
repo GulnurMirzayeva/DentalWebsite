@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\SliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class SliderController extends Controller
 {
@@ -36,15 +37,27 @@ class SliderController extends Controller
             return redirect()->route('sliders.index')->with('error', 'Siz 2-dən daha çox slider rəsmi əlavə edə bilməzsiniz. Əgər yeni rəsim əlavə etmək istəyirsinizsə, öncəliklə var olan rəsimlərdən birini silməlisiniz.');
         }
 
-        $filePath = $request->file('file')->store('sliders', 'public');
+        // Ensure the directory exists
+        if (!Storage::exists('public/sliders')) {
+            Storage::makeDirectory('public/sliders');
+        }
 
-        Slider::create([
-            'file' => $filePath,
-        ]);
+        if ($request->hasFile('file')) {
+            // Process and store the image as WebP with resizing
+            $filePath = 'sliders/' . uniqid() . '.webp';
+            $image = Image::make($request->file('file'))
+                ->resize(1920, 1080) // Resize dimensions, adjust as needed
+                ->encode('webp', 80); // Convert to WebP with 80% quality
+
+            Storage::disk('public')->put($filePath, (string) $image);
+
+            Slider::create([
+                'file' => Storage::url($filePath),
+            ]);
+        }
 
         return redirect()->route('sliders.index')->with('success', 'Slider rəsmi əlavə edildi.');
     }
-
 
     public function edit(Slider $slider)
     {
@@ -57,12 +70,26 @@ class SliderController extends Controller
             'file' => 'nullable|image|max:2048',
         ]);
 
+        // Ensure the directory exists
+        if (!Storage::exists('public/sliders')) {
+            Storage::makeDirectory('public/sliders');
+        }
+
         if ($request->hasFile('file')) {
+            // Delete old image if it exists
             if (Storage::disk('public')->exists($slider->file)) {
                 Storage::disk('public')->delete($slider->file);
             }
-            $filePath = $request->file('file')->store('sliders', 'public');
-            $slider->update(['file' => $filePath]);
+
+            // Process and store the new image as WebP with resizing
+            $filePath = 'sliders/' . uniqid() . '.webp';
+            $newImage = Image::make($request->file('file'))
+                ->resize(1920, 1080) // Resize dimensions, adjust as needed
+                ->encode('webp', 80); // Convert to WebP with 80% quality
+
+            Storage::disk('public')->put($filePath, (string) $newImage);
+
+            $slider->update(['file' => Storage::url($filePath)]);
         }
 
         return redirect()->route('sliders.index')->with('success', 'Slider rəsmi güncəlləndi.');
@@ -70,15 +97,14 @@ class SliderController extends Controller
 
     public function destroy(Slider $slider)
     {
-        if ($slider->file && Storage::disk('public')->exists($slider->file)) {
-            Storage::disk('public')->delete($slider->file);
+        if ($slider->file && Storage::disk('public')->exists(basename($slider->file))) {
+            Storage::disk('public')->delete(basename($slider->file));
         }
 
         $slider->delete();
 
         return redirect()->route('sliders.index')->with('success', 'Slider rəsmi silindi.');
     }
-
 
     public function show(Slider $slider)
     {
