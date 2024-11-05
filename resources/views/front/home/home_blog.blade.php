@@ -1,3 +1,7 @@
+<div class="our_offer">
+    <h1>{{ __('blog-title') }}</h1>
+    <p style="width: 70%; margin: auto; margin-bottom: 40px">{{ __('blog-paragraph') }}</p>
+</div>
 <div class="blog-cards">
     @foreach($blogs as $blog)
         @if($blog->slug)
