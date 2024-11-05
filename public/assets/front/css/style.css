@@ -479,7 +479,6 @@ input:focus,
     padding: 0;
     margin: 0;
     flex-grow: 1;
-    /*margin-bottom: 2px;*/
 }
 
 .working_hours li {
@@ -489,7 +488,7 @@ input:focus,
 
     color: var(--white);
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    width: 70%; /* Xəttin uzunluğunu buradan tənzimləyə bilərsiniz */
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -947,7 +946,7 @@ input, select {
 .our_services {
     width: 100%;
     padding: 0 50px;
-    margin-top: 50px !important;
+    margin-top: 40px !important;
     margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -959,7 +958,7 @@ input, select {
     width: 270px;
     height: 300px;
     margin-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     border-radius: 10px;
     overflow: hidden;
     background-color: var(--light);
@@ -998,13 +997,14 @@ input, select {
     flex-wrap: wrap;
     gap: 40px;
     justify-content: center;
-    margin-bottom: 90px;
+    margin-bottom: 30px;
     padding: 0 150px;
 
 }
 
 .our_offer h1 {
     color: var(--blue);
+    margin-top: 50px !important;
 }
 
 .our_offer p {
@@ -1068,6 +1068,7 @@ input, select {
 .information_about_services h1 {
     text-align: center;
     color: var(--blue);
+    margin-top: 50px;
 }
 
 .information_about_services p {
@@ -3128,7 +3129,7 @@ input, select {
     gap: 30px;
     flex-wrap: wrap;
     height: auto;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
 }
 
 .blog-cards-2 {
@@ -3373,12 +3374,13 @@ input, select {
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 20px;
 }
 
 .main-content {
     flex: 1;
-    min-width: 65%;
+    min-width: 60%;
+    margin-left: 8%;
     font-family: var(--font-family-sans-serif);
 }
 
@@ -3729,6 +3731,7 @@ input, select {
 
     .sidebar {
         flex: 0 0 100%;
+        margin-left: 18%;
         min-width: 100%;
     }
 
