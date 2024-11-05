@@ -958,7 +958,7 @@ input, select {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-left: 120px;
+    margin-left: 40%;
     margin-top: 30px;
 }
 
@@ -971,7 +971,7 @@ input, select {
 .our_service_information p {
     color: var(--gray-dark);
     width: 200px;
-    margin-left: 50px;
+    margin: auto;
 }
 
 .our_offer {
