@@ -141,10 +141,8 @@
         <!-- Add this JavaScript code to your layout or separate JS file -->
         <script>
         function resetCommentCounter() {
-            // Reset counter to 0
             document.getElementById('comment-counter').textContent = '0';
 
-            // Make AJAX call to mark comments as read
             fetch('/admin/comments/mark-as-read', {
                 method: 'POST',
                 headers: {
@@ -152,8 +150,14 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-            });
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.unread_count === 0) {
+                      document.getElementById('comment-counter').textContent = '0';
+                  }
+              });
         }
+
         </script>
 
 

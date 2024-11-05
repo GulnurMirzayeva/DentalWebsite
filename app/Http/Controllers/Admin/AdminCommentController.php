@@ -28,9 +28,9 @@ class AdminCommentController extends Controller
 
     public function markAsRead()
     {
-        BlogComment::where('is_read', false)
-            ->update(['is_read' => true]);
+        BlogComment::where('is_read', false)->update(['is_read' => true]);
 
-        return response()->json(['success' => true]);
+        // Return the updated count to confirm the front end
+        return response()->json(['success' => true, 'unread_count' => 0]);
     }
 }
