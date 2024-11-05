@@ -10,6 +10,8 @@ use App\Models\Service;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ContactDetail;
+
 
 class HomeController extends Controller
 {
@@ -32,6 +34,8 @@ class HomeController extends Controller
             ? asset('storage/' . $aboutImage->about_image)
             : $defaultImageAbout;
 
-        return view('front.home', compact('packages', 'blogs', 'services', 'allServices', 'sliderImages', 'defaultImageSlider', 'backgroundImage', 'bestDentist'));
+        $contactDetails = ContactDetail::first();
+
+        return view('front.home', compact('packages', 'contactDetails', 'blogs', 'services', 'allServices', 'sliderImages', 'defaultImageSlider', 'backgroundImage', 'bestDentist',));
     }
 }
