@@ -119,6 +119,7 @@ Route::prefix('admin')->group(function () {
     Route::post('contact/{id}/markAsViewed', [ComplaintSuggestionController::class, 'markAsViewed'])->name('admin.contact.markAsViewed');
 });
 
+
 // Gallery Routes
 Route::prefix('admin')->group(function () {
     Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('admin.gallery.index');

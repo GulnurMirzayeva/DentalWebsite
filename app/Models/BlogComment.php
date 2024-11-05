@@ -14,6 +14,7 @@ class BlogComment extends Model
         'blog_id',
         'name',
         'email',
+        'is_read',
         'comment',
     ];
 

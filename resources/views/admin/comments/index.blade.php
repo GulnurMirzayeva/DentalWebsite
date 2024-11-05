@@ -36,33 +36,4 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const hash = window.location.hash;
-            if (hash) {
-                const element = document.querySelector(hash);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    element.classList.add('highlight');
-
-                    setTimeout(() => {
-                        element.classList.remove('highlight');
-                    }, 2000);
-                }
-            }
-        });
-    </script>
-
-    <style>
-        .highlight {
-            background-color: #ffeb3b;
-            animation: highlight-animation 2s ease-in-out;
-        }
-
-        @keyframes highlight-animation {
-            0% { background-color: #ffeb3b; }
-            100% { background-color: transparent; }
-        }
-    </style>
 @endsection
