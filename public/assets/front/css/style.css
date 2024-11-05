@@ -468,7 +468,10 @@ input:focus,
 
 .working_hours h2 {
     color: var(--light);
-    margin-left: 40px;
+    margin-left: 25px;
+    margin-top: 30px;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 .working_hours ul {
@@ -482,6 +485,8 @@ input:focus,
 .working_hours li {
     text-align: center;
     padding: 3px;
+    font-size: 15px !important;
+
     color: var(--white);
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     width: 70%; /* Xəttin uzunluğunu buradan tənzimləyə bilərsiniz */
