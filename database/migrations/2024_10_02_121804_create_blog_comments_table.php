@@ -12,7 +12,6 @@ class CreateBlogCommentsTable extends Migration
             $table->id();
             $table->foreignId('blog_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
-            $table->boolean('is_read')->default(false);
             $table->string('email');
             $table->text('comment');
             $table->timestamps();

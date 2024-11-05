@@ -12,10 +12,7 @@ class AdminCommentController extends Controller
     {
         $comments = BlogComment::orderBy('created_at', 'desc')->get();
 
-        // If specific comment_id is provided, scroll to that comment
-        $highlightedCommentId = $request->query('comment_id');
-
-        return view('admin.comments.index', compact('comments', 'highlightedCommentId'));
+        return view('admin.comments.index', compact('comments'));
     }
 
     public function destroy($id)
@@ -24,13 +21,5 @@ class AdminCommentController extends Controller
         $comment->delete();
 
         return redirect()->route('admin.comments.index')->with('success', 'Şərh silindi.');
-    }
-
-    public function markAsRead()
-    {
-        BlogComment::where('is_read', false)->update(['is_read' => true]);
-
-        // Return the updated count to confirm the front end
-        return response()->json(['success' => true, 'unread_count' => 0]);
     }
 }
