@@ -93,16 +93,10 @@
                         />
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <div class="time-input-group ">
-                        <input
-                            type="text"
-                            id="time-picker-main"
-                            name="time"
-                            placeholder="{{ __('time') }}"
-                            readonly
-                            required
-                            class="input-with-icon"
-                        />
+                    <div class="time-input-group">
+                        <select id="time-picker-main" name="time" required>
+                            <option value="" disabled selected>{{ __('Select Time') }}</option> <!-- Placeholder option -->
+                        </select>
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="input-group">

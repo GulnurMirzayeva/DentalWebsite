@@ -404,7 +404,7 @@ backToTopButton.addEventListener('click', function (e) {
 
 // Date
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('overlay');
     const appointmentModal = document.getElementById('appointment-form');
     const appointmentBtn = document.getElementById('appointment-btn');
@@ -424,125 +424,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let dateSelected = false;
 
-    ["#date-picker-appointment", "#date-picker-main"].forEach(function(selector) {
+    // Tarih seçiciyi yapılandır
+    ["#date-picker-appointment", "#date-picker-main"].forEach(function (selector) {
         const dateInput = document.querySelector(selector);
         if (dateInput) {
             flatpickr(dateInput, {
                 minDate: "today",
                 dateFormat: "Y-m-d",
                 disable: [
-                    function(date) {
-                        return date.getDay() === 0;
+                    function (date) {
+                        return date.getDay() === 0; // Pazar günlerini devre dışı bırak
                     }
                 ],
-                onChange: function(selectedDates, dateStr, instance) {
+                onChange: function (selectedDates, dateStr, instance) {
                     dateSelected = !!selectedDates.length;
                     updateAvailableTimes(dateStr);
                     toggleTimePickers(dateSelected);
-
-                    // Automatically adjust the time input to the beginning of the valid time range
-                    if (dateSelected) {
-                        const timeInput = selector.includes('main') ?
-                            document.getElementById('time-picker-main') :
-                            document.getElementById('time-picker-appointment');
-
-                        const minTime = getMinTimeForDate(dateStr);
-                        timeInput.value = minTime;
-                    }
                 }
             });
         }
     });
 
-    function getMinTimeForDate(dateStr) {
-        const selectedDate = new Date(dateStr);
-        const dateOfMonth = selectedDate.getDate();
-
-        // Determine the beginning hour based on the date
-        if (dateOfMonth % 2 === 0) {
-            return "15:00"; // Beginning of working hours for even days
-        } else {
-            return "09:00"; // Beginning of working hours for odd days
-        }
-    }
-
+    // Zaman seçeneklerini güncelle
     function updateAvailableTimes(dateStr) {
         const selectedDate = new Date(dateStr);
-        const dayOfWeek = selectedDate.getDay();
-        const dateOfMonth = selectedDate.getDate();
-        let minTime, maxTime;
+        const dayOfMonth = selectedDate.getDate();
+        let startHour, endHour;
 
-        if (dayOfWeek === 0) {
-            toggleTimePickers(false);
-            return;
-        }
-
-        if (dateOfMonth % 2 === 0) {
-            minTime = "15:00";
-            maxTime = "19:30";
+        if (dayOfMonth % 2 === 0) {
+            startHour = 15; // 3 PM
+            endHour = 19; // 7 PM
         } else {
-            minTime = "09:00";
-            maxTime = "14:00";
+            startHour = 9; // 9 AM
+            endHour = 14; // 2 PM
         }
 
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
-            const timeInput = document.querySelector(selector);
-            if (timeInput) {
-                if (timeInput._flatpickr) {
-                    timeInput._flatpickr.destroy();
-                }
-
-                flatpickr(timeInput, {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i",
-                    time_24hr: true,
-                    minTime: minTime,
-                    maxTime: maxTime,
-                    minuteIncrement: 30,
-                    disableMobile: true,
-                    onChange: async function(selectedDates, timeStr, instance) {
-                        const dateInput = timeInput.id.includes('main') ?
-                            document.getElementById('date-picker-main') :
-                            document.getElementById('date-picker-appointment');
-
-                        if (dateInput.value && timeStr) {
-                            const isTaken = await checkTimeAvailability(dateInput.value, timeStr);
-                            if (isTaken) {
-                                timeInput.style.borderColor = '#ff4444';
-                                timeInput.setCustomValidity('This time slot is already taken. Please select another time.');
-                            } else {
-                                timeInput.style.borderColor = '';
-                                timeInput.setCustomValidity('');
-                            }
-                            timeInput.reportValidity();
-                        }
-                    }
-                });
-
-                // Add minute rounding logic
-                timeInput.addEventListener('input', function() {
-                    const [hour, minute] = timeInput.value.split(':').map(Number);
-                    let adjustedHour = hour;
-                    let adjustedMinute = minute;
-
-                    if (minute >= 1 && minute <= 29) {
-                        adjustedMinute = 30;
-                    } else if (minute >= 31 && minute <= 59) {
-                        adjustedMinute = 0;
-                        adjustedHour = (hour + 1) % 24; // Wrap around to 00 if hour exceeds 23
-                    }
-
-                    timeInput.value = `${String(adjustedHour).padStart(2, '0')}:${String(adjustedMinute).padStart(2, '0')}`;
-                });
-            }
+        const allSelectors = ["#time-picker-appointment", "#time-picker-main"];
+        allSelectors.forEach(function (selector) {
+            populateTimeOptions(selector, startHour, endHour, dateStr);
         });
 
         toggleTimePickers(true);
     }
 
+    // Zaman seçeneklerini doldur
+    function populateTimeOptions(selector, startHour, endHour, dateStr) {
+        const selectElement = document.querySelector(selector);
+        if (!selectElement) return;
+
+        selectElement.innerHTML = ""; // Mevcut seçenekleri temizle
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = "";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = "Saat Seçin";
+        selectElement.appendChild(defaultOption);
+
+        const today = new Date();
+        const currentHour = today.getHours();
+        const selectedDate = new Date(dateStr);
+
+        // Saat seçeneklerini oluştur
+        for (let hour = startHour; hour <= endHour; hour++) {
+            // Bugünün geçmiş saatlerini tamamen atla
+            if (selectedDate.toDateString() === today.toDateString() && hour <= currentHour) {
+                continue; // Geçmiş saatleri atla
+            }
+
+            const hourString = formatHour(hour);
+            const option = document.createElement('option');
+            option.value = hourString;
+            option.textContent = hourString;
+
+            // Zaman dilimi dolu mu kontrol et
+            checkTimeAvailability(dateStr, hourString, function (isTaken) {
+                if (isTaken) {
+                    option.style.color = "red"; // Uygun olmayan seçenekleri renklendir
+                    option.textContent += " (Dolu)";
+                    option.disabled = true; // Seçeneği devre dışı bırak
+                }
+                selectElement.appendChild(option);
+            });
+        }
+    }
+
+
+    function formatHour(hour) {
+        return `${hour.toString().padStart(2, '0')}:00`;
+    }
+
     function toggleTimePickers(enabled) {
-        ["#time-picker-appointment", "#time-picker-main"].forEach(function(selector) {
+        ["#time-picker-appointment", "#time-picker-main"].forEach(function (selector) {
             const timeInput = document.querySelector(selector);
             if (timeInput) {
                 timeInput.disabled = !enabled;
@@ -550,105 +523,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function openModal() {
-        overlay.classList.remove('hidden');
-        appointmentModal.classList.remove('hidden');
+    // Zaman uygunluk kontrol fonksiyonu
+    function checkTimeAvailability(date, time, callback) {
+        $.ajax({
+            url: '/check-time-availability',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                date: date,
+                time: time
+            },
+            success: function (response) {
+                callback(response.taken);
+            },
+            error: function (xhr, status, error) {
+                console.error('Zaman uygunluk kontrolü hatası:', error);
+                callback(false);
+            }
+        });
     }
 
-    function closeModal() {
-        overlay.classList.add('hidden');
-        appointmentModal.classList.add('hidden');
-    }
+    // Form gönderimi sırasında AJAX kullanarak rezervasyon yap
+    function setupForm(formObj) {
+        $(formObj.form).on('submit', function (e) {
+            e.preventDefault(); // Sayfanın yeniden yüklenmesini engelle
 
-    if (appointmentBtn) {
-        appointmentBtn.addEventListener('click', openModal);
-    }
+            const formData = $(this).serialize();
 
-    if (overlay) {
-        overlay.addEventListener('click', closeModal);
-    }
-
-    async function checkTimeAvailability(date, time) {
-        try {
-            const response = await fetch('/check-time-availability', {
+            $.ajax({
+                url: '/reservations',
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                body: JSON.stringify({ date, time })
-            });
-
-            const data = await response.json();
-            return data.taken;
-        } catch (error) {
-            console.error('Error checking time availability:', error);
-            return false;
-        }
-    }
-
-    function setupForm(formElements) {
-        const { form, timeInput, dateInput } = formElements;
-
-        if (!form) return;
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const date = dateInput.value;
-            const time = timeInput.value;
-
-            if (date && time) {
-                const isTaken = await checkTimeAvailability(date, time);
-                if (isTaken) {
-                    timeInput.style.borderColor = '#ff4444';
-                    alert('This time slot is no longer available. Please select another time.');
-                    return;
-                }
-            }
-
-            const formData = new FormData(form);
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(Object.fromEntries(formData))
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    form.reset();
-                    if (appointmentModal && !appointmentModal.classList.contains('hidden')) {
-                        closeModal();
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message); // Başarı mesajını göster
+                    } else {
+                        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
                     }
-                } else {
-                    alert(data.message || 'An error occurred. Please try again.');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Rezervasyon hatası:', error);
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
                 }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('An error occurred. Please try again.');
-            }
+            });
         });
     }
 
     setupForm(forms.main);
     setupForm(forms.modal);
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !appointmentModal.classList.contains('hidden')) {
-            closeModal();
-        }
-    });
-
-    appointmentModal.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-    toggleTimePickers(false);
 });
+
+
+
+// Date ends

@@ -19,7 +19,7 @@ class ReservationDataController extends Controller
 
         $exists = Reservation::where('date', $request->date)
             ->where('time', $request->time)
-            ->where('status', '!=', 'rejected')
+            ->where('status', '=', 'accepted')
             ->exists();
 
         return response()->json([
