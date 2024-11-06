@@ -484,7 +484,7 @@ input:focus,
 .working_hours li {
     text-align: center;
     padding: 3px;
-    font-size: 15px !important;
+    font-size: 13px !important;
 
     color: var(--white);
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
