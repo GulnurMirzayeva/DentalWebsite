@@ -52,13 +52,15 @@
             <p><i class="fa-solid fa-envelope"></i> {{ $contactDetails->email ?? 'Email not set' }}</p>
             <p>
                 <i class="fa-brands fa-square-instagram"></i>
-                <a href="https://www.instagram.com/{{ $contactDetails->instagram ?? '' }}" target="_blank" class="social-link">
+                <a href="https://www.instagram.com/{{ $contactDetails->instagram ?? '' }}" target="_blank"
+                    class="social-link">
                     {{ $contactDetails->instagram ?? 'Instagram not set' }}
                 </a>
             </p>
             <p>
                 <i class="fa-brands fa-square-facebook"></i>
-                <a href="https://www.facebook.com/{{ $contactDetails->facebook ?? '' }}" target="_blank" class="social-link">
+                <a href="https://www.facebook.com/{{ $contactDetails->facebook ?? '' }}" target="_blank"
+                    class="social-link">
                     {{ $contactDetails->facebook ?? 'Facebook not set' }}
                 </a>
             </p>
